@@ -3,7 +3,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
+from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
@@ -192,76 +194,37 @@ st.sidebar.caption(
     "Supported formats: CSV, XLS, XLSX")
 
 
-# ============================================================
 # DATASET PATHS
-# ============================================================
-import os
-from pathlib import Path
-
-# ============================================================
-# DATASET PATHS
-# ============================================================
 
 BASE_DIR = Path(__file__).resolve().parent
-
 DATA_FOLDER = BASE_DIR / "data"
-
 DEFAULT_DATASET = DATA_FOLDER / "default_credit_risk.csv"
 
-
-# ============================================================
 # LOAD DATA
-# ============================================================
 
 @st.cache_data
 def load_data(uploaded_file=None):
-
-    # --------------------------------------------------------
     # USER UPLOADED DATASET
-    # --------------------------------------------------------
-
     if uploaded_file is not None:
 
         file_name = uploaded_file.name.lower()
-
         if file_name.endswith(".csv"):
-
-            df = pd.read_csv(uploaded_file)
-
+            df = pd.read_csv(uploaded_file
         elif file_name.endswith((".xls", ".xlsx")):
-
             df = pd.read_excel(uploaded_file)
-
         else:
-
-            raise ValueError(
-                "Unsupported file format. "
-                "Please upload CSV or Excel file."
-            )
-
+            raise ValueError("Unsupported file format. "
+                             "Please upload CSV or Excel file.")
         source = f"Uploaded Dataset: {uploaded_file.name}"
 
-    # --------------------------------------------------------
     # DEFAULT DATASET
-    # --------------------------------------------------------
-
     else:
-
         if os.path.exists(DEFAULT_DATASET):
-
             df = pd.read_csv(DEFAULT_DATASET)
-
-            source = (
-                "Default Dataset: "
-                "default_credit_risk.csv"
-            )
-
+            source = ("Default Dataset: " 
+                      "default_credit_risk.csv")
         else:
-
-            raise FileNotFoundError(
-                f"Default dataset not found: {DEFAULT_DATASET}"
-            )
-
+            raise FileNotFoundError(f"Default dataset not found: {DEFAULT_DATASET}")
     return df, source
 
 
