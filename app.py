@@ -1859,11 +1859,11 @@ with tabs[6]:
             st.stop()
         gender = st.selectbox("Gender", gender_options)
     with col2:
-        division_options = (sorted(df["division"].dropna().astype(str).unique()))
-        
+        division_options = (sorted(df["division"].dropna().astype(str).unique()))    
         if len(division_options) == 0:
             st.error("No valid division values found.")
             st.stop()
+       # division = st.selectbox("Division", division_options)
        division = st.selectbox("Division", division_options)
     with col3:
         district_options = (sorted(df["district"].dropna().astype(str).unique()))
