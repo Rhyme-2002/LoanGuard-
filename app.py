@@ -1,12 +1,6 @@
-# ============================================================
-# LOANGUARD - CREDIT RISK PREDICTION SYSTEM
-# Streamlit Application
-# ============================================================
-
 import streamlit as st
 import pandas as pd
 import numpy as np
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -15,47 +9,22 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-
-from sklearn.ensemble import (
-    RandomForestClassifier,
-    GradientBoostingClassifier
-)
-
+from sklearn.ensemble import (RandomForestClassifier, GradientBoostingClassifier)
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
-
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    roc_auc_score,
-    confusion_matrix,
-    classification_report,
-    roc_curve
-)
-
+from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, classification_report, roc_curve)
 from xgboost import XGBClassifier
 
-
-# ============================================================
 # PAGE CONFIGURATION
-# ============================================================
-
 st.set_page_config(
     page_title="LoanGuard | Credit Risk Prediction",
     page_icon="🏦",
     layout="wide",
-    initial_sidebar_state="expanded"
-)
+    initial_sidebar_state="expanded")
 
-
-# ============================================================
 # CUSTOM CSS
-# ============================================================
 
 st.markdown(
     """
@@ -147,9 +116,7 @@ st.markdown(
 )
 
 
-# ============================================================
 # APP TITLE
-# ============================================================
 
 st.markdown(
     """
@@ -169,10 +136,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-# ============================================================
 # SIDEBAR HEADER
-# ============================================================
 
 st.sidebar.markdown(
     """
@@ -183,13 +147,9 @@ st.sidebar.markdown(
         </p>
     </div>
     """,
-    unsafe_allow_html=True
-)
+    unsafe_allow_html=True)
 
-
-# ============================================================
 # APP FEATURES
-# ============================================================
 
 st.sidebar.markdown("---")
 
@@ -212,13 +172,9 @@ st.sidebar.markdown(
     👤 **Customer Risk Prediction**
 
     📥 **Download Prediction Reports**
-    """
-)
+    """)
 
-
-# ============================================================
 # DATASET UPLOAD
-# ============================================================
 
 st.sidebar.markdown("---")
 
@@ -230,290 +186,96 @@ uploaded_file = st.sidebar.file_uploader(
     help=(
         "Upload a CSV or Excel credit risk dataset. "
         "If no dataset is uploaded, LoanGuard will use "
-        "a built-in demo dataset."
-    )
-)
+        "a built-in demo dataset."))
 
 st.sidebar.caption(
-    "Supported formats: CSV, XLS, XLSX"
+    "Supported formats: CSV, XLS, XLSX")
+
+
+# ============================================================
+# DATASET PATHS
+# ============================================================
+
+DATA_FOLDER = "data"
+
+DEFAULT_DATASET_1 = os.path.join(
+    DATA_FOLDER,
+    "credit_risk_bangladesh_1560.csv"
 )
 
-
-# ============================================================
-# CREATE DEFAULT DATASET
-# ============================================================
-
-@st.cache_data
-def create_default_dataset(n_samples=2000):
-
-    np.random.seed(42)
-
-    divisions = [
-        "Dhaka",
-        "Chattogram",
-        "Rajshahi",
-        "Khulna",
-        "Barishal",
-        "Sylhet",
-        "Rangpur",
-        "Mymensingh"
-    ]
-
-    division_districts = {
-        "Dhaka": ["Dhaka", "Gazipur", "Narayanganj"],
-        "Chattogram": ["Chattogram", "Cumilla", "Cox's Bazar"],
-        "Rajshahi": ["Rajshahi", "Bogura", "Pabna"],
-        "Khulna": ["Khulna", "Jashore", "Kushtia"],
-        "Barishal": ["Barishal", "Bhola", "Patuakhali"],
-        "Sylhet": ["Sylhet", "Moulvibazar", "Habiganj"],
-        "Rangpur": ["Rangpur", "Dinajpur", "Kurigram"],
-        "Mymensingh": ["Mymensingh", "Jamalpur", "Netrokona"]
-    }
-
-    gender = np.random.choice(
-        ["Male", "Female"],
-        size=n_samples
-    )
-
-    division = np.random.choice(
-        divisions,
-        size=n_samples
-    )
-
-    district = [
-        np.random.choice(division_districts[d])
-        for d in division
-    ]
-
-    education = np.random.choice(
-        ["SSC", "HSC", "Bachelor", "Master"],
-        size=n_samples,
-        p=[0.25, 0.30, 0.30, 0.15]
-    )
-
-    employment_type = np.random.choice(
-        [
-            "Salaried",
-            "Business",
-            "Self-Employed",
-            "Unemployed"
-        ],
-        size=n_samples,
-        p=[0.45, 0.25, 0.20, 0.10]
-    )
-
-    account_type = np.random.choice(
-        [
-            "Savings",
-            "Current",
-            "Student"
-        ],
-        size=n_samples,
-        p=[0.65, 0.25, 0.10]
-    )
-
-    loan_type = np.random.choice(
-        [
-            "Personal",
-            "Home",
-            "Business",
-            "Auto"
-        ],
-        size=n_samples
-    )
-
-    age = np.random.randint(
-        21,
-        65,
-        n_samples
-    )
-
-    monthly_income_bdt = np.random.lognormal(
-        mean=np.log(50000),
-        sigma=0.55,
-        size=n_samples
-    ).clip(15000, 300000)
-
-    account_balance_bdt = np.random.lognormal(
-        mean=np.log(120000),
-        sigma=0.90,
-        size=n_samples
-    ).clip(1000, 2000000)
-
-    credit_score = np.random.normal(
-        680,
-        85,
-        n_samples
-    ).clip(300, 900)
-
-    loan_amount_bdt = np.random.lognormal(
-        mean=np.log(350000),
-        sigma=0.80,
-        size=n_samples
-    ).clip(30000, 3000000)
-
-    loan_tenure_months = np.random.choice(
-        [12, 24, 36, 48, 60, 84, 120],
-        size=n_samples
-    )
-
-    interest_rate_pct = np.random.uniform(
-        7,
-        24,
-        n_samples
-    )
-
-    monthly_installment_bdt = (
-        loan_amount_bdt
-        * (1 + interest_rate_pct / 100)
-        / loan_tenure_months
-    )
-
-    previous_loans = np.random.poisson(
-        2,
-        n_samples
-    )
-
-    transaction_frequency_monthly = np.random.poisson(
-        25,
-        n_samples
-    ).clip(1, 100)
-
-    previous_default = np.random.choice(
-        ["No", "Yes"],
-        size=n_samples,
-        p=[0.85, 0.15]
-    )
-
-    loan_income_ratio = (
-        loan_amount_bdt
-        / (monthly_income_bdt * 12)
-    )
-
-    installment_income_ratio = (
-        monthly_installment_bdt
-        / monthly_income_bdt
-    )
-
-    risk_score = (
-        -2.5
-        + 2.2 * loan_income_ratio
-        + 2.0 * installment_income_ratio
-        + 1.3 * (previous_default == "Yes").astype(int)
-        - 0.008 * (credit_score - 650)
-        - 0.000003 * account_balance_bdt
-        + 0.15 * previous_loans
-    )
-
-    default_probability = (
-        1 / (1 + np.exp(-risk_score))
-    )
-
-    default = np.random.binomial(
-        1,
-        default_probability
-    )
-
-    df_default = pd.DataFrame({
-
-        "customer_id": [
-            f"CUST_{i:05d}"
-            for i in range(1, n_samples + 1)
-        ],
-
-        "customer_name": [
-            f"Customer {i}"
-            for i in range(1, n_samples + 1)
-        ],
-
-        "age": age,
-        "gender": gender,
-        "division": division,
-        "district": district,
-        "education": education,
-        "employment_type": employment_type,
-
-        "monthly_income_bdt":
-            monthly_income_bdt.round(2),
-
-        "account_balance_bdt":
-            account_balance_bdt.round(2),
-
-        "credit_score":
-            credit_score.round(0),
-
-        "loan_amount_bdt":
-            loan_amount_bdt.round(2),
-
-        "loan_tenure_months":
-            loan_tenure_months,
-
-        "interest_rate_pct":
-            interest_rate_pct.round(2),
-
-        "monthly_installment_bdt":
-            monthly_installment_bdt.round(2),
-
-        "previous_loans":
-            previous_loans,
-
-        "transaction_frequency_monthly":
-            transaction_frequency_monthly,
-
-        "account_type":
-            account_type,
-
-        "loan_type":
-            loan_type,
-
-        "previous_default":
-            previous_default,
-
-        "default":
-            default
-    })
-
-    return df_default
-
-
-# ============================================================
-# LOAD UPLOADED DATA
-# ============================================================
-
-@st.cache_data
-def load_uploaded_data(file):
-
-    file_name = file.name.lower()
-
-    if file_name.endswith(".csv"):
-        return pd.read_csv(file)
-
-    elif file_name.endswith((".xls", ".xlsx")):
-        return pd.read_excel(file)
-
-    else:
-        raise ValueError(
-            "Unsupported file format."
-        )
+DEFAULT_DATASET_2 = os.path.join(
+    DATA_FOLDER,
+    "default_credit_risk.csv"
+)
 
 
 # ============================================================
 # LOAD DATA
 # ============================================================
 
+@st.cache_data
+def load_data(uploaded_file=None):
+
+    # User uploaded dataset
+    if uploaded_file is not None:
+
+        file_name = uploaded_file.name.lower()
+
+        if file_name.endswith(".csv"):
+
+            df = pd.read_csv(uploaded_file)
+
+        elif file_name.endswith((".xls", ".xlsx")):
+
+            df = pd.read_excel(uploaded_file)
+
+        else:
+
+            raise ValueError("Unsupported file format.")
+
+        source = f"Uploaded Dataset: {uploaded_file.name}"
+
+    # Default dataset
+    else:
+
+        if os.path.exists(DEFAULT_DATASET_1):
+
+            df = pd.read_csv(DEFAULT_DATASET_1)
+
+            source = (
+                "Default Dataset: "
+                "credit_risk_bangladesh_1560.csv"
+            )
+
+        elif os.path.exists(DEFAULT_DATASET_2):
+
+            df = pd.read_csv(DEFAULT_DATASET_2)
+
+            source = (
+                "Default Dataset: "
+                "default_credit_risk.csv"
+            )
+
+        else:
+
+            raise FileNotFoundError(
+                "No default dataset found inside data folder."
+            )
+
+    return df, source
+
+
+# ============================================================
+# LOAD DATASET
+# ============================================================
+
 try:
+
+    df, dataset_source = load_data(uploaded_file)
 
     if uploaded_file is not None:
 
-        df = load_uploaded_data(uploaded_file)
-
-        dataset_source = (
-            f"Uploaded Dataset: {uploaded_file.name}"
-        )
-
-        st.sidebar.success(
-            "✅ Custom dataset loaded"
-        )
+        st.sidebar.success("✅ Custom dataset loaded")
 
         st.sidebar.info(
             f"📄 {uploaded_file.name}"
@@ -521,24 +283,20 @@ try:
 
     else:
 
-        df = create_default_dataset(
-            n_samples=2000
-        )
-
-        dataset_source = "Default Demo Dataset"
-
         st.sidebar.success(
-            "🗂️ Using Default Demo Dataset"
+            "🗂️ Default dataset loaded"
         )
+
+        st.sidebar.info(
+            "🇧🇩 credit_risk_bangladesh_1560.csv"
+        )
+
 
 except Exception as e:
 
-    st.error(
-        f"Error loading dataset: {e}"
-    )
+    st.error(f"❌ Error loading dataset: {e}")
 
     st.stop()
-
 
 # ============================================================
 # DATASET INFORMATION
