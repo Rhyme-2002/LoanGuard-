@@ -209,7 +209,7 @@ def load_data(uploaded_file=None):
 
         file_name = uploaded_file.name.lower()
         if file_name.endswith(".csv"):
-            df = pd.read_csv(uploaded_file
+            df = pd.read_csv(uploaded_file)
         elif file_name.endswith((".xls", ".xlsx")):
             df = pd.read_excel(uploaded_file)
         else:
