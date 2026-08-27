@@ -3628,151 +3628,27 @@ with tabs[6]:
 
             st.markdown("---")
 
+            st.subheader("Default Probability")
+            st.progress(float(new_probability))
 
-            # ------------------------------------------------
-            # PROBABILITY
-            # ------------------------------------------------
+            st.write(f"Probability of Default: " f"**{new_probability:.2%}**")
+            new_customer_report = pd.DataFrame({"Model": [best_model_name], "Prediction": [prediction_label],
+                                                "Default_Probability": [new_probability], "Risk_Level": [risk_level]})
 
-            st.subheader(
-                "Default Probability"
-            )
-
-
-            st.progress(
-
-                float(
-                    new_probability
-                )
-
-            )
-
-
-            st.write(
-
-                f"Probability of Default: "
-                f"**{new_probability:.2%}**"
-
-            )
-
-
-            # ------------------------------------------------
-            # RISK REPORT
-            # ------------------------------------------------
-
-            new_customer_report = pd.DataFrame({
-
-                "Model": [
-
-                    best_model_name
-
-                ],
-
-                "Prediction": [
-
-                    prediction_label
-
-                ],
-
-                "Default_Probability": [
-
-                    new_probability
-
-                ],
-
-                "Risk_Level": [
-
-                    risk_level
-
-                ]
-
-            })
-
-
-            st.subheader(
-                "📋 Customer Risk Report"
-            )
-
-
-            st.dataframe(
-
-                new_customer_report.style.format({
-
-                    "Default_Probability":
-                        "{:.2%}"
-
-                }),
-
-                use_container_width=True
-
-            )
-
-
-            # ------------------------------------------------
-            # CUSTOMER INFORMATION
-            # ------------------------------------------------
-
-            with st.expander(
-
-                "👤 View Customer Information"
-
-            ):
-
-                st.dataframe(
-
-                    new_customer_df,
-
-                    use_container_width=True
-
-                )
-
-
-            # ------------------------------------------------
-            # DOWNLOAD REPORT
-            # ------------------------------------------------
-
-            csv_data = (
-
-                new_customer_report
-                .to_csv(
-                    index=False
-                )
-
-            )
-
-
-            st.download_button(
-
-                label="⬇️ Download Risk Report",
-
-                data=csv_data,
-
-                file_name="new_customer_prediction.csv",
-
-                mime="text/csv",
-
-                use_container_width=True
-
-            )
-
-
+            st.subheader("📋 Customer Risk Report")
+            st.dataframe(new_customer_report.style.format({"Default_Probability": "{:.2%}"}), use_container_width=True)
+            with st.expander("👤 View Customer Information"):
+                
+                st.dataframe(new_customer_df, use_container_width=True)
+            csv_data = (new_customer_report.to_csv(index=False))
+            st.download_button(label="⬇️ Download Risk Report", data=csv_data, file_name="new_customer_prediction.csv", mime="text/csv", use_container_width=True)
         except Exception as e:
-
-            st.error(
-
-                f"❌ Prediction Error: {e}"
-
-            )
-
-
-# ============================================================
-# FOOTER
-# ============================================================
+            st.error(f"❌ Prediction Error: {e}")
 
 st.markdown("---")
 
 
 st.markdown(
-
     """
     <div style="text-align:center; color:gray;">
 
@@ -3783,6 +3659,4 @@ st.markdown(
     </div>
     """,
 
-    unsafe_allow_html=True
-
-)
+    unsafe_allow_html=True)
