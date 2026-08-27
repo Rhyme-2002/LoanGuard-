@@ -3345,156 +3345,60 @@ with tabs[6]:
 
         )
 
-
-        # ----------------------------------------------------
         # PREDICTION
-        # ----------------------------------------------------
-
         try:
-
-            new_prediction = (
-
-                best_model
-                .predict(
-                    new_customer_df
-                )[0]
-
-            )
-
-
-            new_probability = (
-
-                best_model
-                .predict_proba(
-                    new_customer_df
-                )[0, 1]
-
-            )
-
-
-            # ------------------------------------------------
+            new_prediction = (best_model.predict(new_customer_df)[0])
+            new_probability = (best_model.predict_proba(new_customer_df)[0, 1])
+            
             # RISK LEVEL
-            # ------------------------------------------------
-
+            
             if new_probability >= 0.70:
-
                 risk_level = "HIGH RISK"
-
             elif new_probability >= 0.40:
-
                 risk_level = "MEDIUM RISK"
-
             else:
-
                 risk_level = "LOW RISK"
-
-
-            # ------------------------------------------------
+                
             # PREDICTION LABEL
-            # ------------------------------------------------
-
+            
             if new_prediction == 1:
-
-                prediction_label = (
-                    "DEFAULTER"
-                )
-
+                prediction_label = ("DEFAULTER")
             else:
+                prediction_label = ("NON-DEFAULTER")
 
-                prediction_label = (
-                    "NON-DEFAULTER"
-                )
-
-
-            # ------------------------------------------------
             # RESULT
-            # ------------------------------------------------
-
+            
             st.markdown("---")
-
-
-            st.subheader(
-                "🎯 Credit Risk Result"
-            )
-
-
+            st.subheader("🎯 Credit Risk Result")
             col1, col2, col3 = st.columns(3)
-
-
             with col1:
-
-                st.metric(
-
-                    "Best Model",
-
-                    best_model_name
-
-                )
-
-
+                st.metric("Best Model", best_model_name)
             with col2:
-
-                st.metric(
-
-                    "Default Probability",
-
-                    f"{new_probability:.2%}"
-
-                )
-
-
+                st.metric("Default Probability", f"{new_probability:.2%}")
             with col3:
+                st.metric("Prediction", prediction_label)
 
-                st.metric(
-
-                    "Prediction",
-
-                    prediction_label
-
-                )
-
-
-            # ------------------------------------------------
             # RISK DISPLAY
-            # ------------------------------------------------
-
             if risk_level == "HIGH RISK":
-
                 st.markdown(
-
-                    '<div class="risk-high">'
+                 '<div class="risk-high">'
                     '⚠️ HIGH RISK'
                     '</div>',
-
-                    unsafe_allow_html=True
-
-                )
+                    unsafe_allow_html=True)
 
             elif risk_level == "MEDIUM RISK":
-
                 st.markdown(
-
                     '<div class="risk-medium">'
                     '⚠️ MEDIUM RISK'
                     '</div>',
-
-                    unsafe_allow_html=True
-
-                )
-
+                   unsafe_allow_html=True)
             else:
-
                 st.markdown(
-
                     '<div class="risk-low">'
                     '✅ LOW RISK'
                     '</div>',
-
-                    unsafe_allow_html=True
-
-                )
-
-
+                    unsafe_allow_html=True)
+                
             st.markdown("---")
 
             st.subheader("Default Probability")
