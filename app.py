@@ -1,8 +1,9 @@
 # ============================================================
-# CREDIT RISK PREDICTION APP
+# LOANGUARD - CREDIT RISK PREDICTION SYSTEM
 # Streamlit Application
 # ============================================================
 
+import os
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -52,7 +53,7 @@ from xgboost import XGBClassifier
 # ============================================================
 
 st.set_page_config(
-    page_title="Credit Risk Prediction",
+    page_title="LoanGuard - Credit Risk Prediction",
     page_icon="🏦",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -79,13 +80,6 @@ st.markdown(
         text-align: center;
         color: #666666;
         margin-bottom: 30px;
-    }
-
-    .metric-card {
-        padding: 20px;
-        border-radius: 10px;
-        background-color: #f8f9fa;
-        text-align: center;
     }
 
     .risk-high {
@@ -129,7 +123,7 @@ st.markdown(
 # ============================================================
 
 st.markdown(
-    '<div class="main-title">🏦 Credit Risk Prediction System</div>',
+    '<div class="main-title">🏦 LoanGuard - Credit Risk Prediction System</div>',
     unsafe_allow_html=True
 )
 
@@ -145,13 +139,13 @@ st.markdown(
 # SIDEBAR
 # ============================================================
 
-st.sidebar.title("🏦 Credit Risk System")
+st.sidebar.title("🏦 LoanGuard")
 
 st.sidebar.markdown(
     """
     ### Navigation
 
-    Use the tabs in the main panel to explore:
+    Explore the following sections:
 
     - 📊 Dashboard
     - 🔍 EDA
@@ -165,95 +159,39 @@ st.sidebar.markdown(
 
 st.sidebar.markdown("---")
 
+st.sidebar.subheader("📂 Dataset")
+
 uploaded_file = st.sidebar.file_uploader(
-    "Upload Credit Risk Dataset",
-    type=["csv", "xls", "xlsx"]
+    "Upload your own dataset",
+    type=["csv", "xls", "xlsx"],
+    help="Upload a credit risk dataset. If no file is uploaded, the built-in default dataset will be used."
+)
+
+if uploaded_file is None:
+
+    st.sidebar.success(
+        "Using built-in default dataset."
+    )
+
+else:
+
+    st.sidebar.info(
+        f"Using uploaded dataset: {uploaded_file.name}"
+    )
+
+
+# ============================================================
+# DEFAULT DATASET PATH
+# ============================================================
+
+DEFAULT_DATASET = os.path.join(
+    "data",
+    "default_credit_risk.csv"
 )
 
 
 # ============================================================
-# LOAD DATA FUNCTION
-# ============================================================
-
-@st.cache_data
-def load_data(uploaded_file):
-
-    if uploaded_file is None:
-        return None
-
-    file_name = uploaded_file.name.lower()
-
-    if file_name.endswith(".csv"):
-
-        data = pd.read_csv(uploaded_file)
-
-    elif file_name.endswith(".xls"):
-
-        data = pd.read_excel(uploaded_file)
-
-    elif file_name.endswith(".xlsx"):
-
-        data = pd.read_excel(uploaded_file)
-
-    else:
-
-        raise ValueError(
-            "Unsupported file format."
-        )
-
-    return data
-
-
-# ============================================================
-# LOAD DATA
-# ============================================================
-
-if uploaded_file is None:
-
-    st.info(
-        "👈 Please upload your credit risk dataset from the sidebar."
-    )
-
-    st.markdown(
-        """
-        ### Expected dataset
-
-        Your dataset should contain columns similar to:
-
-        `customer_id`, `customer_name`, `age`, `gender`,
-        `division`, `district`, `education`,
-        `employment_type`, `monthly_income_bdt`,
-        `account_balance_bdt`, `credit_score`,
-        `loan_amount_bdt`, `loan_tenure_months`,
-        `interest_rate_pct`, `monthly_installment_bdt`,
-        `previous_loans`, `transaction_frequency_monthly`,
-        `account_type`, `loan_type`, `previous_default`,
-        `loan_status`, `default`
-        """
-    )
-
-    st.stop()
-
-
-# ============================================================
-# READ DATA
-# ============================================================
-
-try:
-
-    df = load_data(uploaded_file)
-
-except Exception as e:
-
-    st.error(
-        f"Error loading dataset: {e}"
-    )
-
-    st.stop()
-
-
-# ============================================================
-# BASIC VALIDATION
+# REQUIRED COLUMNS
 # ============================================================
 
 required_columns = [
@@ -268,6 +206,7 @@ required_columns = [
     "monthly_installment_bdt",
     "previous_loans",
     "transaction_frequency_monthly",
+
     "gender",
     "division",
     "district",
@@ -277,39 +216,215 @@ required_columns = [
     "loan_type",
     "previous_default",
     "loan_status",
+
     "default"
 
 ]
 
 
-missing_columns = [
-    col
-    for col in required_columns
-    if col not in df.columns
-]
+# ============================================================
+# LOAD DATA FUNCTION
+# ============================================================
+
+@st.cache_data
+def load_uploaded_data(uploaded_file):
+
+    file_name = uploaded_file.name.lower()
+
+    if file_name.endswith(".csv"):
+
+        return pd.read_csv(uploaded_file)
+
+    elif file_name.endswith(".xlsx"):
+
+        return pd.read_excel(uploaded_file)
+
+    elif file_name.endswith(".xls"):
+
+        return pd.read_excel(uploaded_file)
+
+    else:
+
+        raise ValueError(
+            "Unsupported file format."
+        )
 
 
-if missing_columns:
+@st.cache_data
+def load_default_data():
 
-    st.error(
-        "The following required columns are missing:"
+    if not os.path.exists(DEFAULT_DATASET):
+
+        return None
+
+    return pd.read_csv(
+        DEFAULT_DATASET
     )
 
-    st.write(
-        missing_columns
+
+# ============================================================
+# LOAD DATA
+# ============================================================
+
+try:
+
+    if uploaded_file is not None:
+
+        df = load_uploaded_data(
+            uploaded_file
+        )
+
+        dataset_source = (
+            f"Uploaded dataset: {uploaded_file.name}"
+        )
+
+    else:
+
+        df = load_default_data()
+
+        dataset_source = (
+            "Built-in default dataset"
+        )
+
+
+except Exception as e:
+
+    st.error(
+        f"Error loading dataset: {e}"
     )
 
     st.stop()
 
 
 # ============================================================
-# REMOVE CUSTOMER ID
+# CHECK DEFAULT DATASET
+# ============================================================
+
+if df is None:
+
+    st.error(
+        """
+        ❌ Default dataset not found.
+
+        Please make sure your GitHub repository contains:
+
+        `data/default_credit_risk.csv`
+        """
+    )
+
+    st.stop()
+
+
+# ============================================================
+# DATASET SOURCE
+# ============================================================
+
+st.sidebar.caption(
+    dataset_source
+)
+
+
+# ============================================================
+# BASIC DATA CLEANING
+# ============================================================
+
+df.columns = (
+    df.columns
+    .str.strip()
+    .str.lower()
+)
+
+
+# ============================================================
+# VALIDATE REQUIRED COLUMNS
+# ============================================================
+
+missing_columns = [
+
+    col
+    for col in required_columns
+    if col not in df.columns
+
+]
+
+
+if missing_columns:
+
+    st.error(
+        "❌ The dataset is missing required columns."
+    )
+
+    st.write(
+        "Missing columns:"
+    )
+
+    st.write(
+        missing_columns
+    )
+
+    st.info(
+        """
+        Please upload a dataset containing the required
+        credit-risk variables.
+        """
+    )
+
+    st.stop()
+
+
+# ============================================================
+# REMOVE IDENTIFIER COLUMNS
 # ============================================================
 
 df = df.drop(
-    columns=["customer_id"],
+    columns=[
+        "customer_id",
+        "customer_name"
+    ],
     errors="ignore"
 )
+
+
+# ============================================================
+# CONVERT TARGET TO NUMERIC
+# ============================================================
+
+try:
+
+    df["default"] = pd.to_numeric(
+        df["default"],
+        errors="coerce"
+    )
+
+except Exception:
+
+    st.error(
+        "The 'default' column could not be converted to numeric."
+    )
+
+    st.stop()
+
+
+# ============================================================
+# REMOVE INVALID TARGET ROWS
+# ============================================================
+
+df = df[
+    df["default"].isin([0, 1])
+].copy()
+
+
+# ============================================================
+# CHECK TARGET CLASSES
+# ============================================================
+
+if df["default"].nunique() < 2:
+
+    st.error(
+        "The dataset must contain both default classes: 0 and 1."
+    )
+
+    st.stop()
 
 
 # ============================================================
@@ -319,8 +434,13 @@ df = df.drop(
 df["loan_to_income_ratio"] = (
 
     df["loan_amount_bdt"]
+
     /
-    (df["monthly_income_bdt"] * 12)
+
+    (
+        df["monthly_income_bdt"]
+        * 12
+    )
 
 )
 
@@ -328,8 +448,13 @@ df["loan_to_income_ratio"] = (
 df["installment_to_income_ratio"] = (
 
     df["monthly_installment_bdt"]
+
     /
-    df["monthly_income_bdt"]
+
+    df["monthly_income_bdt"].replace(
+        0,
+        np.nan
+    )
 
 )
 
@@ -346,7 +471,7 @@ df.replace(
 
 
 # ============================================================
-# CREATE DEFAULTER DATASET
+# DEFAULTER DATA
 # ============================================================
 
 defaulters = df[
@@ -365,9 +490,14 @@ non_defaulters = df[
 
 total_customers = len(df)
 
-total_defaulters = len(defaulters)
+total_defaulters = len(
+    defaulters
+)
 
-total_non_defaulters = len(non_defaulters)
+total_non_defaulters = len(
+    non_defaulters
+)
+
 
 default_rate = (
 
@@ -382,8 +512,8 @@ total_defaulted_loan = (
 
     defaulters[
         "loan_amount_bdt"
-    ].sum()
-
+    ]
+    .sum()
 )
 
 
@@ -391,8 +521,8 @@ avg_defaulted_loan = (
 
     defaulters[
         "loan_amount_bdt"
-    ].mean()
-
+    ]
+    .mean()
 )
 
 
@@ -400,8 +530,8 @@ avg_defaulter_income = (
 
     defaulters[
         "monthly_income_bdt"
-    ].mean()
-
+    ]
+    .mean()
 )
 
 
@@ -409,8 +539,8 @@ avg_defaulter_credit_score = (
 
     defaulters[
         "credit_score"
-    ].mean()
-
+    ]
+    .mean()
 )
 
 
@@ -418,8 +548,8 @@ avg_defaulter_age = (
 
     defaulters[
         "age"
-    ].mean()
-
+    ]
+    .mean()
 )
 
 
@@ -484,7 +614,6 @@ categorical_features = [
 # ============================================================
 
 numeric_transformer = Pipeline(
-
     steps=[
 
         (
@@ -500,12 +629,10 @@ numeric_transformer = Pipeline(
         )
 
     ]
-
 )
 
 
 categorical_transformer = Pipeline(
-
     steps=[
 
         (
@@ -518,12 +645,12 @@ categorical_transformer = Pipeline(
         (
             "encoder",
             OneHotEncoder(
-                handle_unknown="ignore"
+                handle_unknown="ignore",
+                sparse_output=False
             )
         )
 
     ]
-
 )
 
 
@@ -543,7 +670,9 @@ preprocessor = ColumnTransformer(
             categorical_features
         )
 
-    ]
+    ],
+
+    remainder="drop"
 
 )
 
@@ -555,7 +684,6 @@ preprocessor = ColumnTransformer(
 X = df.drop(
 
     columns=[
-        "customer_name",
         "default"
     ],
 
@@ -564,7 +692,21 @@ X = df.drop(
 )
 
 
-y = df["default"]
+X = X.drop(
+
+    columns=[
+        "customer_name",
+        "customer_id"
+    ],
+
+    errors="ignore"
+
+)
+
+
+y = df[
+    "default"
+].astype(int)
 
 
 # ============================================================
@@ -680,7 +822,9 @@ models = {
 
             random_state=42,
 
-            n_jobs=-1
+            n_jobs=-1,
+
+            tree_method="hist"
 
         ),
 
@@ -720,7 +864,12 @@ models = {
 # ============================================================
 
 @st.cache_resource
-def train_models(X_train, X_test, y_train, y_test):
+def train_models(
+    X_train,
+    X_test,
+    y_train,
+    y_test
+):
 
     trained_models = {}
 
@@ -728,120 +877,164 @@ def train_models(X_train, X_test, y_train, y_test):
 
     roc_data = {}
 
+
     for name, model in models.items():
 
-        pipeline = Pipeline(
+        try:
 
-            steps=[
+            pipeline = Pipeline(
 
-                (
-                    "preprocessor",
-                    preprocessor
-                ),
+                steps=[
 
-                (
-                    "model",
-                    model
-                )
+                    (
+                        "preprocessor",
+                        preprocessor
+                    ),
 
-            ]
+                    (
+                        "model",
+                        model
+                    )
 
+                ]
+
+            )
+
+
+            pipeline.fit(
+
+                X_train,
+
+                y_train
+
+            )
+
+
+            trained_models[name] = pipeline
+
+
+            y_pred = pipeline.predict(
+
+                X_test
+
+            )
+
+
+            y_prob = pipeline.predict_proba(
+
+                X_test
+
+            )[:, 1]
+
+
+            accuracy = accuracy_score(
+
+                y_test,
+
+                y_pred
+
+            )
+
+
+            precision = precision_score(
+
+                y_test,
+
+                y_pred,
+
+                zero_division=0
+
+            )
+
+
+            recall = recall_score(
+
+                y_test,
+
+                y_pred,
+
+                zero_division=0
+
+            )
+
+
+            f1 = f1_score(
+
+                y_test,
+
+                y_pred,
+
+                zero_division=0
+
+            )
+
+
+            roc_auc = roc_auc_score(
+
+                y_test,
+
+                y_prob
+
+            )
+
+
+            results[name] = {
+
+                "Model": name,
+
+                "Accuracy": accuracy,
+
+                "Precision": precision,
+
+                "Recall": recall,
+
+                "F1 Score": f1,
+
+                "ROC-AUC": roc_auc
+
+            }
+
+
+            fpr, tpr, thresholds = roc_curve(
+
+                y_test,
+
+                y_prob
+
+            )
+
+
+            roc_data[name] = {
+
+                "fpr": fpr,
+
+                "tpr": tpr,
+
+                "auc": roc_auc
+
+            }
+
+
+        except Exception as e:
+
+            print(
+                f"{name} failed: {e}"
+            )
+
+
+    if not results:
+
+        raise RuntimeError(
+            "All machine learning models failed to train."
         )
-
-
-        pipeline.fit(
-            X_train,
-            y_train
-        )
-
-
-        trained_models[
-            name
-        ] = pipeline
-
-
-        y_pred = pipeline.predict(
-            X_test
-        )
-
-
-        y_prob = pipeline.predict_proba(
-            X_test
-        )[:, 1]
-
-
-        accuracy = accuracy_score(
-            y_test,
-            y_pred
-        )
-
-
-        precision = precision_score(
-            y_test,
-            y_pred,
-            zero_division=0
-        )
-
-
-        recall = recall_score(
-            y_test,
-            y_pred,
-            zero_division=0
-        )
-
-
-        f1 = f1_score(
-            y_test,
-            y_pred,
-            zero_division=0
-        )
-
-
-        roc_auc = roc_auc_score(
-            y_test,
-            y_prob
-        )
-
-
-        results[name] = {
-
-            "Model": name,
-
-            "Accuracy": accuracy,
-
-            "Precision": precision,
-
-            "Recall": recall,
-
-            "F1 Score": f1,
-
-            "ROC-AUC": roc_auc
-
-        }
-
-
-        fpr, tpr, thresholds = roc_curve(
-
-            y_test,
-
-            y_prob
-
-        )
-
-
-        roc_data[name] = {
-
-            "fpr": fpr,
-
-            "tpr": tpr,
-
-            "auc": roc_auc
-
-        }
 
 
     results_df = pd.DataFrame(
-        list(results.values())
+
+        list(
+            results.values()
+        )
+
     )
 
 
@@ -851,6 +1044,8 @@ def train_models(X_train, X_test, y_train, y_test):
 
         ascending=False
 
+    ).reset_index(
+        drop=True
     )
 
 
@@ -866,25 +1061,37 @@ def train_models(X_train, X_test, y_train, y_test):
 
 
 # ============================================================
-# TRAINING SPINNER
+# TRAINING
 # ============================================================
 
 with st.spinner(
+
     "🤖 Training machine learning models..."
+
 ):
 
-    (
-        trained_models,
-        results_df,
-        roc_data
-    ) = train_models(
+    try:
 
-        X_train,
-        X_test,
-        y_train,
-        y_test
+        (
+            trained_models,
+            results_df,
+            roc_data
+        ) = train_models(
 
-    )
+            X_train,
+            X_test,
+            y_train,
+            y_test
+
+        )
+
+    except Exception as e:
+
+        st.error(
+            f"Model training failed: {e}"
+        )
+
+        st.stop()
 
 
 # ============================================================
@@ -911,46 +1118,72 @@ best_model = (
 # BEST MODEL PREDICTIONS
 # ============================================================
 
-best_pred = best_model.predict(
-    X_test
+best_pred = (
+
+    best_model.predict(
+        X_test
+    )
+
 )
 
 
-best_prob = best_model.predict_proba(
-    X_test
-)[:, 1]
+best_prob = (
+
+    best_model.predict_proba(
+        X_test
+    )[:, 1]
+
+)
 
 
 accuracy = accuracy_score(
+
     y_test,
+
     best_pred
+
 )
 
 
 precision = precision_score(
+
     y_test,
+
     best_pred,
+
     zero_division=0
+
 )
 
 
 recall = recall_score(
+
     y_test,
+
     best_pred,
+
     zero_division=0
+
 )
 
 
 f1 = f1_score(
+
     y_test,
+
     best_pred,
+
     zero_division=0
+
 )
 
 
 roc_auc = roc_auc_score(
+
     y_test,
+
     best_prob
+
 )
 
 
@@ -991,9 +1224,17 @@ with tabs[0]:
         "📊 Credit Risk Dashboard"
     )
 
+    st.info(
+        f"Dataset: {dataset_source}"
+    )
 
-    st.markdown(
-        "### Portfolio Overview"
+
+    # --------------------------------------------------------
+    # PORTFOLIO OVERVIEW
+    # --------------------------------------------------------
+
+    st.subheader(
+        "Portfolio Overview"
     )
 
 
@@ -1003,32 +1244,44 @@ with tabs[0]:
     with col1:
 
         st.metric(
+
             "Total Customers",
+
             f"{total_customers:,}"
+
         )
 
 
     with col2:
 
         st.metric(
+
             "Total Defaulters",
+
             f"{total_defaulters:,}"
+
         )
 
 
     with col3:
 
         st.metric(
+
             "Default Rate",
+
             f"{default_rate:.2f}%"
+
         )
 
 
     with col4:
 
         st.metric(
+
             "Defaulted Loan",
+
             f"৳{total_defaulted_loan:,.0f}"
+
         )
 
 
@@ -1041,37 +1294,53 @@ with tabs[0]:
     with col1:
 
         st.metric(
+
             "Avg Defaulter Income",
+
             f"৳{avg_defaulter_income:,.0f}"
+
         )
 
 
     with col2:
 
         st.metric(
+
             "Avg Credit Score",
+
             f"{avg_defaulter_credit_score:.1f}"
+
         )
 
 
     with col3:
 
         st.metric(
+
             "Avg Defaulter Age",
+
             f"{avg_defaulter_age:.1f}"
+
         )
 
 
     with col4:
 
         st.metric(
+
             "Avg Defaulted Loan",
+
             f"৳{avg_defaulted_loan:,.0f}"
+
         )
 
 
     st.markdown("---")
 
+
+    # --------------------------------------------------------
+    # DEFAULT DISTRIBUTION
+    # --------------------------------------------------------
 
     col1, col2 = st.columns(2)
 
@@ -1079,14 +1348,22 @@ with tabs[0]:
     with col1:
 
         fig, ax = plt.subplots(
+
             figsize=(7, 5)
+
         )
 
+
         sns.countplot(
+
             data=df,
+
             x="default",
+
             ax=ax
+
         )
+
 
         ax.set_title(
             "Default Distribution"
@@ -1100,7 +1377,11 @@ with tabs[0]:
             "Number of Customers"
         )
 
-        st.pyplot(fig)
+
+        st.pyplot(
+            fig,
+            clear_figure=True
+        )
 
 
     with col2:
@@ -1115,8 +1396,11 @@ with tabs[0]:
 
 
         fig, ax = plt.subplots(
+
             figsize=(7, 5)
+
         )
+
 
         ax.pie(
 
@@ -1131,29 +1415,43 @@ with tabs[0]:
 
         )
 
+
         ax.set_title(
             "Default Percentage"
         )
 
-        st.pyplot(fig)
+
+        st.pyplot(
+            fig,
+            clear_figure=True
+        )
 
 
     st.markdown("---")
 
 
+    # --------------------------------------------------------
+    # DATA PREVIEW
+    # --------------------------------------------------------
+
     st.subheader(
         "Dataset Preview"
     )
 
+
     st.dataframe(
+
         df.head(20),
+
         use_container_width=True
+
     )
 
 
     st.subheader(
         "Dataset Information"
     )
+
 
     col1, col2 = st.columns(2)
 
@@ -1175,12 +1473,19 @@ with tabs[0]:
 
         st.write(
             "**Missing Values:**",
-            int(df.isnull().sum().sum())
+            int(
+                df.isnull()
+                .sum()
+                .sum()
+            )
         )
 
         st.write(
             "**Duplicate Rows:**",
-            int(df.duplicated().sum())
+            int(
+                df.duplicated()
+                .sum()
+            )
         )
 
 
@@ -1210,8 +1515,11 @@ with tabs[1]:
     with col1:
 
         fig, ax = plt.subplots(
+
             figsize=(7, 5)
+
         )
+
 
         sns.histplot(
 
@@ -1227,18 +1535,28 @@ with tabs[1]:
 
         )
 
+
         ax.set_title(
+
             f"Distribution of {eda_variable}"
+
         )
 
-        st.pyplot(fig)
+
+        st.pyplot(
+            fig,
+            clear_figure=True
+        )
 
 
     with col2:
 
         fig, ax = plt.subplots(
+
             figsize=(7, 5)
+
         )
+
 
         sns.boxplot(
 
@@ -1252,6 +1570,7 @@ with tabs[1]:
 
         )
 
+
         ax.set_title(
 
             f"{eda_variable}: "
@@ -1259,11 +1578,16 @@ with tabs[1]:
 
         )
 
+
         ax.set_xlabel(
             "Default"
         )
 
-        st.pyplot(fig)
+
+        st.pyplot(
+            fig,
+            clear_figure=True
+        )
 
 
     st.markdown("---")
@@ -1278,34 +1602,17 @@ with tabs[1]:
 
         "Select categorical variable",
 
-        [
-
-            "gender",
-
-            "division",
-
-            "district",
-
-            "education",
-
-            "employment_type",
-
-            "account_type",
-
-            "loan_type",
-
-            "previous_default",
-
-            "loan_status"
-
-        ]
+        categorical_features
 
     )
 
 
     categorical_counts = (
 
-        df[categorical_variable]
+        df[
+            categorical_variable
+        ]
+        .astype(str)
         .value_counts()
         .head(15)
 
@@ -1313,7 +1620,9 @@ with tabs[1]:
 
 
     fig, ax = plt.subplots(
+
         figsize=(10, 5)
+
     )
 
 
@@ -1329,19 +1638,26 @@ with tabs[1]:
 
 
     ax.set_title(
+
         f"Distribution of {categorical_variable}"
+
     )
+
 
     ax.set_xlabel(
         "Number of Customers"
     )
+
 
     ax.set_ylabel(
         categorical_variable
     )
 
 
-    st.pyplot(fig)
+    st.pyplot(
+        fig,
+        clear_figure=True
+    )
 
 
 # ============================================================
@@ -1362,15 +1678,10 @@ with tabs[2]:
         [
 
             "gender",
-
             "division",
-
             "education",
-
             "employment_type",
-
             "loan_type",
-
             "previous_default"
 
         ]
@@ -1381,7 +1692,11 @@ with tabs[2]:
     default_rate_analysis = (
 
         df.groupby(
-            analysis_variable
+
+            analysis_variable,
+
+            dropna=False
+
         )["default"]
 
         .mean()
@@ -1396,12 +1711,16 @@ with tabs[2]:
 
 
     st.subheader(
+
         f"Default Rate by {analysis_variable}"
+
     )
 
 
     fig, ax = plt.subplots(
+
         figsize=(10, 6)
+
     )
 
 
@@ -1409,7 +1728,7 @@ with tabs[2]:
 
         x=default_rate_analysis.values,
 
-        y=default_rate_analysis.index,
+        y=default_rate_analysis.index.astype(str),
 
         ax=ax
 
@@ -1420,16 +1739,23 @@ with tabs[2]:
         "Default Rate (%)"
     )
 
+
     ax.set_ylabel(
         analysis_variable
     )
 
+
     ax.set_title(
+
         f"Default Rate by {analysis_variable}"
+
     )
 
 
-    st.pyplot(fig)
+    st.pyplot(
+        fig,
+        clear_figure=True
+    )
 
 
     st.dataframe(
@@ -1437,10 +1763,14 @@ with tabs[2]:
         default_rate_analysis
         .reset_index()
         .rename(
+
             columns={
+
                 "default":
                     "Default Rate (%)"
+
             }
+
         ),
 
         use_container_width=True
@@ -1479,6 +1809,7 @@ with tabs[2]:
             "Average Installment-to-Income Ratio"
 
         ],
+
 
         "Value": [
 
@@ -1524,8 +1855,11 @@ with tabs[2]:
 
 
     st.dataframe(
+
         profile,
+
         use_container_width=True
+
     )
 
 
@@ -1540,13 +1874,23 @@ with tabs[3]:
     )
 
 
-    correlation = df[
-        numeric_features + ["default"]
-    ].corr()
+    correlation = (
+
+        df[
+            numeric_features + ["default"]
+        ]
+
+        .corr(
+            numeric_only=True
+        )
+
+    )
 
 
     fig, ax = plt.subplots(
+
         figsize=(14, 10)
+
     )
 
 
@@ -1572,7 +1916,10 @@ with tabs[3]:
     )
 
 
-    st.pyplot(fig)
+    st.pyplot(
+        fig,
+        clear_figure=True
+    )
 
 
     st.markdown("---")
@@ -1641,7 +1988,9 @@ with tabs[4]:
     )
 
 
-    display_results = results_df.copy()
+    display_results = (
+        results_df.copy()
+    )
 
 
     for col in [
@@ -1676,171 +2025,181 @@ with tabs[4]:
     st.markdown("---")
 
 
-    col1, col2 = st.columns(2)
+    # ROC-AUC
+    fig, ax = plt.subplots(
 
+        figsize=(8, 6)
 
-    with col1:
+    )
 
-        fig, ax = plt.subplots(
-            figsize=(8, 6)
-        )
 
+    sns.barplot(
 
-        sns.barplot(
+        data=results_df,
 
-            data=results_df,
+        x="ROC-AUC",
 
-            x="ROC-AUC",
+        y="Model",
 
-            y="Model",
+        ax=ax
 
-            ax=ax
+    )
 
-        )
 
+    ax.set_xlim(
+        0,
+        1
+    )
 
-        ax.set_xlim(
-            0,
-            1
-        )
 
+    ax.set_title(
+        "Model Comparison - ROC-AUC"
+    )
 
-        ax.set_title(
-            "Model Comparison - ROC-AUC"
-        )
 
+    st.pyplot(
+        fig,
+        clear_figure=True
+    )
 
-        st.pyplot(fig)
 
+    # Recall
+    fig, ax = plt.subplots(
 
-    with col2:
+        figsize=(8, 6)
 
-        fig, ax = plt.subplots(
-            figsize=(8, 6)
-        )
+    )
 
 
-        sns.barplot(
+    sns.barplot(
 
-            data=results_df,
+        data=results_df,
 
-            x="Recall",
+        x="Recall",
 
-            y="Model",
+        y="Model",
 
-            ax=ax
+        ax=ax
 
-        )
+    )
 
 
-        ax.set_xlim(
-            0,
-            1
-        )
+    ax.set_xlim(
+        0,
+        1
+    )
 
 
-        ax.set_title(
-            "Defaulter Recall Comparison"
-        )
+    ax.set_title(
+        "Defaulter Recall Comparison"
+    )
 
 
-        st.pyplot(fig)
+    st.pyplot(
+        fig,
+        clear_figure=True
+    )
 
 
-    st.markdown("---")
+    # F1
+    fig, ax = plt.subplots(
 
+        figsize=(8, 6)
 
-    col1, col2 = st.columns(2)
+    )
 
 
-    with col1:
+    sns.barplot(
 
-        fig, ax = plt.subplots(
-            figsize=(8, 6)
-        )
+        data=results_df,
 
+        x="F1 Score",
 
-        sns.barplot(
+        y="Model",
 
-            data=results_df,
+        ax=ax
 
-            x="F1 Score",
+    )
 
-            y="Model",
 
-            ax=ax
+    ax.set_xlim(
+        0,
+        1
+    )
 
-        )
 
+    ax.set_title(
+        "F1 Score Comparison"
+    )
 
-        ax.set_xlim(
-            0,
-            1
-        )
 
+    st.pyplot(
+        fig,
+        clear_figure=True
+    )
 
-        ax.set_title(
-            "F1 Score Comparison"
-        )
 
+    # ROC CURVES
+    fig, ax = plt.subplots(
 
-        st.pyplot(fig)
+        figsize=(8, 6)
 
+    )
 
-    with col2:
 
-        fig, ax = plt.subplots(
-            figsize=(8, 6)
-        )
-
-
-        for name, data in roc_data.items():
-
-            ax.plot(
-
-                data["fpr"],
-
-                data["tpr"],
-
-                label=(
-
-                    f"{name} "
-                    f"(AUC={data['auc']:.3f})"
-
-                )
-
-            )
-
+    for name, data in roc_data.items():
 
         ax.plot(
 
-            [0, 1],
+            data["fpr"],
 
-            [0, 1],
+            data["tpr"],
 
-            linestyle="--"
+            label=(
+
+                f"{name} "
+                f"(AUC={data['auc']:.3f})"
+
+            )
 
         )
 
 
-        ax.set_xlabel(
-            "False Positive Rate"
-        )
+    ax.plot(
 
-        ax.set_ylabel(
-            "True Positive Rate"
-        )
+        [0, 1],
 
-        ax.set_title(
-            "ROC Curves"
-        )
+        [0, 1],
 
-        ax.legend(
-            fontsize=8
-        )
+        linestyle="--"
+
+    )
 
 
-        st.pyplot(fig)
+    ax.set_xlabel(
+        "False Positive Rate"
+    )
+
+
+    ax.set_ylabel(
+        "True Positive Rate"
+    )
+
+
+    ax.set_title(
+        "ROC Curves"
+    )
+
+
+    ax.legend(
+        fontsize=8
+    )
+
+
+    st.pyplot(
+        fig,
+        clear_figure=True
+    )
 
 
     st.download_button(
@@ -1870,7 +2229,9 @@ with tabs[5]:
 
 
     st.success(
+
         f"Best Model: {best_model_name}"
+
     )
 
 
@@ -1920,6 +2281,10 @@ with tabs[5]:
     st.markdown("---")
 
 
+    # --------------------------------------------------------
+    # CLASSIFICATION REPORT
+    # --------------------------------------------------------
+
     st.subheader(
         "Classification Report"
     )
@@ -1963,6 +2328,10 @@ with tabs[5]:
     st.markdown("---")
 
 
+    # --------------------------------------------------------
+    # CONFUSION MATRIX
+    # --------------------------------------------------------
+
     st.subheader(
         "Confusion Matrix"
     )
@@ -1978,7 +2347,9 @@ with tabs[5]:
 
 
     fig, ax = plt.subplots(
+
         figsize=(7, 6)
+
     )
 
 
@@ -2017,23 +2388,31 @@ with tabs[5]:
         "Predicted"
     )
 
+
     ax.set_ylabel(
         "Actual"
     )
 
+
     ax.set_title(
+
         f"Confusion Matrix - {best_model_name}"
+
     )
 
 
-    st.pyplot(fig)
+    st.pyplot(
+        fig,
+        clear_figure=True
+    )
 
 
-    # ========================================================
+    # --------------------------------------------------------
     # FEATURE IMPORTANCE
-    # ========================================================
+    # --------------------------------------------------------
 
     st.markdown("---")
+
 
     st.subheader(
         "🔎 Feature Importance"
@@ -2147,7 +2526,10 @@ with tabs[5]:
         )
 
 
-        st.pyplot(fig)
+        st.pyplot(
+            fig,
+            clear_figure=True
+        )
 
 
     else:
@@ -2160,11 +2542,12 @@ with tabs[5]:
         )
 
 
-    # ========================================================
+    # --------------------------------------------------------
     # SAMPLE TEST CUSTOMER
-    # ========================================================
+    # --------------------------------------------------------
 
     st.markdown("---")
+
 
     st.subheader(
         "📋 Sample Test Customer Predictions"
@@ -2275,16 +2658,19 @@ with tabs[6]:
 
 
     st.markdown(
+
         """
-        Enter the customer's information below.
-        The trained best-performing model will estimate
-        the probability of default.
+        Enter customer information below.
+
+        The best-performing machine learning model will
+        estimate the probability of default.
         """
+
     )
 
 
     # ========================================================
-    # NUMERIC INPUTS
+    # FINANCIAL INFORMATION
     # ========================================================
 
     st.subheader(
@@ -2454,7 +2840,7 @@ with tabs[6]:
 
 
     # ========================================================
-    # CATEGORICAL INPUTS
+    # CUSTOMER INFORMATION
     # ========================================================
 
     st.subheader(
@@ -2467,48 +2853,75 @@ with tabs[6]:
 
     with col1:
 
-        gender = st.selectbox(
-
-            "Gender",
+        gender_options = (
 
             sorted(
+
                 df["gender"]
                 .dropna()
                 .astype(str)
                 .unique()
+
             )
 
         )
 
 
+        gender = st.selectbox(
+
+            "Gender",
+
+            gender_options
+
+        )
+
+
     with col2:
+
+        division_options = (
+
+            sorted(
+
+                df["division"]
+                .dropna()
+                .astype(str)
+                .unique()
+
+            )
+
+        )
+
 
         division = st.selectbox(
 
             "Division",
 
-            sorted(
-                df["division"]
-                .dropna()
-                .astype(str)
-                .unique()
-            )
+            division_options
 
         )
 
 
     with col3:
+
+        district_options = (
+
+            sorted(
+
+                df["district"]
+                .dropna()
+                .astype(str)
+                .unique()
+
+            )
+
+        )
+
 
         district = st.selectbox(
 
             "District",
 
-            sorted(
-                df["district"]
-                .dropna()
-                .astype(str)
-                .unique()
-            )
+            district_options
 
         )
 
@@ -2517,49 +2930,76 @@ with tabs[6]:
 
 
     with col1:
+
+        education_options = (
+
+            sorted(
+
+                df["education"]
+                .dropna()
+                .astype(str)
+                .unique()
+
+            )
+
+        )
+
 
         education = st.selectbox(
 
             "Education",
 
-            sorted(
-                df["education"]
-                .dropna()
-                .astype(str)
-                .unique()
-            )
+            education_options
 
         )
 
 
     with col2:
 
-        employment_type = st.selectbox(
-
-            "Employment Type",
+        employment_options = (
 
             sorted(
+
                 df["employment_type"]
                 .dropna()
                 .astype(str)
                 .unique()
+
             )
+
+        )
+
+
+        employment_type = st.selectbox(
+
+            "Employment Type",
+
+            employment_options
 
         )
 
 
     with col3:
 
-        account_type = st.selectbox(
-
-            "Account Type",
+        account_options = (
 
             sorted(
+
                 df["account_type"]
                 .dropna()
                 .astype(str)
                 .unique()
+
             )
+
+        )
+
+
+        account_type = st.selectbox(
+
+            "Account Type",
+
+            account_options
 
         )
 
@@ -2569,48 +3009,75 @@ with tabs[6]:
 
     with col1:
 
-        loan_type = st.selectbox(
-
-            "Loan Type",
+        loan_options = (
 
             sorted(
+
                 df["loan_type"]
                 .dropna()
                 .astype(str)
                 .unique()
+
             )
+
+        )
+
+
+        loan_type = st.selectbox(
+
+            "Loan Type",
+
+            loan_options
 
         )
 
 
     with col2:
 
-        previous_default = st.selectbox(
-
-            "Previous Default",
+        previous_default_options = (
 
             sorted(
+
                 df["previous_default"]
                 .dropna()
                 .astype(str)
                 .unique()
+
             )
+
+        )
+
+
+        previous_default = st.selectbox(
+
+            "Previous Default",
+
+            previous_default_options
 
         )
 
 
     with col3:
 
-        loan_status = st.selectbox(
-
-            "Loan Status",
+        loan_status_options = (
 
             sorted(
+
                 df["loan_status"]
                 .dropna()
                 .astype(str)
                 .unique()
+
             )
+
+        )
+
+
+        loan_status = st.selectbox(
+
+            "Loan Status",
+
+            loan_status_options
 
         )
 
@@ -2635,9 +3102,9 @@ with tabs[6]:
 
     if predict_button:
 
-        # ====================================================
-        # CREATE CUSTOMER DATA
-        # ====================================================
+        # ----------------------------------------------------
+        # CUSTOMER DATA
+        # ----------------------------------------------------
 
         new_customer = {
 
@@ -2702,13 +3169,15 @@ with tabs[6]:
 
 
         new_customer_df = pd.DataFrame(
+
             [new_customer]
+
         )
 
 
-        # ====================================================
+        # ----------------------------------------------------
         # FEATURE ENGINEERING
-        # ====================================================
+        # ----------------------------------------------------
 
         if monthly_income_bdt > 0:
 
@@ -2718,7 +3187,10 @@ with tabs[6]:
 
                 loan_amount_bdt
                 /
-                (monthly_income_bdt * 12)
+                (
+                    monthly_income_bdt
+                    * 12
+                )
 
             )
 
@@ -2745,9 +3217,9 @@ with tabs[6]:
             ] = np.nan
 
 
-        # ====================================================
-        # HANDLE INF
-        # ====================================================
+        # ----------------------------------------------------
+        # HANDLE INFINITE VALUES
+        # ----------------------------------------------------
 
         new_customer_df.replace(
 
@@ -2760,9 +3232,9 @@ with tabs[6]:
         )
 
 
-        # ====================================================
+        # ----------------------------------------------------
         # PREDICTION
-        # ====================================================
+        # ----------------------------------------------------
 
         try:
 
@@ -2786,9 +3258,9 @@ with tabs[6]:
             )
 
 
-            # ================================================
+            # ------------------------------------------------
             # RISK LEVEL
-            # ================================================
+            # ------------------------------------------------
 
             if new_probability >= 0.70:
 
@@ -2803,9 +3275,9 @@ with tabs[6]:
                 risk_level = "LOW RISK"
 
 
-            # ================================================
+            # ------------------------------------------------
             # PREDICTION LABEL
-            # ================================================
+            # ------------------------------------------------
 
             if new_prediction == 1:
 
@@ -2820,11 +3292,12 @@ with tabs[6]:
                 )
 
 
-            # ================================================
+            # ------------------------------------------------
             # RESULT
-            # ================================================
+            # ------------------------------------------------
 
             st.markdown("---")
+
 
             st.subheader(
                 "🎯 Credit Risk Result"
@@ -2867,9 +3340,9 @@ with tabs[6]:
                 )
 
 
-            # ================================================
+            # ------------------------------------------------
             # RISK DISPLAY
-            # ================================================
+            # ------------------------------------------------
 
             if risk_level == "HIGH RISK":
 
@@ -2883,7 +3356,6 @@ with tabs[6]:
 
                 )
 
-
             elif risk_level == "MEDIUM RISK":
 
                 st.markdown(
@@ -2895,7 +3367,6 @@ with tabs[6]:
                     unsafe_allow_html=True
 
                 )
-
 
             else:
 
@@ -2913,9 +3384,9 @@ with tabs[6]:
             st.markdown("---")
 
 
-            # ================================================
-            # PROBABILITY BAR
-            # ================================================
+            # ------------------------------------------------
+            # PROBABILITY
+            # ------------------------------------------------
 
             st.subheader(
                 "Default Probability"
@@ -2923,7 +3394,11 @@ with tabs[6]:
 
 
             st.progress(
-                float(new_probability)
+
+                float(
+                    new_probability
+                )
+
             )
 
 
@@ -2935,9 +3410,9 @@ with tabs[6]:
             )
 
 
-            # ================================================
-            # CUSTOMER RISK REPORT
-            # ================================================
+            # ------------------------------------------------
+            # RISK REPORT
+            # ------------------------------------------------
 
             new_customer_report = pd.DataFrame({
 
@@ -2987,12 +3462,14 @@ with tabs[6]:
             )
 
 
-            # ================================================
+            # ------------------------------------------------
             # CUSTOMER INFORMATION
-            # ================================================
+            # ------------------------------------------------
 
             with st.expander(
+
                 "👤 View Customer Information"
+
             ):
 
                 st.dataframe(
@@ -3004,9 +3481,9 @@ with tabs[6]:
                 )
 
 
-            # ================================================
+            # ------------------------------------------------
             # DOWNLOAD REPORT
-            # ================================================
+            # ------------------------------------------------
 
             csv_data = (
 
@@ -3036,7 +3513,9 @@ with tabs[6]:
         except Exception as e:
 
             st.error(
+
                 f"Prediction Error: {e}"
+
             )
 
 
@@ -3046,12 +3525,13 @@ with tabs[6]:
 
 st.markdown("---")
 
+
 st.markdown(
 
     """
     <div style="text-align:center; color:gray;">
 
-    <b>Credit Risk Prediction System</b><br>
+    <b>LoanGuard - Credit Risk Prediction System</b><br>
 
     Machine Learning | Credit Risk Analytics | Data Science
 
