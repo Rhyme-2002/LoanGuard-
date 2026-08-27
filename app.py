@@ -2186,187 +2186,40 @@ with tabs[6]:
     with col3:
         previous_loans = st.number_input("Previous Loans", min_value=0, max_value=100, value=1)
 
-
-    transaction_frequency_monthly = st.number_input(
-
-        "Monthly Transaction Frequency",
-
-        min_value=0,
-
-        max_value=1000,
-
-        value=20
-
-    )
-
-
-    # ========================================================
+    transaction_frequency_monthly = st.number_input("Monthly Transaction Frequency", min_value=0, max_value=1000, value=20)
+    
     # CUSTOMER INFORMATION
-    # ========================================================
-
-    st.subheader(
-        "👤 Customer Information"
-    )
-
-
+    st.subheader("👤 Customer Information")
     col1, col2, col3 = st.columns(3)
-
-
     with col1:
-
-        gender_options = (
-
-            sorted(
-
-                df["gender"]
-                .dropna()
-                .astype(str)
-                .unique()
-
-            )
-
-        )
-
-
+        gender_options = (sorted( df["gender"].dropna().astype(str).unique()))
         if len(gender_options) == 0:
-
-            st.error(
-                "No valid gender values found."
-            )
-
+            st.error("No valid gender values found.")
             st.stop()
-
-
-        gender = st.selectbox(
-
-            "Gender",
-
-            gender_options
-
-        )
-
-
+        gender = st.selectbox("Gender", gender_options)
     with col2:
-
-        division_options = (
-
-            sorted(
-
-                df["division"]
-                .dropna()
-                .astype(str)
-                .unique()
-
-            )
-
-        )
-
-
+        division_options = (sorted(df["division"].dropna().astype(str).unique()))
+        
         if len(division_options) == 0:
-
-            st.error(
-                "No valid division values found."
-            )
-
+            st.error("No valid division values found.")
             st.stop()
-
-
-        division = st.selectbox(
-
-            "Division",
-
-            division_options
-
-        )
-
-
+       division = st.selectbox("Division", division_options)
     with col3:
-
-        district_options = (
-
-            sorted(
-
-                df["district"]
-                .dropna()
-                .astype(str)
-                .unique()
-
-            )
-
-        )
-
-
+        district_options = (sorted(df["district"].dropna().astype(str).unique()))
         if len(district_options) == 0:
-
-            st.error(
-                "No valid district values found."
-            )
-
+            st.error("No valid district values found.")
             st.stop()
-
-
-        district = st.selectbox(
-
-            "District",
-
-            district_options
-
-        )
-
-
+        district = st.selectbox("District", district_options)
     col1, col2, col3 = st.columns(3)
-
-
     with col1:
-
-        education_options = (
-
-            sorted(
-
-                df["education"]
-                .dropna()
-                .astype(str)
-                .unique()
-
-            )
-
-        )
-
-
+        education_options = (sorted(df["education"].dropna().astype(str).unique()))
         if len(education_options) == 0:
-
-            st.error(
-                "No valid education values found."
-            )
-
+            st.error("No valid education values found.")
             st.stop()
-
-
-        education = st.selectbox(
-
-            "Education",
-
-            education_options
-
-        )
-
-
+            
+        education = st.selectbox("Education", education_options)
     with col2:
-
-        employment_options = (
-
-            sorted(
-
-                df["employment_type"]
-                .dropna()
-                .astype(str)
-                .unique()
-
-            )
-
-        )
-
-
+        employment_options = (sorted(df["employment_type"].dropna().astype(str).unique()))
         if len(employment_options) == 0:
             st.error("No valid employment values found.")
             st.stop()
