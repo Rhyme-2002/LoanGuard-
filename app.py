@@ -2810,162 +2810,31 @@ with tabs[6]:
 
     )
 
-
-    # ========================================================
     # FINANCIAL INFORMATION
-    # ========================================================
 
-    st.subheader(
-        "💰 Financial Information"
-    )
-
-
+    st.subheader("💰 Financial Information")
     col1, col2, col3 = st.columns(3)
-
-
     with col1:
-
-        age = st.number_input(
-
-            "Age",
-
-            min_value=18,
-
-            max_value=100,
-
-            value=30
-
-        )
-
-
+        age = st.number_input("Age", min_value=18, max_value=100, value=30)
     with col2:
-
-        monthly_income_bdt = st.number_input(
-
-            "Monthly Income (BDT)",
-
-            min_value=0.0,
-
-            value=50000.0,
-
-            step=1000.0
-
-        )
-
-
+        monthly_income_bdt = st.number_input("Monthly Income (BDT)", min_value=0.0, value=50000.0, step=1000.0)
     with col3:
-
-        account_balance_bdt = st.number_input(
-
-            "Account Balance (BDT)",
-
-            min_value=0.0,
-
-            value=100000.0,
-
-            step=5000.0
-
-        )
-
-
+        account_balance_bdt = st.number_input("Account Balance (BDT)", min_value=0.0, value=100000.0, step=5000.0)
+        
     col1, col2, col3 = st.columns(3)
-
-
     with col1:
-
-        credit_score = st.number_input(
-
-            "Credit Score",
-
-            min_value=0.0,
-
-            max_value=1000.0,
-
-            value=700.0,
-
-            step=1.0
-
-        )
-
-
+        credit_score = st.number_input("Credit Score", min_value=0.0, max_value=1000.0, value=700.0, step=1.0)
     with col2:
-
-        loan_amount_bdt = st.number_input(
-
-            "Loan Amount (BDT)",
-
-            min_value=0.0,
-
-            value=300000.0,
-
-            step=10000.0
-
-        )
-
-
+        loan_amount_bdt = st.number_input("Loan Amount (BDT)", min_value=0.0, value=300000.0, step=10000.0)
     with col3:
-
-        loan_tenure_months = st.number_input(
-
-            "Loan Tenure (Months)",
-
-            min_value=1,
-
-            max_value=360,
-
-            value=36
-
-        )
-
-
+        loan_tenure_months = st.number_input("Loan Tenure (Months)", min_value=1, max_value=360, value=36)
     col1, col2, col3 = st.columns(3)
-
-
     with col1:
-
-        interest_rate_pct = st.number_input(
-
-            "Interest Rate (%)",
-
-            min_value=0.0,
-
-            max_value=100.0,
-
-            value=10.0,
-
-            step=0.1
-
-        )
-
-
+        interest_rate_pct = st.number_input("Interest Rate (%)", min_value=0.0, max_value=100.0, value=10.0, step=0.1)
     with col2:
-
-        monthly_installment_bdt = st.number_input(
-
-            "Monthly Installment (BDT)",
-
-            min_value=0.0,
-
-            value=10000.0,
-
-            step=500.0
-
-        )
-
-
+        monthly_installment_bdt = st.number_input("Monthly Installment (BDT)", min_value=0.0, value=10000.0, step=500.0)
     with col3:
-
-        previous_loans = st.number_input(
-
-            "Previous Loans",
-
-            min_value=0,
-
-            max_value=100,
-
-            value=1
-
-        )
+        previous_loans = st.number_input("Previous Loans", min_value=0, max_value=100, value=1)
 
 
     transaction_frequency_monthly = st.number_input(
