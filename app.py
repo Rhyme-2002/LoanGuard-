@@ -2078,460 +2078,87 @@ with tabs[4]:
                        data=results_df.to_csv(index=False),
                        file_name="model_comparison_results.csv", mime="text/csv")
 
-
-# ============================================================
-# TAB 6 — BEST MODEL
-# ============================================================
-
+#  BEST MODEL
 with tabs[5]:
-
-    st.header(
-        "🏆 Best Credit Risk Model"
-    )
-
-
-    st.success(
-
-        f"Best Model: {best_model_name}"
-
-    )
-
-
+    st.header("🏆 Best Credit Risk Model")
+    st.success(f"Best Model: {best_model_name}")
     col1, col2, col3, col4, col5 = st.columns(5)
-
-
     with col1:
-
-        st.metric(
-            "Accuracy",
-            f"{accuracy:.3f}"
-        )
-
-
+        st.metric("Accuracy", f"{accuracy:.3f}")
     with col2:
-
-        st.metric(
-            "Precision",
-            f"{precision:.3f}"
-        )
-
-
+        st.metric("Precision", f"{precision:.3f}")
     with col3:
-
-        st.metric(
-            "Recall",
-            f"{recall:.3f}"
-        )
-
-
+        st.metric("Recall", f"{recall:.3f}")
     with col4:
-
-        st.metric(
-            "F1 Score",
-            f"{f1:.3f}"
-        )
-
-
+        st.metric("F1 Score", f"{f1:.3f}")
     with col5:
-
-        st.metric(
-            "ROC-AUC",
-            f"{roc_auc:.3f}"
-        )
-
-
+        st.metric("ROC-AUC", f"{roc_auc:.3f}")
     st.markdown("---")
 
-
-    # --------------------------------------------------------
     # CLASSIFICATION REPORT
-    # --------------------------------------------------------
 
-    st.subheader(
-        "Classification Report"
-    )
-
-
-    report = classification_report(
-
-        y_test,
-
-        best_pred,
-
-        target_names=[
-
-            "Non-Defaulter",
-
-            "Defaulter"
-
-        ],
-
-        zero_division=0,
-
-        output_dict=True
-
-    )
-
-
-    report_df = pd.DataFrame(
-        report
-    ).transpose()
-
-
-    st.dataframe(
-
-        report_df.round(4),
-
-        use_container_width=True
-
-    )
-
-
+    st.subheader("Classification Report")
+    report = classification_report(y_test, best_pred, target_names=["Non-Defaulter", "Defaulter"],
+                                   zero_division=0, output_dict=True)
+    report_df = pd.DataFrame(report).transpose()
+    st.dataframe(report_df.round(4), use_container_width=True)
     st.markdown("---")
-
-
-    # --------------------------------------------------------
+    
     # CONFUSION MATRIX
-    # --------------------------------------------------------
+    st.subheader("Confusion Matrix")
+    cm = confusion_matrix(y_test, best_pred)
+    fig, ax = plt.subplots(figsize=(7, 6))
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=["Non-Defaulter", "Defaulter"],
+                yticklabels=["Non-Defaulter", "Defaulter"], ax=ax)
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("Actual")
+    ax.set_title(f"Confusion Matrix - {best_model_name}")
+    st.pyplot(fig, clear_figure=True)
 
-    st.subheader(
-        "Confusion Matrix"
-    )
-
-
-    cm = confusion_matrix(
-
-        y_test,
-
-        best_pred
-
-    )
-
-
-    fig, ax = plt.subplots(
-
-        figsize=(7, 6)
-
-    )
-
-
-    sns.heatmap(
-
-        cm,
-
-        annot=True,
-
-        fmt="d",
-
-        cmap="Blues",
-
-        xticklabels=[
-
-            "Non-Defaulter",
-
-            "Defaulter"
-
-        ],
-
-        yticklabels=[
-
-            "Non-Defaulter",
-
-            "Defaulter"
-
-        ],
-
-        ax=ax
-
-    )
-
-
-    ax.set_xlabel(
-        "Predicted"
-    )
-
-
-    ax.set_ylabel(
-        "Actual"
-    )
-
-
-    ax.set_title(
-
-        f"Confusion Matrix - {best_model_name}"
-
-    )
-
-
-    st.pyplot(
-        fig,
-        clear_figure=True
-    )
-
-
-    # --------------------------------------------------------
     # FEATURE IMPORTANCE
-    # --------------------------------------------------------
-
     st.markdown("---")
-
-
-    st.subheader(
-        "🔎 Feature Importance"
-    )
-
-
-    model_object = (
-
-        best_model.named_steps[
-            "model"
-        ]
-
-    )
-
-
-    preprocessor_object = (
-
-        best_model.named_steps[
-            "preprocessor"
-        ]
-
-    )
-
-
-    if hasattr(
-
-        model_object,
-
-        "feature_importances_"
-
-    ):
-
-        feature_names = (
-
-            preprocessor_object
-            .get_feature_names_out()
-
-        )
-
-
-        importance = (
-
-            model_object
-            .feature_importances_
-
-        )
-
-
-        feature_importance = pd.DataFrame({
-
-            "Feature":
-                feature_names,
-
-            "Importance":
-                importance
-
-        })
-
-
-        feature_importance = (
-
-            feature_importance
-
-            .sort_values(
-
-                "Importance",
-
-                ascending=False
-
-            )
-
-            .head(20)
-
-        )
-
-
-        st.dataframe(
-
-            feature_importance,
-
-            use_container_width=True
-
-        )
-
-
-        fig, ax = plt.subplots(
-
-            figsize=(10, 8)
-
-        )
-
-
-        sns.barplot(
-
-            data=feature_importance,
-
-            x="Importance",
-
-            y="Feature",
-
-            ax=ax
-
-        )
-
-
-        ax.set_title(
-
-            f"Top 20 Feature Importance - "
-            f"{best_model_name}"
-
-        )
-
-
-        st.pyplot(
-
-            fig,
-
-            clear_figure=True
-
-        )
-
-
+    st.subheader( "🔎 Feature Importance")
+    model_object = (best_model.named_steps["model"])
+    preprocessor_object = (best_model.named_steps["preprocessor"])
+    
+    if hasattr( model_object, "feature_importances_"):
+        feature_names = (preprocessor_object.get_feature_names_out())
+        importance = (model_object.feature_importances_)
+        feature_importance = pd.DataFrame({"Feature": feature_names, "Importance": importance})
+        feature_importance = (feature_importance.sort_values("Importance", ascending=False).head(20))
+        st.dataframe(feature_importance, use_container_width=True)
+        fig, ax = plt.subplots(figsize=(10, 8))
+        sns.barplot(data=feature_importance, x="Importance", y="Feature", ax=ax)
+        ax.set_title(f"Top 20 Feature Importance - " f"{best_model_name}")
+        st.pyplot(fig, clear_figure=True)
     else:
-
-        st.info(
-
-            f"{best_model_name} does not provide "
-            "built-in feature_importances_."
-
-        )
-
-
-    # --------------------------------------------------------
+        st.info(f"{best_model_name} does not provide " "built-in feature_importances_.")
+        
     # SAMPLE TEST CUSTOMER
-    # --------------------------------------------------------
-
     st.markdown("---")
-
-
-    st.subheader(
-        "📋 Sample Test Customer Predictions"
-    )
-
-
-    sample_customers = (
-
-        X_test
-        .head(10)
-        .copy()
-
-    )
-
-
-    sample_actual = (
-
-        y_test
-        .loc[
-            sample_customers.index
-        ]
-
-    )
-
-
-    sample_prediction = (
-
-        best_model
-        .predict(
-            sample_customers
-        )
-
-    )
-
-
-    sample_probability = (
-
-        best_model
-        .predict_proba(
-            sample_customers
-        )[:, 1]
-
-    )
-
-
-    prediction_table = pd.DataFrame({
-
-        "Actual":
-            sample_actual.values,
-
-        "Predicted":
-            sample_prediction,
-
-        "Default_Probability":
-            sample_probability
-
-    })
-
-
-    prediction_table[
-        "Risk_Level"
-    ] = np.where(
-
-        prediction_table[
-            "Default_Probability"
-        ] >= 0.70,
-
-        "High Risk",
-
-        np.where(
-
-            prediction_table[
-                "Default_Probability"
-            ] >= 0.40,
-
-            "Medium Risk",
-
-            "Low Risk"
-
-        )
-
-    )
-
-
-    st.dataframe(
-
-        prediction_table.style.format({
-
-            "Default_Probability":
-                "{:.2%}"
-
-        }),
-
-        use_container_width=True
-
-    )
-
-
-# ============================================================
-# TAB 7 — NEW CUSTOMER PREDICTION
-# ============================================================
+    st.subheader("📋 Sample Test Customer Predictions")
+    sample_customers = (X_test.head(10).copy())
+    sample_actual = (y_test.loc[sample_customers.index])
+    sample_prediction = (best_model.predict(sample_customers))
+    sample_probability = (best_model.predict_proba(sample_customers)[:, 1])
+    prediction_table = pd.DataFrame({"Actual" : sample_actual.values, "Predicted" : sample_prediction,
+                                     "Default_Probability" : sample_probability})
+    prediction_table["Risk_Level"] = np.where(prediction_table["Default_Probability"] >= 0.70,
+                                              "High Risk", np.where(prediction_table["Default_Probability"] >= 0.40,
+                                                                    "Medium Risk", "Low Risk"))
+    st.dataframe(prediction_table.style.format({"Default_Probability" : "{:.2%}"}),
+                 use_container_width=True)
+#  NEW CUSTOMER PREDICTION
 
 with tabs[6]:
-
-    st.header(
-        "👤 New Customer Credit Risk Prediction"
-    )
-
-
+    st.header("👤 New Customer Credit Risk Prediction")
     st.markdown(
-
         """
         Enter customer information below.
-
+        
         The best-performing machine learning model will
         estimate the probability of default.
-        """
-
-    )
+        """)
 
     # FINANCIAL INFORMATION
 
