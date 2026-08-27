@@ -195,11 +195,7 @@ st.sidebar.caption(
 # ============================================================
 # DATASET PATHS
 # ============================================================
-
-
-
-
-# =====================DATA_FOLDER = "data"
+DATA_FOLDER = "data"
 
 DEFAULT_DATASET = os.path.join(
     DATA_FOLDER,
@@ -214,7 +210,10 @@ DEFAULT_DATASET = os.path.join(
 @st.cache_data
 def load_data(uploaded_file=None):
 
-    # User uploaded dataset
+    # --------------------------------------------------------
+    # USER UPLOADED DATASET
+    # --------------------------------------------------------
+
     if uploaded_file is not None:
 
         file_name = uploaded_file.name.lower()
@@ -236,7 +235,10 @@ def load_data(uploaded_file=None):
 
         source = f"Uploaded Dataset: {uploaded_file.name}"
 
-    # Default dataset
+    # --------------------------------------------------------
+    # DEFAULT DATASET
+    # --------------------------------------------------------
+
     else:
 
         if os.path.exists(DEFAULT_DATASET):
@@ -251,11 +253,13 @@ def load_data(uploaded_file=None):
         else:
 
             raise FileNotFoundError(
-                "No default dataset found inside data folder."
+                f"Default dataset not found: {DEFAULT_DATASET}"
             )
 
     return df, source
-    
+
+
+# ============================================================
 # LOAD DATASET
 # ============================================================
 
@@ -265,7 +269,9 @@ try:
 
     if uploaded_file is not None:
 
-        st.sidebar.success("✅ Custom dataset loaded")
+        st.sidebar.success(
+            "✅ Custom dataset loaded"
+        )
 
         st.sidebar.info(
             f"📄 {uploaded_file.name}"
@@ -278,13 +284,15 @@ try:
         )
 
         st.sidebar.info(
-            "🇧🇩 credit_risk_bangladesh_1560.csv"
+            "📄 default_credit_risk.csv"
         )
 
 
 except Exception as e:
 
-    st.error(f"❌ Error loading dataset: {e}")
+    st.error(
+        f"❌ Error loading dataset: {e}"
+    )
 
     st.stop()
 
