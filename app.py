@@ -196,14 +196,12 @@ st.sidebar.caption(
 # DATASET PATHS
 # ============================================================
 
-DATA_FOLDER = "data"
 
-DEFAULT_DATASET_1 = os.path.join(
-    DATA_FOLDER,
-    "credit_risk_bangladesh_1560.csv"
-)
 
-DEFAULT_DATASET_2 = os.path.join(
+
+# =====================DATA_FOLDER = "data"
+
+DEFAULT_DATASET = os.path.join(
     DATA_FOLDER,
     "default_credit_risk.csv"
 )
@@ -231,25 +229,19 @@ def load_data(uploaded_file=None):
 
         else:
 
-            raise ValueError("Unsupported file format.")
+            raise ValueError(
+                "Unsupported file format. "
+                "Please upload CSV or Excel file."
+            )
 
         source = f"Uploaded Dataset: {uploaded_file.name}"
 
     # Default dataset
     else:
 
-        if os.path.exists(DEFAULT_DATASET_1):
+        if os.path.exists(DEFAULT_DATASET):
 
-            df = pd.read_csv(DEFAULT_DATASET_1)
-
-            source = (
-                "Default Dataset: "
-                "credit_risk_bangladesh_1560.csv"
-            )
-
-        elif os.path.exists(DEFAULT_DATASET_2):
-
-            df = pd.read_csv(DEFAULT_DATASET_2)
+            df = pd.read_csv(DEFAULT_DATASET)
 
             source = (
                 "Default Dataset: "
@@ -262,10 +254,7 @@ def load_data(uploaded_file=None):
                 "No default dataset found inside data folder."
             )
 
-    return df, source
-
-
-# ============================================================
+    return df, source=======================================
 # LOAD DATASET
 # ============================================================
 
