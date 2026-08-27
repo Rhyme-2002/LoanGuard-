@@ -254,7 +254,8 @@ def load_data(uploaded_file=None):
                 "No default dataset found inside data folder."
             )
 
-    return df, source=======================================
+    return df, source
+    
 # LOAD DATASET
 # ============================================================
 
