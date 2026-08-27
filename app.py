@@ -2016,205 +2016,40 @@ with tabs[3]:
     )
 
 
-    sns.heatmap(
-
-        correlation,
-
-        annot=True,
-
-        fmt=".2f",
-
-        cmap="coolwarm",
-
-        center=0,
-
-        ax=ax
-
-    )
-
-
-    ax.set_title(
-        "Correlation Matrix"
-    )
-
-
-    st.pyplot(
-        fig,
-        clear_figure=True
-    )
-
-
+    sns.heatmap(correlation, annot=True, fmt=".2f", cmap="coolwarm", center=0, ax=ax)
+    ax.set_title("Correlation Matrix")
+    st.pyplot(fig, clear_figure=True)
     st.markdown("---")
+    st.subheader("Variables Most Associated with Default")
+    default_corr = (correlation["default"].drop("default").sort_values(key=abs, ascending=False))
 
+    correlation_table = (default_corr.reset_index())
+    correlation_table.columns = ["Variable", "Correlation"]
+    st.dataframe(correlation_table, use_container_width=True)
 
-    st.subheader(
-        "Variables Most Associated with Default"
-    )
-
-
-    default_corr = (
-
-        correlation["default"]
-
-        .drop("default")
-
-        .sort_values(
-
-            key=abs,
-
-            ascending=False
-
-        )
-
-    )
-
-
-    correlation_table = (
-
-        default_corr
-        .reset_index()
-
-    )
-
-
-    correlation_table.columns = [
-
-        "Variable",
-
-        "Correlation"
-
-    ]
-
-
-    st.dataframe(
-
-        correlation_table,
-
-        use_container_width=True
-
-    )
-
-
-# ============================================================
-# TAB 5 — MODEL COMPARISON
-# ============================================================
-
+# MODEL COMPARISON
 with tabs[4]:
-
-    st.header(
-        "🤖 Machine Learning Model Comparison"
-    )
-
-
-    st.markdown(
-        "Models are ranked according to ROC-AUC."
-    )
-
-
-    display_results = (
-        results_df.copy()
-    )
-
-
-    for col in [
-
-        "Accuracy",
-
-        "Precision",
-
-        "Recall",
-
-        "F1 Score",
-
-        "ROC-AUC"
-
-    ]:
-
-        display_results[col] = (
-
-            display_results[col]
-            .round(4)
-
-        )
-
-
-    st.dataframe(
-
-        display_results,
-
-        use_container_width=True,
-
-        hide_index=True
-
-    )
-
-
+    st.header("🤖 Machine Learning Model Comparison")
+    st.markdown("Models are ranked according to ROC-AUC.")
+    display_results = (results_df.copy())
+    for col in ["Accuracy", "Precision", "Recall", "F1 Score", "ROC-AUC"]:
+        display_results[col] = (display_results[col].round(4))
+        
+    st.dataframe(display_results, use_container_width=True, hide_index=True)
     st.markdown("---")
-
-
-    # --------------------------------------------------------
+    
     # ROC-AUC
-    # --------------------------------------------------------
+    
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.barplot( data=results_df, x="ROC-AUC", y="Model", ax=ax)
+    ax.set_xlim(0, 1)
+    
+    ax.set_title("Model Comparison - ROC-AUC")
+    st.pyplot(fig, clear_figure=True)
 
-    fig, ax = plt.subplots(
-
-        figsize=(8, 6)
-
-    )
-
-
-    sns.barplot(
-
-        data=results_df,
-
-        x="ROC-AUC",
-
-        y="Model",
-
-        ax=ax
-
-    )
-
-
-    ax.set_xlim(
-        0,
-        1
-    )
-
-
-    ax.set_title(
-        "Model Comparison - ROC-AUC"
-    )
-
-
-    st.pyplot(
-        fig,
-        clear_figure=True
-    )
-
-
-    # --------------------------------------------------------
     # RECALL
-    # --------------------------------------------------------
-
-    fig, ax = plt.subplots(
-
-        figsize=(8, 6)
-
-    )
-
-
-    sns.barplot(
-
-        data=results_df,
-
-        x="Recall",
-
-        y="Model",
-
-        ax=ax
-
-    )
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.barplot(data=results_df, x="Recall", y="Model", ax=ax)
 
 
     ax.set_xlim(
