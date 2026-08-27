@@ -1,70 +1,27 @@
-# ============================================================
-# LOANGUARD - CREDIT RISK PREDICTION SYSTEM
-# Streamlit Application
-# ============================================================
-
 import os
 from pathlib import Path
 
 import streamlit as st
 import pandas as pd
 import numpy as np
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.model_selection import train_test_split
-
-from sklearn.preprocessing import (
-    OneHotEncoder,
-    StandardScaler
-)
-
+from sklearn.preprocessing import (OneHotEncoder, StandardScaler)
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-
 from sklearn.impute import SimpleImputer
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-
-from sklearn.ensemble import (
-    RandomForestClassifier,
-    GradientBoostingClassifier
-)
-
+from sklearn.ensemble import (RandomForestClassifier, GradientBoostingClassifier)
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
-
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    roc_auc_score,
-    confusion_matrix,
-    classification_report,
-    roc_curve
-)
-
+from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, classification_report, roc_curve)
 from xgboost import XGBClassifier
 
 
-# ============================================================
-# PAGE CONFIGURATION
-# ============================================================
-
-st.set_page_config(
-    page_title="LoanGuard - Credit Risk Prediction",
-    page_icon="🏦",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-
-# ============================================================
-# CUSTOM CSS
-# ============================================================
+st.set_page_config(page_title="LoanGuard - Credit Risk Prediction", page_icon="🏦", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown(
     """
@@ -176,76 +133,28 @@ uploaded_file = st.sidebar.file_uploader(
 )
 
 
-# ============================================================
-# REQUIRED COLUMNS
-# ============================================================
-
-required_columns = [
-
-    "age",
-    "monthly_income_bdt",
-    "account_balance_bdt",
-    "credit_score",
-    "loan_amount_bdt",
-    "loan_tenure_months",
-    "interest_rate_pct",
-    "monthly_installment_bdt",
-    "previous_loans",
-    "transaction_frequency_monthly",
-
-    "gender",
-    "division",
-    "district",
-    "education",
-    "employment_type",
-    "account_type",
-    "loan_type",
-    "previous_default",
-    "loan_status",
-
-    "default"
-
-]
-
-
-# ============================================================
-# FIND DEFAULT DATASET
-# ============================================================
+required_columns = ["age", "monthly_income_bdt", "account_balance_bdt", "credit_score", "loan_amount_bdt", "loan_tenure_months", "interest_rate_pct",
+    "monthly_installment_bdt", "previous_loans", "transaction_frequency_monthly", "gender", "division", "district", "education", "employment_type",
+    "account_type", "loan_type", "previous_default", "loan_status", "default"]
 
 def find_default_dataset():
-
     """
     Search for the default dataset.
-
     Expected structure:
-
         LoanGuard/
         ├── app.py
         ├── requirements.txt
         └── data/
             └── default_credit_risk.csv
     """
-
     possible_paths = []
 
-    # --------------------------------------------------------
-    # Path 1: Same directory as app.py
-    # --------------------------------------------------------
-
     try:
+        app_directory = Path( __file__).resolve().parent
 
-        app_directory = Path(
-            __file__
-        ).resolve().parent
-
-        possible_paths.append(
-            app_directory
-            / "data"
-            / "default_credit_risk.csv"
-        )
+        possible_paths.append(app_directory/ "data" / "default_credit_risk.csv")
 
     except Exception:
-
         app_directory = Path.cwd()
 
 
