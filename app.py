@@ -2050,145 +2050,33 @@ with tabs[4]:
     # RECALL
     fig, ax = plt.subplots(figsize=(8, 6))
     sns.barplot(data=results_df, x="Recall", y="Model", ax=ax)
-
-
-    ax.set_xlim(
-        0,
-        1
-    )
-
-
-    ax.set_title(
-        "Defaulter Recall Comparison"
-    )
-
-
-    st.pyplot(
-        fig,
-        clear_figure=True
-    )
-
-
-    # --------------------------------------------------------
+    ax.set_xlim(0, 1)
+    ax.set_title("Defaulter Recall Comparison")
+    st.pyplot(fig, clear_figure=True)
+    
     # F1
-    # --------------------------------------------------------
 
-    fig, ax = plt.subplots(
-
-        figsize=(8, 6)
-
-    )
-
-
-    sns.barplot(
-
-        data=results_df,
-
-        x="F1 Score",
-
-        y="Model",
-
-        ax=ax
-
-    )
-
-
-    ax.set_xlim(
-        0,
-        1
-    )
-
-
-    ax.set_title(
-        "F1 Score Comparison"
-    )
-
-
-    st.pyplot(
-        fig,
-        clear_figure=True
-    )
-
-
-    # --------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.barplot(data=results_df, x="F1 Score", y="Model", ax=ax)
+    ax.set_xlim(0, 1)
+    ax.set_title("F1 Score Comparison")
+    st.pyplot(fig, clear_figure=True)
+    
     # ROC CURVES
-    # --------------------------------------------------------
-
-    fig, ax = plt.subplots(
-
-        figsize=(8, 6)
-
-    )
-
-
+    fig, ax = plt.subplots(figsize=(8, 6))
     for name, data in roc_data.items():
+        ax.plot(data["fpr"], data["tpr"],
+                label=(f"{name} " f"(AUC={data['auc']:.3f})"))
+    ax.plot([0, 1], [0, 1], linestyle="--")
+    ax.set_xlabel("False Positive Rate")
+    ax.set_ylabel("True Positive Rate")
+    ax.set_title("ROC Curves")
+    ax.legend(fontsize=8)
+    st.pyplot(fig, clear_figure=True)
 
-        ax.plot(
-
-            data["fpr"],
-
-            data["tpr"],
-
-            label=(
-
-                f"{name} "
-                f"(AUC={data['auc']:.3f})"
-
-            )
-
-        )
-
-
-    ax.plot(
-
-        [0, 1],
-
-        [0, 1],
-
-        linestyle="--"
-
-    )
-
-
-    ax.set_xlabel(
-        "False Positive Rate"
-    )
-
-
-    ax.set_ylabel(
-        "True Positive Rate"
-    )
-
-
-    ax.set_title(
-        "ROC Curves"
-    )
-
-
-    ax.legend(
-        fontsize=8
-    )
-
-
-    st.pyplot(
-        fig,
-        clear_figure=True
-    )
-
-
-    st.download_button(
-
-        label="⬇️ Download Model Comparison",
-
-        data=results_df.to_csv(
-            index=False
-        ),
-
-        file_name="model_comparison_results.csv",
-
-        mime="text/csv"
-
-    )
+    st.download_button(label="⬇️ Download Model Comparison",
+                       data=results_df.to_csv(index=False),
+                       file_name="model_comparison_results.csv", mime="text/csv")
 
 
 # ============================================================
