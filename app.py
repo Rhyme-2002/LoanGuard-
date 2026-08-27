@@ -1,3164 +1,3063 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": 2,
-   "id": "291e7d45-7eb7-40e9-a890-f9ccbcb4db74",
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "2026-08-28 00:58:40.964 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.966 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.968 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.969 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.972 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.973 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.975 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.977 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.979 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.980 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.982 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.984 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.986 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.988 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.990 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.996 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:40.998 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.001 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.002 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.005 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.006 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.008 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.011 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.015 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.018 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.021 No runtime found, using MemoryCacheStorageManager\n",
-      "2026-08-28 00:58:41.025 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.034 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.036 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.039 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.041 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.044 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.046 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.049 No runtime found, using MemoryCacheStorageManager\n",
-      "2026-08-28 00:58:41.052 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.054 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.056 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.058 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.062 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.064 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n",
-      "2026-08-28 00:58:41.065 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.\n"
-     ]
-    },
-    {
-     "ename": "AttributeError",
-     "evalue": "'NoneType' object has no attribute 'columns'",
-     "output_type": "error",
-     "traceback": [
-      "\u001b[31m---------------------------------------------------------------------------\u001b[39m",
-      "\u001b[31mAttributeError\u001b[39m                            Traceback (most recent call last)",
-      "\u001b[36mCell\u001b[39m\u001b[36m \u001b[39m\u001b[32mIn[2]\u001b[39m\u001b[32m, line 288\u001b[39m\n\u001b[32m    255\u001b[39m \u001b[38;5;66;03m# ============================================================\u001b[39;00m\n\u001b[32m    256\u001b[39m \u001b[38;5;66;03m# BASIC VALIDATION\u001b[39;00m\n\u001b[32m    257\u001b[39m \u001b[38;5;66;03m# ============================================================\u001b[39;00m\n\u001b[32m    259\u001b[39m required_columns = [\n\u001b[32m    260\u001b[39m \n\u001b[32m    261\u001b[39m     \u001b[33m\"\u001b[39m\u001b[33mage\u001b[39m\u001b[33m\"\u001b[39m,\n\u001b[32m   (...)\u001b[39m\u001b[32m    281\u001b[39m \n\u001b[32m    282\u001b[39m ]\n\u001b[32m    285\u001b[39m missing_columns = [\n\u001b[32m    286\u001b[39m     col\n\u001b[32m    287\u001b[39m     \u001b[38;5;28;01mfor\u001b[39;00m col \u001b[38;5;129;01min\u001b[39;00m required_columns\n\u001b[32m--> \u001b[39m\u001b[32m288\u001b[39m     \u001b[38;5;28;01mif\u001b[39;00m col \u001b[38;5;129;01mnot\u001b[39;00m \u001b[38;5;129;01min\u001b[39;00m \u001b[43mdf\u001b[49m\u001b[43m.\u001b[49m\u001b[43mcolumns\u001b[49m\n\u001b[32m    289\u001b[39m ]\n\u001b[32m    292\u001b[39m \u001b[38;5;28;01mif\u001b[39;00m missing_columns:\n\u001b[32m    294\u001b[39m     st.error(\n\u001b[32m    295\u001b[39m         \u001b[33m\"\u001b[39m\u001b[33mThe following required columns are missing:\u001b[39m\u001b[33m\"\u001b[39m\n\u001b[32m    296\u001b[39m     )\n",
-      "\u001b[31mAttributeError\u001b[39m: 'NoneType' object has no attribute 'columns'"
-     ]
+# ============================================================
+# CREDIT RISK PREDICTION APP
+# Streamlit Application
+# ============================================================
+
+import streamlit as st
+import pandas as pd
+import numpy as np
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split
+
+from sklearn.preprocessing import (
+    OneHotEncoder,
+    StandardScaler
+)
+
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+
+from sklearn.impute import SimpleImputer
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+
+from sklearn.ensemble import (
+    RandomForestClassifier,
+    GradientBoostingClassifier
+)
+
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score,
+    confusion_matrix,
+    classification_report,
+    roc_curve
+)
+
+from xgboost import XGBClassifier
+
+
+# ============================================================
+# PAGE CONFIGURATION
+# ============================================================
+
+st.set_page_config(
+    page_title="Credit Risk Prediction",
+    page_icon="🏦",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+
+# ============================================================
+# CUSTOM CSS
+# ============================================================
+
+st.markdown(
+    """
+    <style>
+
+    .main-title {
+        font-size: 40px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 10px;
     }
-   ],
-   "source": [
-    "# ============================================================\n",
-    "# CREDIT RISK PREDICTION APP\n",
-    "# Streamlit Application\n",
-    "# ============================================================\n",
-    "\n",
-    "import streamlit as st\n",
-    "import pandas as pd\n",
-    "import numpy as np\n",
-    "\n",
-    "import matplotlib.pyplot as plt\n",
-    "import seaborn as sns\n",
-    "\n",
-    "from sklearn.model_selection import train_test_split\n",
-    "\n",
-    "from sklearn.preprocessing import (\n",
-    "    OneHotEncoder,\n",
-    "    StandardScaler\n",
-    ")\n",
-    "\n",
-    "from sklearn.compose import ColumnTransformer\n",
-    "from sklearn.pipeline import Pipeline\n",
-    "\n",
-    "from sklearn.impute import SimpleImputer\n",
-    "\n",
-    "from sklearn.linear_model import LogisticRegression\n",
-    "from sklearn.tree import DecisionTreeClassifier\n",
-    "\n",
-    "from sklearn.ensemble import (\n",
-    "    RandomForestClassifier,\n",
-    "    GradientBoostingClassifier\n",
-    ")\n",
-    "\n",
-    "from sklearn.svm import SVC\n",
-    "from sklearn.neighbors import KNeighborsClassifier\n",
-    "\n",
-    "from sklearn.metrics import (\n",
-    "    accuracy_score,\n",
-    "    precision_score,\n",
-    "    recall_score,\n",
-    "    f1_score,\n",
-    "    roc_auc_score,\n",
-    "    confusion_matrix,\n",
-    "    classification_report,\n",
-    "    roc_curve\n",
-    ")\n",
-    "\n",
-    "from xgboost import XGBClassifier\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# PAGE CONFIGURATION\n",
-    "# ============================================================\n",
-    "\n",
-    "st.set_page_config(\n",
-    "    page_title=\"Credit Risk Prediction\",\n",
-    "    page_icon=\"🏦\",\n",
-    "    layout=\"wide\",\n",
-    "    initial_sidebar_state=\"expanded\"\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# CUSTOM CSS\n",
-    "# ============================================================\n",
-    "\n",
-    "st.markdown(\n",
-    "    \"\"\"\n",
-    "    <style>\n",
-    "\n",
-    "    .main-title {\n",
-    "        font-size: 40px;\n",
-    "        font-weight: 700;\n",
-    "        text-align: center;\n",
-    "        margin-bottom: 10px;\n",
-    "    }\n",
-    "\n",
-    "    .sub-title {\n",
-    "        font-size: 18px;\n",
-    "        text-align: center;\n",
-    "        color: #666666;\n",
-    "        margin-bottom: 30px;\n",
-    "    }\n",
-    "\n",
-    "    .metric-card {\n",
-    "        padding: 20px;\n",
-    "        border-radius: 10px;\n",
-    "        background-color: #f8f9fa;\n",
-    "        text-align: center;\n",
-    "    }\n",
-    "\n",
-    "    .risk-high {\n",
-    "        background-color: #ffcccc;\n",
-    "        padding: 20px;\n",
-    "        border-radius: 10px;\n",
-    "        text-align: center;\n",
-    "        font-size: 25px;\n",
-    "        font-weight: bold;\n",
-    "        color: #990000;\n",
-    "    }\n",
-    "\n",
-    "    .risk-medium {\n",
-    "        background-color: #fff0b3;\n",
-    "        padding: 20px;\n",
-    "        border-radius: 10px;\n",
-    "        text-align: center;\n",
-    "        font-size: 25px;\n",
-    "        font-weight: bold;\n",
-    "        color: #996600;\n",
-    "    }\n",
-    "\n",
-    "    .risk-low {\n",
-    "        background-color: #ccffcc;\n",
-    "        padding: 20px;\n",
-    "        border-radius: 10px;\n",
-    "        text-align: center;\n",
-    "        font-size: 25px;\n",
-    "        font-weight: bold;\n",
-    "        color: #006600;\n",
-    "    }\n",
-    "\n",
-    "    </style>\n",
-    "    \"\"\",\n",
-    "    unsafe_allow_html=True\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TITLE\n",
-    "# ============================================================\n",
-    "\n",
-    "st.markdown(\n",
-    "    '<div class=\"main-title\">🏦 Credit Risk Prediction System</div>',\n",
-    "    unsafe_allow_html=True\n",
-    ")\n",
-    "\n",
-    "st.markdown(\n",
-    "    '<div class=\"sub-title\">'\n",
-    "    'Machine Learning Based Credit Default Prediction & Risk Assessment'\n",
-    "    '</div>',\n",
-    "    unsafe_allow_html=True\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# SIDEBAR\n",
-    "# ============================================================\n",
-    "\n",
-    "st.sidebar.title(\"🏦 Credit Risk System\")\n",
-    "\n",
-    "st.sidebar.markdown(\n",
-    "    \"\"\"\n",
-    "    ### Navigation\n",
-    "\n",
-    "    Use the tabs in the main panel to explore:\n",
-    "\n",
-    "    - 📊 Dashboard\n",
-    "    - 🔍 EDA\n",
-    "    - 👥 Defaulter Analysis\n",
-    "    - 📈 Correlation\n",
-    "    - 🤖 Model Comparison\n",
-    "    - 🏆 Best Model\n",
-    "    - 👤 New Customer Prediction\n",
-    "    \"\"\"\n",
-    ")\n",
-    "\n",
-    "st.sidebar.markdown(\"---\")\n",
-    "\n",
-    "uploaded_file = st.sidebar.file_uploader(\n",
-    "    \"Upload Credit Risk Dataset\",\n",
-    "    type=[\"csv\", \"xls\", \"xlsx\"]\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# LOAD DATA FUNCTION\n",
-    "# ============================================================\n",
-    "\n",
-    "@st.cache_data\n",
-    "def load_data(uploaded_file):\n",
-    "\n",
-    "    if uploaded_file is None:\n",
-    "        return None\n",
-    "\n",
-    "    file_name = uploaded_file.name.lower()\n",
-    "\n",
-    "    if file_name.endswith(\".csv\"):\n",
-    "\n",
-    "        data = pd.read_csv(uploaded_file)\n",
-    "\n",
-    "    elif file_name.endswith(\".xls\"):\n",
-    "\n",
-    "        data = pd.read_excel(uploaded_file)\n",
-    "\n",
-    "    elif file_name.endswith(\".xlsx\"):\n",
-    "\n",
-    "        data = pd.read_excel(uploaded_file)\n",
-    "\n",
-    "    else:\n",
-    "\n",
-    "        raise ValueError(\n",
-    "            \"Unsupported file format.\"\n",
-    "        )\n",
-    "\n",
-    "    return data\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# LOAD DATA\n",
-    "# ============================================================\n",
-    "\n",
-    "if uploaded_file is None:\n",
-    "\n",
-    "    st.info(\n",
-    "        \"👈 Please upload your credit risk dataset from the sidebar.\"\n",
-    "    )\n",
-    "\n",
-    "    st.markdown(\n",
-    "        \"\"\"\n",
-    "        ### Expected dataset\n",
-    "\n",
-    "        Your dataset should contain columns similar to:\n",
-    "\n",
-    "        `customer_id`, `customer_name`, `age`, `gender`,\n",
-    "        `division`, `district`, `education`,\n",
-    "        `employment_type`, `monthly_income_bdt`,\n",
-    "        `account_balance_bdt`, `credit_score`,\n",
-    "        `loan_amount_bdt`, `loan_tenure_months`,\n",
-    "        `interest_rate_pct`, `monthly_installment_bdt`,\n",
-    "        `previous_loans`, `transaction_frequency_monthly`,\n",
-    "        `account_type`, `loan_type`, `previous_default`,\n",
-    "        `loan_status`, `default`\n",
-    "        \"\"\"\n",
-    "    )\n",
-    "\n",
-    "    st.stop()\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# READ DATA\n",
-    "# ============================================================\n",
-    "\n",
-    "try:\n",
-    "\n",
-    "    df = load_data(uploaded_file)\n",
-    "\n",
-    "except Exception as e:\n",
-    "\n",
-    "    st.error(\n",
-    "        f\"Error loading dataset: {e}\"\n",
-    "    )\n",
-    "\n",
-    "    st.stop()\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# BASIC VALIDATION\n",
-    "# ============================================================\n",
-    "\n",
-    "required_columns = [\n",
-    "\n",
-    "    \"age\",\n",
-    "    \"monthly_income_bdt\",\n",
-    "    \"account_balance_bdt\",\n",
-    "    \"credit_score\",\n",
-    "    \"loan_amount_bdt\",\n",
-    "    \"loan_tenure_months\",\n",
-    "    \"interest_rate_pct\",\n",
-    "    \"monthly_installment_bdt\",\n",
-    "    \"previous_loans\",\n",
-    "    \"transaction_frequency_monthly\",\n",
-    "    \"gender\",\n",
-    "    \"division\",\n",
-    "    \"district\",\n",
-    "    \"education\",\n",
-    "    \"employment_type\",\n",
-    "    \"account_type\",\n",
-    "    \"loan_type\",\n",
-    "    \"previous_default\",\n",
-    "    \"loan_status\",\n",
-    "    \"default\"\n",
-    "\n",
-    "]\n",
-    "\n",
-    "\n",
-    "missing_columns = [\n",
-    "    col\n",
-    "    for col in required_columns\n",
-    "    if col not in df.columns\n",
-    "]\n",
-    "\n",
-    "\n",
-    "if missing_columns:\n",
-    "\n",
-    "    st.error(\n",
-    "        \"The following required columns are missing:\"\n",
-    "    )\n",
-    "\n",
-    "    st.write(\n",
-    "        missing_columns\n",
-    "    )\n",
-    "\n",
-    "    st.stop()\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# REMOVE CUSTOMER ID\n",
-    "# ============================================================\n",
-    "\n",
-    "df = df.drop(\n",
-    "    columns=[\"customer_id\"],\n",
-    "    errors=\"ignore\"\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# FEATURE ENGINEERING\n",
-    "# ============================================================\n",
-    "\n",
-    "df[\"loan_to_income_ratio\"] = (\n",
-    "\n",
-    "    df[\"loan_amount_bdt\"]\n",
-    "    /\n",
-    "    (df[\"monthly_income_bdt\"] * 12)\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "df[\"installment_to_income_ratio\"] = (\n",
-    "\n",
-    "    df[\"monthly_installment_bdt\"]\n",
-    "    /\n",
-    "    df[\"monthly_income_bdt\"]\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# HANDLE INFINITE VALUES\n",
-    "# ============================================================\n",
-    "\n",
-    "df.replace(\n",
-    "    [np.inf, -np.inf],\n",
-    "    np.nan,\n",
-    "    inplace=True\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# CREATE DEFAULTER DATASET\n",
-    "# ============================================================\n",
-    "\n",
-    "defaulters = df[\n",
-    "    df[\"default\"] == 1\n",
-    "].copy()\n",
-    "\n",
-    "\n",
-    "non_defaulters = df[\n",
-    "    df[\"default\"] == 0\n",
-    "].copy()\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# BASIC STATISTICS\n",
-    "# ============================================================\n",
-    "\n",
-    "total_customers = len(df)\n",
-    "\n",
-    "total_defaulters = len(defaulters)\n",
-    "\n",
-    "total_non_defaulters = len(non_defaulters)\n",
-    "\n",
-    "default_rate = (\n",
-    "\n",
-    "    total_defaulters\n",
-    "    /\n",
-    "    total_customers\n",
-    "\n",
-    ") * 100\n",
-    "\n",
-    "\n",
-    "total_defaulted_loan = (\n",
-    "\n",
-    "    defaulters[\n",
-    "        \"loan_amount_bdt\"\n",
-    "    ].sum()\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "avg_defaulted_loan = (\n",
-    "\n",
-    "    defaulters[\n",
-    "        \"loan_amount_bdt\"\n",
-    "    ].mean()\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "avg_defaulter_income = (\n",
-    "\n",
-    "    defaulters[\n",
-    "        \"monthly_income_bdt\"\n",
-    "    ].mean()\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "avg_defaulter_credit_score = (\n",
-    "\n",
-    "    defaulters[\n",
-    "        \"credit_score\"\n",
-    "    ].mean()\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "avg_defaulter_age = (\n",
-    "\n",
-    "    defaulters[\n",
-    "        \"age\"\n",
-    "    ].mean()\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# FEATURE LIST\n",
-    "# ============================================================\n",
-    "\n",
-    "numeric_features = [\n",
-    "\n",
-    "    \"age\",\n",
-    "\n",
-    "    \"monthly_income_bdt\",\n",
-    "\n",
-    "    \"account_balance_bdt\",\n",
-    "\n",
-    "    \"credit_score\",\n",
-    "\n",
-    "    \"loan_amount_bdt\",\n",
-    "\n",
-    "    \"loan_tenure_months\",\n",
-    "\n",
-    "    \"interest_rate_pct\",\n",
-    "\n",
-    "    \"monthly_installment_bdt\",\n",
-    "\n",
-    "    \"previous_loans\",\n",
-    "\n",
-    "    \"transaction_frequency_monthly\",\n",
-    "\n",
-    "    \"loan_to_income_ratio\",\n",
-    "\n",
-    "    \"installment_to_income_ratio\"\n",
-    "\n",
-    "]\n",
-    "\n",
-    "\n",
-    "categorical_features = [\n",
-    "\n",
-    "    \"gender\",\n",
-    "\n",
-    "    \"division\",\n",
-    "\n",
-    "    \"district\",\n",
-    "\n",
-    "    \"education\",\n",
-    "\n",
-    "    \"employment_type\",\n",
-    "\n",
-    "    \"account_type\",\n",
-    "\n",
-    "    \"loan_type\",\n",
-    "\n",
-    "    \"previous_default\",\n",
-    "\n",
-    "    \"loan_status\"\n",
-    "\n",
-    "]\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# PREPROCESSING\n",
-    "# ============================================================\n",
-    "\n",
-    "numeric_transformer = Pipeline(\n",
-    "\n",
-    "    steps=[\n",
-    "\n",
-    "        (\n",
-    "            \"imputer\",\n",
-    "            SimpleImputer(\n",
-    "                strategy=\"median\"\n",
-    "            )\n",
-    "        ),\n",
-    "\n",
-    "        (\n",
-    "            \"scaler\",\n",
-    "            StandardScaler()\n",
-    "        )\n",
-    "\n",
-    "    ]\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "categorical_transformer = Pipeline(\n",
-    "\n",
-    "    steps=[\n",
-    "\n",
-    "        (\n",
-    "            \"imputer\",\n",
-    "            SimpleImputer(\n",
-    "                strategy=\"most_frequent\"\n",
-    "            )\n",
-    "        ),\n",
-    "\n",
-    "        (\n",
-    "            \"encoder\",\n",
-    "            OneHotEncoder(\n",
-    "                handle_unknown=\"ignore\"\n",
-    "            )\n",
-    "        )\n",
-    "\n",
-    "    ]\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "preprocessor = ColumnTransformer(\n",
-    "\n",
-    "    transformers=[\n",
-    "\n",
-    "        (\n",
-    "            \"numeric\",\n",
-    "            numeric_transformer,\n",
-    "            numeric_features\n",
-    "        ),\n",
-    "\n",
-    "        (\n",
-    "            \"categorical\",\n",
-    "            categorical_transformer,\n",
-    "            categorical_features\n",
-    "        )\n",
-    "\n",
-    "    ]\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# FEATURES AND TARGET\n",
-    "# ============================================================\n",
-    "\n",
-    "X = df.drop(\n",
-    "\n",
-    "    columns=[\n",
-    "        \"customer_name\",\n",
-    "        \"default\"\n",
-    "    ],\n",
-    "\n",
-    "    errors=\"ignore\"\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "y = df[\"default\"]\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TRAIN TEST SPLIT\n",
-    "# ============================================================\n",
-    "\n",
-    "X_train, X_test, y_train, y_test = train_test_split(\n",
-    "\n",
-    "    X,\n",
-    "\n",
-    "    y,\n",
-    "\n",
-    "    test_size=0.20,\n",
-    "\n",
-    "    random_state=42,\n",
-    "\n",
-    "    stratify=y\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# ML MODELS\n",
-    "# ============================================================\n",
-    "\n",
-    "models = {\n",
-    "\n",
-    "    \"Logistic Regression\":\n",
-    "\n",
-    "        LogisticRegression(\n",
-    "\n",
-    "            max_iter=2000,\n",
-    "\n",
-    "            class_weight=\"balanced\",\n",
-    "\n",
-    "            random_state=42\n",
-    "\n",
-    "        ),\n",
-    "\n",
-    "\n",
-    "    \"Decision Tree\":\n",
-    "\n",
-    "        DecisionTreeClassifier(\n",
-    "\n",
-    "            max_depth=6,\n",
-    "\n",
-    "            min_samples_split=10,\n",
-    "\n",
-    "            min_samples_leaf=5,\n",
-    "\n",
-    "            class_weight=\"balanced\",\n",
-    "\n",
-    "            random_state=42\n",
-    "\n",
-    "        ),\n",
-    "\n",
-    "\n",
-    "    \"Random Forest\":\n",
-    "\n",
-    "        RandomForestClassifier(\n",
-    "\n",
-    "            n_estimators=300,\n",
-    "\n",
-    "            max_depth=10,\n",
-    "\n",
-    "            min_samples_split=10,\n",
-    "\n",
-    "            min_samples_leaf=4,\n",
-    "\n",
-    "            class_weight=\"balanced\",\n",
-    "\n",
-    "            random_state=42,\n",
-    "\n",
-    "            n_jobs=-1\n",
-    "\n",
-    "        ),\n",
-    "\n",
-    "\n",
-    "    \"Gradient Boosting\":\n",
-    "\n",
-    "        GradientBoostingClassifier(\n",
-    "\n",
-    "            n_estimators=200,\n",
-    "\n",
-    "            learning_rate=0.05,\n",
-    "\n",
-    "            max_depth=3,\n",
-    "\n",
-    "            min_samples_split=10,\n",
-    "\n",
-    "            random_state=42\n",
-    "\n",
-    "        ),\n",
-    "\n",
-    "\n",
-    "    \"XGBoost\":\n",
-    "\n",
-    "        XGBClassifier(\n",
-    "\n",
-    "            n_estimators=300,\n",
-    "\n",
-    "            learning_rate=0.05,\n",
-    "\n",
-    "            max_depth=4,\n",
-    "\n",
-    "            min_child_weight=3,\n",
-    "\n",
-    "            subsample=0.8,\n",
-    "\n",
-    "            colsample_bytree=0.8,\n",
-    "\n",
-    "            eval_metric=\"logloss\",\n",
-    "\n",
-    "            random_state=42,\n",
-    "\n",
-    "            n_jobs=-1\n",
-    "\n",
-    "        ),\n",
-    "\n",
-    "\n",
-    "    \"SVM\":\n",
-    "\n",
-    "        SVC(\n",
-    "\n",
-    "            kernel=\"rbf\",\n",
-    "\n",
-    "            C=1.0,\n",
-    "\n",
-    "            probability=True,\n",
-    "\n",
-    "            class_weight=\"balanced\",\n",
-    "\n",
-    "            random_state=42\n",
-    "\n",
-    "        ),\n",
-    "\n",
-    "\n",
-    "    \"KNN\":\n",
-    "\n",
-    "        KNeighborsClassifier(\n",
-    "\n",
-    "            n_neighbors=7,\n",
-    "\n",
-    "            weights=\"distance\"\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "}\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TRAIN MODELS\n",
-    "# ============================================================\n",
-    "\n",
-    "@st.cache_resource\n",
-    "def train_models(X_train, X_test, y_train, y_test):\n",
-    "\n",
-    "    trained_models = {}\n",
-    "\n",
-    "    results = {}\n",
-    "\n",
-    "    roc_data = {}\n",
-    "\n",
-    "    for name, model in models.items():\n",
-    "\n",
-    "        pipeline = Pipeline(\n",
-    "\n",
-    "            steps=[\n",
-    "\n",
-    "                (\n",
-    "                    \"preprocessor\",\n",
-    "                    preprocessor\n",
-    "                ),\n",
-    "\n",
-    "                (\n",
-    "                    \"model\",\n",
-    "                    model\n",
-    "                )\n",
-    "\n",
-    "            ]\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        pipeline.fit(\n",
-    "            X_train,\n",
-    "            y_train\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        trained_models[\n",
-    "            name\n",
-    "        ] = pipeline\n",
-    "\n",
-    "\n",
-    "        y_pred = pipeline.predict(\n",
-    "            X_test\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        y_prob = pipeline.predict_proba(\n",
-    "            X_test\n",
-    "        )[:, 1]\n",
-    "\n",
-    "\n",
-    "        accuracy = accuracy_score(\n",
-    "            y_test,\n",
-    "            y_pred\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        precision = precision_score(\n",
-    "            y_test,\n",
-    "            y_pred,\n",
-    "            zero_division=0\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        recall = recall_score(\n",
-    "            y_test,\n",
-    "            y_pred,\n",
-    "            zero_division=0\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        f1 = f1_score(\n",
-    "            y_test,\n",
-    "            y_pred,\n",
-    "            zero_division=0\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        roc_auc = roc_auc_score(\n",
-    "            y_test,\n",
-    "            y_prob\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        results[name] = {\n",
-    "\n",
-    "            \"Model\": name,\n",
-    "\n",
-    "            \"Accuracy\": accuracy,\n",
-    "\n",
-    "            \"Precision\": precision,\n",
-    "\n",
-    "            \"Recall\": recall,\n",
-    "\n",
-    "            \"F1 Score\": f1,\n",
-    "\n",
-    "            \"ROC-AUC\": roc_auc\n",
-    "\n",
-    "        }\n",
-    "\n",
-    "\n",
-    "        fpr, tpr, thresholds = roc_curve(\n",
-    "\n",
-    "            y_test,\n",
-    "\n",
-    "            y_prob\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        roc_data[name] = {\n",
-    "\n",
-    "            \"fpr\": fpr,\n",
-    "\n",
-    "            \"tpr\": tpr,\n",
-    "\n",
-    "            \"auc\": roc_auc\n",
-    "\n",
-    "        }\n",
-    "\n",
-    "\n",
-    "    results_df = pd.DataFrame(\n",
-    "        list(results.values())\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    results_df = results_df.sort_values(\n",
-    "\n",
-    "        by=\"ROC-AUC\",\n",
-    "\n",
-    "        ascending=False\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    return (\n",
-    "\n",
-    "        trained_models,\n",
-    "\n",
-    "        results_df,\n",
-    "\n",
-    "        roc_data\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TRAINING SPINNER\n",
-    "# ============================================================\n",
-    "\n",
-    "with st.spinner(\n",
-    "    \"🤖 Training machine learning models...\"\n",
-    "):\n",
-    "\n",
-    "    (\n",
-    "        trained_models,\n",
-    "        results_df,\n",
-    "        roc_data\n",
-    "    ) = train_models(\n",
-    "\n",
-    "        X_train,\n",
-    "        X_test,\n",
-    "        y_train,\n",
-    "        y_test\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# BEST MODEL\n",
-    "# ============================================================\n",
-    "\n",
-    "best_model_name = (\n",
-    "\n",
-    "    results_df.iloc[0][\"Model\"]\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "best_model = (\n",
-    "\n",
-    "    trained_models[\n",
-    "        best_model_name\n",
-    "    ]\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# BEST MODEL PREDICTIONS\n",
-    "# ============================================================\n",
-    "\n",
-    "best_pred = best_model.predict(\n",
-    "    X_test\n",
-    ")\n",
-    "\n",
-    "\n",
-    "best_prob = best_model.predict_proba(\n",
-    "    X_test\n",
-    ")[:, 1]\n",
-    "\n",
-    "\n",
-    "accuracy = accuracy_score(\n",
-    "    y_test,\n",
-    "    best_pred\n",
-    ")\n",
-    "\n",
-    "\n",
-    "precision = precision_score(\n",
-    "    y_test,\n",
-    "    best_pred,\n",
-    "    zero_division=0\n",
-    ")\n",
-    "\n",
-    "\n",
-    "recall = recall_score(\n",
-    "    y_test,\n",
-    "    best_pred,\n",
-    "    zero_division=0\n",
-    ")\n",
-    "\n",
-    "\n",
-    "f1 = f1_score(\n",
-    "    y_test,\n",
-    "    best_pred,\n",
-    "    zero_division=0\n",
-    ")\n",
-    "\n",
-    "\n",
-    "roc_auc = roc_auc_score(\n",
-    "    y_test,\n",
-    "    best_prob\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TABS\n",
-    "# ============================================================\n",
-    "\n",
-    "tabs = st.tabs(\n",
-    "\n",
-    "    [\n",
-    "\n",
-    "        \"📊 Dashboard\",\n",
-    "\n",
-    "        \"🔍 EDA\",\n",
-    "\n",
-    "        \"👥 Defaulter Analysis\",\n",
-    "\n",
-    "        \"📈 Correlation\",\n",
-    "\n",
-    "        \"🤖 Model Comparison\",\n",
-    "\n",
-    "        \"🏆 Best Model\",\n",
-    "\n",
-    "        \"👤 New Customer Prediction\"\n",
-    "\n",
-    "    ]\n",
-    "\n",
-    ")\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TAB 1 — DASHBOARD\n",
-    "# ============================================================\n",
-    "\n",
-    "with tabs[0]:\n",
-    "\n",
-    "    st.header(\n",
-    "        \"📊 Credit Risk Dashboard\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\n",
-    "        \"### Portfolio Overview\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    col1, col2, col3, col4 = st.columns(4)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Total Customers\",\n",
-    "            f\"{total_customers:,}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Total Defaulters\",\n",
-    "            f\"{total_defaulters:,}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col3:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Default Rate\",\n",
-    "            f\"{default_rate:.2f}%\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col4:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Defaulted Loan\",\n",
-    "            f\"৳{total_defaulted_loan:,.0f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    col1, col2, col3, col4 = st.columns(4)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Avg Defaulter Income\",\n",
-    "            f\"৳{avg_defaulter_income:,.0f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Avg Credit Score\",\n",
-    "            f\"{avg_defaulter_credit_score:.1f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col3:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Avg Defaulter Age\",\n",
-    "            f\"{avg_defaulter_age:.1f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col4:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Avg Defaulted Loan\",\n",
-    "            f\"৳{avg_defaulted_loan:,.0f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    col1, col2 = st.columns(2)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        fig, ax = plt.subplots(\n",
-    "            figsize=(7, 5)\n",
-    "        )\n",
-    "\n",
-    "        sns.countplot(\n",
-    "            data=df,\n",
-    "            x=\"default\",\n",
-    "            ax=ax\n",
-    "        )\n",
-    "\n",
-    "        ax.set_title(\n",
-    "            \"Default Distribution\"\n",
-    "        )\n",
-    "\n",
-    "        ax.set_xlabel(\n",
-    "            \"Default (0 = No, 1 = Yes)\"\n",
-    "        )\n",
-    "\n",
-    "        ax.set_ylabel(\n",
-    "            \"Number of Customers\"\n",
-    "        )\n",
-    "\n",
-    "        st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        default_counts = (\n",
-    "\n",
-    "            df[\"default\"]\n",
-    "            .value_counts()\n",
-    "            .sort_index()\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        fig, ax = plt.subplots(\n",
-    "            figsize=(7, 5)\n",
-    "        )\n",
-    "\n",
-    "        ax.pie(\n",
-    "\n",
-    "            default_counts.values,\n",
-    "\n",
-    "            labels=[\n",
-    "                \"Non-Defaulter\",\n",
-    "                \"Defaulter\"\n",
-    "            ],\n",
-    "\n",
-    "            autopct=\"%1.1f%%\"\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "        ax.set_title(\n",
-    "            \"Default Percentage\"\n",
-    "        )\n",
-    "\n",
-    "        st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"Dataset Preview\"\n",
-    "    )\n",
-    "\n",
-    "    st.dataframe(\n",
-    "        df.head(20),\n",
-    "        use_container_width=True\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"Dataset Information\"\n",
-    "    )\n",
-    "\n",
-    "    col1, col2 = st.columns(2)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        st.write(\n",
-    "            \"**Rows:**\",\n",
-    "            df.shape[0]\n",
-    "        )\n",
-    "\n",
-    "        st.write(\n",
-    "            \"**Columns:**\",\n",
-    "            df.shape[1]\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        st.write(\n",
-    "            \"**Missing Values:**\",\n",
-    "            int(df.isnull().sum().sum())\n",
-    "        )\n",
-    "\n",
-    "        st.write(\n",
-    "            \"**Duplicate Rows:**\",\n",
-    "            int(df.duplicated().sum())\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TAB 2 — EDA\n",
-    "# ============================================================\n",
-    "\n",
-    "with tabs[1]:\n",
-    "\n",
-    "    st.header(\n",
-    "        \"🔍 Exploratory Data Analysis\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    eda_variable = st.selectbox(\n",
-    "\n",
-    "        \"Select numerical variable\",\n",
-    "\n",
-    "        numeric_features\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    col1, col2 = st.columns(2)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        fig, ax = plt.subplots(\n",
-    "            figsize=(7, 5)\n",
-    "        )\n",
-    "\n",
-    "        sns.histplot(\n",
-    "\n",
-    "            data=df,\n",
-    "\n",
-    "            x=eda_variable,\n",
-    "\n",
-    "            bins=25,\n",
-    "\n",
-    "            kde=True,\n",
-    "\n",
-    "            ax=ax\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "        ax.set_title(\n",
-    "            f\"Distribution of {eda_variable}\"\n",
-    "        )\n",
-    "\n",
-    "        st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        fig, ax = plt.subplots(\n",
-    "            figsize=(7, 5)\n",
-    "        )\n",
-    "\n",
-    "        sns.boxplot(\n",
-    "\n",
-    "            data=df,\n",
-    "\n",
-    "            x=\"default\",\n",
-    "\n",
-    "            y=eda_variable,\n",
-    "\n",
-    "            ax=ax\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "        ax.set_title(\n",
-    "\n",
-    "            f\"{eda_variable}: \"\n",
-    "            \"Defaulters vs Non-Defaulters\"\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "        ax.set_xlabel(\n",
-    "            \"Default\"\n",
-    "        )\n",
-    "\n",
-    "        st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"Categorical Variable Analysis\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    categorical_variable = st.selectbox(\n",
-    "\n",
-    "        \"Select categorical variable\",\n",
-    "\n",
-    "        [\n",
-    "\n",
-    "            \"gender\",\n",
-    "\n",
-    "            \"division\",\n",
-    "\n",
-    "            \"district\",\n",
-    "\n",
-    "            \"education\",\n",
-    "\n",
-    "            \"employment_type\",\n",
-    "\n",
-    "            \"account_type\",\n",
-    "\n",
-    "            \"loan_type\",\n",
-    "\n",
-    "            \"previous_default\",\n",
-    "\n",
-    "            \"loan_status\"\n",
-    "\n",
-    "        ]\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    categorical_counts = (\n",
-    "\n",
-    "        df[categorical_variable]\n",
-    "        .value_counts()\n",
-    "        .head(15)\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    fig, ax = plt.subplots(\n",
-    "        figsize=(10, 5)\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    sns.barplot(\n",
-    "\n",
-    "        x=categorical_counts.values,\n",
-    "\n",
-    "        y=categorical_counts.index,\n",
-    "\n",
-    "        ax=ax\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    ax.set_title(\n",
-    "        f\"Distribution of {categorical_variable}\"\n",
-    "    )\n",
-    "\n",
-    "    ax.set_xlabel(\n",
-    "        \"Number of Customers\"\n",
-    "    )\n",
-    "\n",
-    "    ax.set_ylabel(\n",
-    "        categorical_variable\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TAB 3 — DEFAULTER ANALYSIS\n",
-    "# ============================================================\n",
-    "\n",
-    "with tabs[2]:\n",
-    "\n",
-    "    st.header(\n",
-    "        \"👥 Defaulter Analysis\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    analysis_variable = st.selectbox(\n",
-    "\n",
-    "        \"Select variable for default analysis\",\n",
-    "\n",
-    "        [\n",
-    "\n",
-    "            \"gender\",\n",
-    "\n",
-    "            \"division\",\n",
-    "\n",
-    "            \"education\",\n",
-    "\n",
-    "            \"employment_type\",\n",
-    "\n",
-    "            \"loan_type\",\n",
-    "\n",
-    "            \"previous_default\"\n",
-    "\n",
-    "        ]\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    default_rate_analysis = (\n",
-    "\n",
-    "        df.groupby(\n",
-    "            analysis_variable\n",
-    "        )[\"default\"]\n",
-    "\n",
-    "        .mean()\n",
-    "\n",
-    "        .mul(100)\n",
-    "\n",
-    "        .sort_values(\n",
-    "            ascending=False\n",
-    "        )\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.subheader(\n",
-    "        f\"Default Rate by {analysis_variable}\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    fig, ax = plt.subplots(\n",
-    "        figsize=(10, 6)\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    sns.barplot(\n",
-    "\n",
-    "        x=default_rate_analysis.values,\n",
-    "\n",
-    "        y=default_rate_analysis.index,\n",
-    "\n",
-    "        ax=ax\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    ax.set_xlabel(\n",
-    "        \"Default Rate (%)\"\n",
-    "    )\n",
-    "\n",
-    "    ax.set_ylabel(\n",
-    "        analysis_variable\n",
-    "    )\n",
-    "\n",
-    "    ax.set_title(\n",
-    "        f\"Default Rate by {analysis_variable}\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    st.dataframe(\n",
-    "\n",
-    "        default_rate_analysis\n",
-    "        .reset_index()\n",
-    "        .rename(\n",
-    "            columns={\n",
-    "                \"default\":\n",
-    "                    \"Default Rate (%)\"\n",
-    "            }\n",
-    "        ),\n",
-    "\n",
-    "        use_container_width=True\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"Defaulter Profile\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    profile = pd.DataFrame({\n",
-    "\n",
-    "        \"Metric\": [\n",
-    "\n",
-    "            \"Average Age\",\n",
-    "\n",
-    "            \"Average Income\",\n",
-    "\n",
-    "            \"Average Account Balance\",\n",
-    "\n",
-    "            \"Average Credit Score\",\n",
-    "\n",
-    "            \"Average Loan Amount\",\n",
-    "\n",
-    "            \"Average Previous Loans\",\n",
-    "\n",
-    "            \"Average Transaction Frequency\",\n",
-    "\n",
-    "            \"Average Loan-to-Income Ratio\",\n",
-    "\n",
-    "            \"Average Installment-to-Income Ratio\"\n",
-    "\n",
-    "        ],\n",
-    "\n",
-    "        \"Value\": [\n",
-    "\n",
-    "            defaulters[\n",
-    "                \"age\"\n",
-    "            ].mean(),\n",
-    "\n",
-    "            defaulters[\n",
-    "                \"monthly_income_bdt\"\n",
-    "            ].mean(),\n",
-    "\n",
-    "            defaulters[\n",
-    "                \"account_balance_bdt\"\n",
-    "            ].mean(),\n",
-    "\n",
-    "            defaulters[\n",
-    "                \"credit_score\"\n",
-    "            ].mean(),\n",
-    "\n",
-    "            defaulters[\n",
-    "                \"loan_amount_bdt\"\n",
-    "            ].mean(),\n",
-    "\n",
-    "            defaulters[\n",
-    "                \"previous_loans\"\n",
-    "            ].mean(),\n",
-    "\n",
-    "            defaulters[\n",
-    "                \"transaction_frequency_monthly\"\n",
-    "            ].mean(),\n",
-    "\n",
-    "            defaulters[\n",
-    "                \"loan_to_income_ratio\"\n",
-    "            ].mean(),\n",
-    "\n",
-    "            defaulters[\n",
-    "                \"installment_to_income_ratio\"\n",
-    "            ].mean()\n",
-    "\n",
-    "        ]\n",
-    "\n",
-    "    })\n",
-    "\n",
-    "\n",
-    "    st.dataframe(\n",
-    "        profile,\n",
-    "        use_container_width=True\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TAB 4 — CORRELATION\n",
-    "# ============================================================\n",
-    "\n",
-    "with tabs[3]:\n",
-    "\n",
-    "    st.header(\n",
-    "        \"📈 Correlation Analysis\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    correlation = df[\n",
-    "        numeric_features + [\"default\"]\n",
-    "    ].corr()\n",
-    "\n",
-    "\n",
-    "    fig, ax = plt.subplots(\n",
-    "        figsize=(14, 10)\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    sns.heatmap(\n",
-    "\n",
-    "        correlation,\n",
-    "\n",
-    "        annot=True,\n",
-    "\n",
-    "        fmt=\".2f\",\n",
-    "\n",
-    "        cmap=\"coolwarm\",\n",
-    "\n",
-    "        center=0,\n",
-    "\n",
-    "        ax=ax\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    ax.set_title(\n",
-    "        \"Correlation Matrix\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"Variables Most Associated with Default\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    default_corr = (\n",
-    "\n",
-    "        correlation[\"default\"]\n",
-    "\n",
-    "        .drop(\"default\")\n",
-    "\n",
-    "        .sort_values(\n",
-    "\n",
-    "            key=abs,\n",
-    "\n",
-    "            ascending=False\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    correlation_table = (\n",
-    "\n",
-    "        default_corr\n",
-    "        .reset_index()\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    correlation_table.columns = [\n",
-    "\n",
-    "        \"Variable\",\n",
-    "        \"Correlation\"\n",
-    "\n",
-    "    ]\n",
-    "\n",
-    "\n",
-    "    st.dataframe(\n",
-    "\n",
-    "        correlation_table,\n",
-    "\n",
-    "        use_container_width=True\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TAB 5 — MODEL COMPARISON\n",
-    "# ============================================================\n",
-    "\n",
-    "with tabs[4]:\n",
-    "\n",
-    "    st.header(\n",
-    "        \"🤖 Machine Learning Model Comparison\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\n",
-    "        \"Models are ranked according to ROC-AUC.\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    display_results = results_df.copy()\n",
-    "\n",
-    "\n",
-    "    for col in [\n",
-    "\n",
-    "        \"Accuracy\",\n",
-    "        \"Precision\",\n",
-    "        \"Recall\",\n",
-    "        \"F1 Score\",\n",
-    "        \"ROC-AUC\"\n",
-    "\n",
-    "    ]:\n",
-    "\n",
-    "        display_results[col] = (\n",
-    "\n",
-    "            display_results[col]\n",
-    "            .round(4)\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    st.dataframe(\n",
-    "\n",
-    "        display_results,\n",
-    "\n",
-    "        use_container_width=True,\n",
-    "\n",
-    "        hide_index=True\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    col1, col2 = st.columns(2)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        fig, ax = plt.subplots(\n",
-    "            figsize=(8, 6)\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        sns.barplot(\n",
-    "\n",
-    "            data=results_df,\n",
-    "\n",
-    "            x=\"ROC-AUC\",\n",
-    "\n",
-    "            y=\"Model\",\n",
-    "\n",
-    "            ax=ax\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        ax.set_xlim(\n",
-    "            0,\n",
-    "            1\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        ax.set_title(\n",
-    "            \"Model Comparison - ROC-AUC\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        fig, ax = plt.subplots(\n",
-    "            figsize=(8, 6)\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        sns.barplot(\n",
-    "\n",
-    "            data=results_df,\n",
-    "\n",
-    "            x=\"Recall\",\n",
-    "\n",
-    "            y=\"Model\",\n",
-    "\n",
-    "            ax=ax\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        ax.set_xlim(\n",
-    "            0,\n",
-    "            1\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        ax.set_title(\n",
-    "            \"Defaulter Recall Comparison\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    col1, col2 = st.columns(2)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        fig, ax = plt.subplots(\n",
-    "            figsize=(8, 6)\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        sns.barplot(\n",
-    "\n",
-    "            data=results_df,\n",
-    "\n",
-    "            x=\"F1 Score\",\n",
-    "\n",
-    "            y=\"Model\",\n",
-    "\n",
-    "            ax=ax\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        ax.set_xlim(\n",
-    "            0,\n",
-    "            1\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        ax.set_title(\n",
-    "            \"F1 Score Comparison\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        fig, ax = plt.subplots(\n",
-    "            figsize=(8, 6)\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        for name, data in roc_data.items():\n",
-    "\n",
-    "            ax.plot(\n",
-    "\n",
-    "                data[\"fpr\"],\n",
-    "\n",
-    "                data[\"tpr\"],\n",
-    "\n",
-    "                label=(\n",
-    "\n",
-    "                    f\"{name} \"\n",
-    "                    f\"(AUC={data['auc']:.3f})\"\n",
-    "\n",
-    "                )\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "        ax.plot(\n",
-    "\n",
-    "            [0, 1],\n",
-    "\n",
-    "            [0, 1],\n",
-    "\n",
-    "            linestyle=\"--\"\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        ax.set_xlabel(\n",
-    "            \"False Positive Rate\"\n",
-    "        )\n",
-    "\n",
-    "        ax.set_ylabel(\n",
-    "            \"True Positive Rate\"\n",
-    "        )\n",
-    "\n",
-    "        ax.set_title(\n",
-    "            \"ROC Curves\"\n",
-    "        )\n",
-    "\n",
-    "        ax.legend(\n",
-    "            fontsize=8\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    st.download_button(\n",
-    "\n",
-    "        label=\"⬇️ Download Model Comparison\",\n",
-    "\n",
-    "        data=results_df.to_csv(\n",
-    "            index=False\n",
-    "        ),\n",
-    "\n",
-    "        file_name=\"model_comparison_results.csv\",\n",
-    "\n",
-    "        mime=\"text/csv\"\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TAB 6 — BEST MODEL\n",
-    "# ============================================================\n",
-    "\n",
-    "with tabs[5]:\n",
-    "\n",
-    "    st.header(\n",
-    "        \"🏆 Best Credit Risk Model\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.success(\n",
-    "        f\"Best Model: {best_model_name}\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    col1, col2, col3, col4, col5 = st.columns(5)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Accuracy\",\n",
-    "            f\"{accuracy:.3f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Precision\",\n",
-    "            f\"{precision:.3f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col3:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"Recall\",\n",
-    "            f\"{recall:.3f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col4:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"F1 Score\",\n",
-    "            f\"{f1:.3f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col5:\n",
-    "\n",
-    "        st.metric(\n",
-    "            \"ROC-AUC\",\n",
-    "            f\"{roc_auc:.3f}\"\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"Classification Report\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    report = classification_report(\n",
-    "\n",
-    "        y_test,\n",
-    "\n",
-    "        best_pred,\n",
-    "\n",
-    "        target_names=[\n",
-    "\n",
-    "            \"Non-Defaulter\",\n",
-    "\n",
-    "            \"Defaulter\"\n",
-    "\n",
-    "        ],\n",
-    "\n",
-    "        zero_division=0,\n",
-    "\n",
-    "        output_dict=True\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    report_df = pd.DataFrame(\n",
-    "        report\n",
-    "    ).transpose()\n",
-    "\n",
-    "\n",
-    "    st.dataframe(\n",
-    "\n",
-    "        report_df.round(4),\n",
-    "\n",
-    "        use_container_width=True\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"Confusion Matrix\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    cm = confusion_matrix(\n",
-    "\n",
-    "        y_test,\n",
-    "\n",
-    "        best_pred\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    fig, ax = plt.subplots(\n",
-    "        figsize=(7, 6)\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    sns.heatmap(\n",
-    "\n",
-    "        cm,\n",
-    "\n",
-    "        annot=True,\n",
-    "\n",
-    "        fmt=\"d\",\n",
-    "\n",
-    "        cmap=\"Blues\",\n",
-    "\n",
-    "        xticklabels=[\n",
-    "\n",
-    "            \"Non-Defaulter\",\n",
-    "\n",
-    "            \"Defaulter\"\n",
-    "\n",
-    "        ],\n",
-    "\n",
-    "        yticklabels=[\n",
-    "\n",
-    "            \"Non-Defaulter\",\n",
-    "\n",
-    "            \"Defaulter\"\n",
-    "\n",
-    "        ],\n",
-    "\n",
-    "        ax=ax\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    ax.set_xlabel(\n",
-    "        \"Predicted\"\n",
-    "    )\n",
-    "\n",
-    "    ax.set_ylabel(\n",
-    "        \"Actual\"\n",
-    "    )\n",
-    "\n",
-    "    ax.set_title(\n",
-    "        f\"Confusion Matrix - {best_model_name}\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    # ========================================================\n",
-    "    # FEATURE IMPORTANCE\n",
-    "    # ========================================================\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"🔎 Feature Importance\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    model_object = (\n",
-    "\n",
-    "        best_model.named_steps[\n",
-    "            \"model\"\n",
-    "        ]\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    preprocessor_object = (\n",
-    "\n",
-    "        best_model.named_steps[\n",
-    "            \"preprocessor\"\n",
-    "        ]\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    if hasattr(\n",
-    "\n",
-    "        model_object,\n",
-    "\n",
-    "        \"feature_importances_\"\n",
-    "\n",
-    "    ):\n",
-    "\n",
-    "        feature_names = (\n",
-    "\n",
-    "            preprocessor_object\n",
-    "            .get_feature_names_out()\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        importance = (\n",
-    "\n",
-    "            model_object\n",
-    "            .feature_importances_\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        feature_importance = pd.DataFrame({\n",
-    "\n",
-    "            \"Feature\":\n",
-    "                feature_names,\n",
-    "\n",
-    "            \"Importance\":\n",
-    "                importance\n",
-    "\n",
-    "        })\n",
-    "\n",
-    "\n",
-    "        feature_importance = (\n",
-    "\n",
-    "            feature_importance\n",
-    "\n",
-    "            .sort_values(\n",
-    "\n",
-    "                \"Importance\",\n",
-    "\n",
-    "                ascending=False\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "            .head(20)\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        st.dataframe(\n",
-    "\n",
-    "            feature_importance,\n",
-    "\n",
-    "            use_container_width=True\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        fig, ax = plt.subplots(\n",
-    "\n",
-    "            figsize=(10, 8)\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        sns.barplot(\n",
-    "\n",
-    "            data=feature_importance,\n",
-    "\n",
-    "            x=\"Importance\",\n",
-    "\n",
-    "            y=\"Feature\",\n",
-    "\n",
-    "            ax=ax\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        ax.set_title(\n",
-    "\n",
-    "            f\"Top 20 Feature Importance - \"\n",
-    "            f\"{best_model_name}\"\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        st.pyplot(fig)\n",
-    "\n",
-    "\n",
-    "    else:\n",
-    "\n",
-    "        st.info(\n",
-    "\n",
-    "            f\"{best_model_name} does not provide \"\n",
-    "            \"built-in feature_importances_.\"\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    # ========================================================\n",
-    "    # SAMPLE TEST CUSTOMER\n",
-    "    # ========================================================\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"📋 Sample Test Customer Predictions\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    sample_customers = (\n",
-    "\n",
-    "        X_test\n",
-    "        .head(10)\n",
-    "        .copy()\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    sample_actual = (\n",
-    "\n",
-    "        y_test\n",
-    "        .loc[\n",
-    "            sample_customers.index\n",
-    "        ]\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    sample_prediction = (\n",
-    "\n",
-    "        best_model\n",
-    "        .predict(\n",
-    "            sample_customers\n",
-    "        )\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    sample_probability = (\n",
-    "\n",
-    "        best_model\n",
-    "        .predict_proba(\n",
-    "            sample_customers\n",
-    "        )[:, 1]\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    prediction_table = pd.DataFrame({\n",
-    "\n",
-    "        \"Actual\":\n",
-    "            sample_actual.values,\n",
-    "\n",
-    "        \"Predicted\":\n",
-    "            sample_prediction,\n",
-    "\n",
-    "        \"Default_Probability\":\n",
-    "            sample_probability\n",
-    "\n",
-    "    })\n",
-    "\n",
-    "\n",
-    "    prediction_table[\n",
-    "        \"Risk_Level\"\n",
-    "    ] = np.where(\n",
-    "\n",
-    "        prediction_table[\n",
-    "            \"Default_Probability\"\n",
-    "        ] >= 0.70,\n",
-    "\n",
-    "        \"High Risk\",\n",
-    "\n",
-    "        np.where(\n",
-    "\n",
-    "            prediction_table[\n",
-    "                \"Default_Probability\"\n",
-    "            ] >= 0.40,\n",
-    "\n",
-    "            \"Medium Risk\",\n",
-    "\n",
-    "            \"Low Risk\"\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.dataframe(\n",
-    "\n",
-    "        prediction_table.style.format({\n",
-    "\n",
-    "            \"Default_Probability\":\n",
-    "                \"{:.2%}\"\n",
-    "\n",
-    "        }),\n",
-    "\n",
-    "        use_container_width=True\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# TAB 7 — NEW CUSTOMER PREDICTION\n",
-    "# ============================================================\n",
-    "\n",
-    "with tabs[6]:\n",
-    "\n",
-    "    st.header(\n",
-    "        \"👤 New Customer Credit Risk Prediction\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\n",
-    "        \"\"\"\n",
-    "        Enter the customer's information below.\n",
-    "        The trained best-performing model will estimate\n",
-    "        the probability of default.\n",
-    "        \"\"\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    # ========================================================\n",
-    "    # NUMERIC INPUTS\n",
-    "    # ========================================================\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"💰 Financial Information\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    col1, col2, col3 = st.columns(3)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        age = st.number_input(\n",
-    "\n",
-    "            \"Age\",\n",
-    "\n",
-    "            min_value=18,\n",
-    "\n",
-    "            max_value=100,\n",
-    "\n",
-    "            value=30\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        monthly_income_bdt = st.number_input(\n",
-    "\n",
-    "            \"Monthly Income (BDT)\",\n",
-    "\n",
-    "            min_value=0.0,\n",
-    "\n",
-    "            value=50000.0,\n",
-    "\n",
-    "            step=1000.0\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col3:\n",
-    "\n",
-    "        account_balance_bdt = st.number_input(\n",
-    "\n",
-    "            \"Account Balance (BDT)\",\n",
-    "\n",
-    "            min_value=0.0,\n",
-    "\n",
-    "            value=100000.0,\n",
-    "\n",
-    "            step=5000.0\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    col1, col2, col3 = st.columns(3)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        credit_score = st.number_input(\n",
-    "\n",
-    "            \"Credit Score\",\n",
-    "\n",
-    "            min_value=0.0,\n",
-    "\n",
-    "            max_value=1000.0,\n",
-    "\n",
-    "            value=700.0,\n",
-    "\n",
-    "            step=1.0\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        loan_amount_bdt = st.number_input(\n",
-    "\n",
-    "            \"Loan Amount (BDT)\",\n",
-    "\n",
-    "            min_value=0.0,\n",
-    "\n",
-    "            value=300000.0,\n",
-    "\n",
-    "            step=10000.0\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col3:\n",
-    "\n",
-    "        loan_tenure_months = st.number_input(\n",
-    "\n",
-    "            \"Loan Tenure (Months)\",\n",
-    "\n",
-    "            min_value=1,\n",
-    "\n",
-    "            max_value=360,\n",
-    "\n",
-    "            value=36\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    col1, col2, col3 = st.columns(3)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        interest_rate_pct = st.number_input(\n",
-    "\n",
-    "            \"Interest Rate (%)\",\n",
-    "\n",
-    "            min_value=0.0,\n",
-    "\n",
-    "            max_value=100.0,\n",
-    "\n",
-    "            value=10.0,\n",
-    "\n",
-    "            step=0.1\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        monthly_installment_bdt = st.number_input(\n",
-    "\n",
-    "            \"Monthly Installment (BDT)\",\n",
-    "\n",
-    "            min_value=0.0,\n",
-    "\n",
-    "            value=10000.0,\n",
-    "\n",
-    "            step=500.0\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col3:\n",
-    "\n",
-    "        previous_loans = st.number_input(\n",
-    "\n",
-    "            \"Previous Loans\",\n",
-    "\n",
-    "            min_value=0,\n",
-    "\n",
-    "            max_value=100,\n",
-    "\n",
-    "            value=1\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    transaction_frequency_monthly = st.number_input(\n",
-    "\n",
-    "        \"Monthly Transaction Frequency\",\n",
-    "\n",
-    "        min_value=0,\n",
-    "\n",
-    "        max_value=1000,\n",
-    "\n",
-    "        value=20\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    # ========================================================\n",
-    "    # CATEGORICAL INPUTS\n",
-    "    # ========================================================\n",
-    "\n",
-    "    st.subheader(\n",
-    "        \"👤 Customer Information\"\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    col1, col2, col3 = st.columns(3)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        gender = st.selectbox(\n",
-    "\n",
-    "            \"Gender\",\n",
-    "\n",
-    "            sorted(\n",
-    "                df[\"gender\"]\n",
-    "                .dropna()\n",
-    "                .astype(str)\n",
-    "                .unique()\n",
-    "            )\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        division = st.selectbox(\n",
-    "\n",
-    "            \"Division\",\n",
-    "\n",
-    "            sorted(\n",
-    "                df[\"division\"]\n",
-    "                .dropna()\n",
-    "                .astype(str)\n",
-    "                .unique()\n",
-    "            )\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col3:\n",
-    "\n",
-    "        district = st.selectbox(\n",
-    "\n",
-    "            \"District\",\n",
-    "\n",
-    "            sorted(\n",
-    "                df[\"district\"]\n",
-    "                .dropna()\n",
-    "                .astype(str)\n",
-    "                .unique()\n",
-    "            )\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    col1, col2, col3 = st.columns(3)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        education = st.selectbox(\n",
-    "\n",
-    "            \"Education\",\n",
-    "\n",
-    "            sorted(\n",
-    "                df[\"education\"]\n",
-    "                .dropna()\n",
-    "                .astype(str)\n",
-    "                .unique()\n",
-    "            )\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        employment_type = st.selectbox(\n",
-    "\n",
-    "            \"Employment Type\",\n",
-    "\n",
-    "            sorted(\n",
-    "                df[\"employment_type\"]\n",
-    "                .dropna()\n",
-    "                .astype(str)\n",
-    "                .unique()\n",
-    "            )\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col3:\n",
-    "\n",
-    "        account_type = st.selectbox(\n",
-    "\n",
-    "            \"Account Type\",\n",
-    "\n",
-    "            sorted(\n",
-    "                df[\"account_type\"]\n",
-    "                .dropna()\n",
-    "                .astype(str)\n",
-    "                .unique()\n",
-    "            )\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    col1, col2, col3 = st.columns(3)\n",
-    "\n",
-    "\n",
-    "    with col1:\n",
-    "\n",
-    "        loan_type = st.selectbox(\n",
-    "\n",
-    "            \"Loan Type\",\n",
-    "\n",
-    "            sorted(\n",
-    "                df[\"loan_type\"]\n",
-    "                .dropna()\n",
-    "                .astype(str)\n",
-    "                .unique()\n",
-    "            )\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col2:\n",
-    "\n",
-    "        previous_default = st.selectbox(\n",
-    "\n",
-    "            \"Previous Default\",\n",
-    "\n",
-    "            sorted(\n",
-    "                df[\"previous_default\"]\n",
-    "                .dropna()\n",
-    "                .astype(str)\n",
-    "                .unique()\n",
-    "            )\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    with col3:\n",
-    "\n",
-    "        loan_status = st.selectbox(\n",
-    "\n",
-    "            \"Loan Status\",\n",
-    "\n",
-    "            sorted(\n",
-    "                df[\"loan_status\"]\n",
-    "                .dropna()\n",
-    "                .astype(str)\n",
-    "                .unique()\n",
-    "            )\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "    st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "    # ========================================================\n",
-    "    # PREDICTION BUTTON\n",
-    "    # ========================================================\n",
-    "\n",
-    "    predict_button = st.button(\n",
-    "\n",
-    "        \"🔮 Predict Credit Risk\",\n",
-    "\n",
-    "        type=\"primary\",\n",
-    "\n",
-    "        use_container_width=True\n",
-    "\n",
-    "    )\n",
-    "\n",
-    "\n",
-    "    if predict_button:\n",
-    "\n",
-    "        # ====================================================\n",
-    "        # CREATE CUSTOMER DATA\n",
-    "        # ====================================================\n",
-    "\n",
-    "        new_customer = {\n",
-    "\n",
-    "            \"age\":\n",
-    "                age,\n",
-    "\n",
-    "            \"monthly_income_bdt\":\n",
-    "                monthly_income_bdt,\n",
-    "\n",
-    "            \"account_balance_bdt\":\n",
-    "                account_balance_bdt,\n",
-    "\n",
-    "            \"credit_score\":\n",
-    "                credit_score,\n",
-    "\n",
-    "            \"loan_amount_bdt\":\n",
-    "                loan_amount_bdt,\n",
-    "\n",
-    "            \"loan_tenure_months\":\n",
-    "                loan_tenure_months,\n",
-    "\n",
-    "            \"interest_rate_pct\":\n",
-    "                interest_rate_pct,\n",
-    "\n",
-    "            \"monthly_installment_bdt\":\n",
-    "                monthly_installment_bdt,\n",
-    "\n",
-    "            \"previous_loans\":\n",
-    "                previous_loans,\n",
-    "\n",
-    "            \"transaction_frequency_monthly\":\n",
-    "                transaction_frequency_monthly,\n",
-    "\n",
-    "            \"gender\":\n",
-    "                gender,\n",
-    "\n",
-    "            \"division\":\n",
-    "                division,\n",
-    "\n",
-    "            \"district\":\n",
-    "                district,\n",
-    "\n",
-    "            \"education\":\n",
-    "                education,\n",
-    "\n",
-    "            \"employment_type\":\n",
-    "                employment_type,\n",
-    "\n",
-    "            \"account_type\":\n",
-    "                account_type,\n",
-    "\n",
-    "            \"loan_type\":\n",
-    "                loan_type,\n",
-    "\n",
-    "            \"previous_default\":\n",
-    "                previous_default,\n",
-    "\n",
-    "            \"loan_status\":\n",
-    "                loan_status\n",
-    "\n",
-    "        }\n",
-    "\n",
-    "\n",
-    "        new_customer_df = pd.DataFrame(\n",
-    "            [new_customer]\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        # ====================================================\n",
-    "        # FEATURE ENGINEERING\n",
-    "        # ====================================================\n",
-    "\n",
-    "        if monthly_income_bdt > 0:\n",
-    "\n",
-    "            new_customer_df[\n",
-    "                \"loan_to_income_ratio\"\n",
-    "            ] = (\n",
-    "\n",
-    "                loan_amount_bdt\n",
-    "                /\n",
-    "                (monthly_income_bdt * 12)\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            new_customer_df[\n",
-    "                \"installment_to_income_ratio\"\n",
-    "            ] = (\n",
-    "\n",
-    "                monthly_installment_bdt\n",
-    "                /\n",
-    "                monthly_income_bdt\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "        else:\n",
-    "\n",
-    "            new_customer_df[\n",
-    "                \"loan_to_income_ratio\"\n",
-    "            ] = np.nan\n",
-    "\n",
-    "\n",
-    "            new_customer_df[\n",
-    "                \"installment_to_income_ratio\"\n",
-    "            ] = np.nan\n",
-    "\n",
-    "\n",
-    "        # ====================================================\n",
-    "        # HANDLE INF\n",
-    "        # ====================================================\n",
-    "\n",
-    "        new_customer_df.replace(\n",
-    "\n",
-    "            [np.inf, -np.inf],\n",
-    "\n",
-    "            np.nan,\n",
-    "\n",
-    "            inplace=True\n",
-    "\n",
-    "        )\n",
-    "\n",
-    "\n",
-    "        # ====================================================\n",
-    "        # PREDICTION\n",
-    "        # ====================================================\n",
-    "\n",
-    "        try:\n",
-    "\n",
-    "            new_prediction = (\n",
-    "\n",
-    "                best_model\n",
-    "                .predict(\n",
-    "                    new_customer_df\n",
-    "                )[0]\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            new_probability = (\n",
-    "\n",
-    "                best_model\n",
-    "                .predict_proba(\n",
-    "                    new_customer_df\n",
-    "                )[0, 1]\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            # ================================================\n",
-    "            # RISK LEVEL\n",
-    "            # ================================================\n",
-    "\n",
-    "            if new_probability >= 0.70:\n",
-    "\n",
-    "                risk_level = \"HIGH RISK\"\n",
-    "\n",
-    "            elif new_probability >= 0.40:\n",
-    "\n",
-    "                risk_level = \"MEDIUM RISK\"\n",
-    "\n",
-    "            else:\n",
-    "\n",
-    "                risk_level = \"LOW RISK\"\n",
-    "\n",
-    "\n",
-    "            # ================================================\n",
-    "            # PREDICTION LABEL\n",
-    "            # ================================================\n",
-    "\n",
-    "            if new_prediction == 1:\n",
-    "\n",
-    "                prediction_label = (\n",
-    "                    \"DEFAULTER\"\n",
-    "                )\n",
-    "\n",
-    "            else:\n",
-    "\n",
-    "                prediction_label = (\n",
-    "                    \"NON-DEFAULTER\"\n",
-    "                )\n",
-    "\n",
-    "\n",
-    "            # ================================================\n",
-    "            # RESULT\n",
-    "            # ================================================\n",
-    "\n",
-    "            st.markdown(\"---\")\n",
-    "\n",
-    "            st.subheader(\n",
-    "                \"🎯 Credit Risk Result\"\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            col1, col2, col3 = st.columns(3)\n",
-    "\n",
-    "\n",
-    "            with col1:\n",
-    "\n",
-    "                st.metric(\n",
-    "\n",
-    "                    \"Best Model\",\n",
-    "\n",
-    "                    best_model_name\n",
-    "\n",
-    "                )\n",
-    "\n",
-    "\n",
-    "            with col2:\n",
-    "\n",
-    "                st.metric(\n",
-    "\n",
-    "                    \"Default Probability\",\n",
-    "\n",
-    "                    f\"{new_probability:.2%}\"\n",
-    "\n",
-    "                )\n",
-    "\n",
-    "\n",
-    "            with col3:\n",
-    "\n",
-    "                st.metric(\n",
-    "\n",
-    "                    \"Prediction\",\n",
-    "\n",
-    "                    prediction_label\n",
-    "\n",
-    "                )\n",
-    "\n",
-    "\n",
-    "            # ================================================\n",
-    "            # RISK DISPLAY\n",
-    "            # ================================================\n",
-    "\n",
-    "            if risk_level == \"HIGH RISK\":\n",
-    "\n",
-    "                st.markdown(\n",
-    "\n",
-    "                    '<div class=\"risk-high\">'\n",
-    "                    '⚠️ HIGH RISK'\n",
-    "                    '</div>',\n",
-    "\n",
-    "                    unsafe_allow_html=True\n",
-    "\n",
-    "                )\n",
-    "\n",
-    "\n",
-    "            elif risk_level == \"MEDIUM RISK\":\n",
-    "\n",
-    "                st.markdown(\n",
-    "\n",
-    "                    '<div class=\"risk-medium\">'\n",
-    "                    '⚠️ MEDIUM RISK'\n",
-    "                    '</div>',\n",
-    "\n",
-    "                    unsafe_allow_html=True\n",
-    "\n",
-    "                )\n",
-    "\n",
-    "\n",
-    "            else:\n",
-    "\n",
-    "                st.markdown(\n",
-    "\n",
-    "                    '<div class=\"risk-low\">'\n",
-    "                    '✅ LOW RISK'\n",
-    "                    '</div>',\n",
-    "\n",
-    "                    unsafe_allow_html=True\n",
-    "\n",
-    "                )\n",
-    "\n",
-    "\n",
-    "            st.markdown(\"---\")\n",
-    "\n",
-    "\n",
-    "            # ================================================\n",
-    "            # PROBABILITY BAR\n",
-    "            # ================================================\n",
-    "\n",
-    "            st.subheader(\n",
-    "                \"Default Probability\"\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            st.progress(\n",
-    "                float(new_probability)\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            st.write(\n",
-    "\n",
-    "                f\"Probability of Default: \"\n",
-    "                f\"**{new_probability:.2%}**\"\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            # ================================================\n",
-    "            # CUSTOMER RISK REPORT\n",
-    "            # ================================================\n",
-    "\n",
-    "            new_customer_report = pd.DataFrame({\n",
-    "\n",
-    "                \"Model\": [\n",
-    "\n",
-    "                    best_model_name\n",
-    "\n",
-    "                ],\n",
-    "\n",
-    "                \"Prediction\": [\n",
-    "\n",
-    "                    prediction_label\n",
-    "\n",
-    "                ],\n",
-    "\n",
-    "                \"Default_Probability\": [\n",
-    "\n",
-    "                    new_probability\n",
-    "\n",
-    "                ],\n",
-    "\n",
-    "                \"Risk_Level\": [\n",
-    "\n",
-    "                    risk_level\n",
-    "\n",
-    "                ]\n",
-    "\n",
-    "            })\n",
-    "\n",
-    "\n",
-    "            st.subheader(\n",
-    "                \"📋 Customer Risk Report\"\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            st.dataframe(\n",
-    "\n",
-    "                new_customer_report.style.format({\n",
-    "\n",
-    "                    \"Default_Probability\":\n",
-    "                        \"{:.2%}\"\n",
-    "\n",
-    "                }),\n",
-    "\n",
-    "                use_container_width=True\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            # ================================================\n",
-    "            # CUSTOMER INFORMATION\n",
-    "            # ================================================\n",
-    "\n",
-    "            with st.expander(\n",
-    "                \"👤 View Customer Information\"\n",
-    "            ):\n",
-    "\n",
-    "                st.dataframe(\n",
-    "\n",
-    "                    new_customer_df,\n",
-    "\n",
-    "                    use_container_width=True\n",
-    "\n",
-    "                )\n",
-    "\n",
-    "\n",
-    "            # ================================================\n",
-    "            # DOWNLOAD REPORT\n",
-    "            # ================================================\n",
-    "\n",
-    "            csv_data = (\n",
-    "\n",
-    "                new_customer_report\n",
-    "                .to_csv(\n",
-    "                    index=False\n",
-    "                )\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "            st.download_button(\n",
-    "\n",
-    "                label=\"⬇️ Download Risk Report\",\n",
-    "\n",
-    "                data=csv_data,\n",
-    "\n",
-    "                file_name=\"new_customer_prediction.csv\",\n",
-    "\n",
-    "                mime=\"text/csv\",\n",
-    "\n",
-    "                use_container_width=True\n",
-    "\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "        except Exception as e:\n",
-    "\n",
-    "            st.error(\n",
-    "                f\"Prediction Error: {e}\"\n",
-    "            )\n",
-    "\n",
-    "\n",
-    "# ============================================================\n",
-    "# FOOTER\n",
-    "# ============================================================\n",
-    "\n",
-    "st.markdown(\"---\")\n",
-    "\n",
-    "st.markdown(\n",
-    "\n",
-    "    \"\"\"\n",
-    "    <div style=\"text-align:center; color:gray;\">\n",
-    "\n",
-    "    <b>Credit Risk Prediction System</b><br>\n",
-    "\n",
-    "    Machine Learning | Credit Risk Analytics | Data Science\n",
-    "\n",
-    "    </div>\n",
-    "    \"\"\",\n",
-    "\n",
-    "    unsafe_allow_html=True\n",
-    "\n",
-    ")"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "id": "b0ed7e80-ce91-4d21-a2ea-dbd423d5212f",
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3 (ipykernel)",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.13.9"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 5
+
+    .sub-title {
+        font-size: 18px;
+        text-align: center;
+        color: #666666;
+        margin-bottom: 30px;
+    }
+
+    .metric-card {
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        text-align: center;
+    }
+
+    .risk-high {
+        background-color: #ffcccc;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+        color: #990000;
+    }
+
+    .risk-medium {
+        background-color: #fff0b3;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+        color: #996600;
+    }
+
+    .risk-low {
+        background-color: #ccffcc;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+        color: #006600;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# TITLE
+# ============================================================
+
+st.markdown(
+    '<div class="main-title">🏦 Credit Risk Prediction System</div>',
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    '<div class="sub-title">'
+    'Machine Learning Based Credit Default Prediction & Risk Assessment'
+    '</div>',
+    unsafe_allow_html=True
+)
+
+
+# ============================================================
+# SIDEBAR
+# ============================================================
+
+st.sidebar.title("🏦 Credit Risk System")
+
+st.sidebar.markdown(
+    """
+    ### Navigation
+
+    Use the tabs in the main panel to explore:
+
+    - 📊 Dashboard
+    - 🔍 EDA
+    - 👥 Defaulter Analysis
+    - 📈 Correlation
+    - 🤖 Model Comparison
+    - 🏆 Best Model
+    - 👤 New Customer Prediction
+    """
+)
+
+st.sidebar.markdown("---")
+
+uploaded_file = st.sidebar.file_uploader(
+    "Upload Credit Risk Dataset",
+    type=["csv", "xls", "xlsx"]
+)
+
+
+# ============================================================
+# LOAD DATA FUNCTION
+# ============================================================
+
+@st.cache_data
+def load_data(uploaded_file):
+
+    if uploaded_file is None:
+        return None
+
+    file_name = uploaded_file.name.lower()
+
+    if file_name.endswith(".csv"):
+
+        data = pd.read_csv(uploaded_file)
+
+    elif file_name.endswith(".xls"):
+
+        data = pd.read_excel(uploaded_file)
+
+    elif file_name.endswith(".xlsx"):
+
+        data = pd.read_excel(uploaded_file)
+
+    else:
+
+        raise ValueError(
+            "Unsupported file format."
+        )
+
+    return data
+
+
+# ============================================================
+# LOAD DATA
+# ============================================================
+
+if uploaded_file is None:
+
+    st.info(
+        "👈 Please upload your credit risk dataset from the sidebar."
+    )
+
+    st.markdown(
+        """
+        ### Expected dataset
+
+        Your dataset should contain columns similar to:
+
+        `customer_id`, `customer_name`, `age`, `gender`,
+        `division`, `district`, `education`,
+        `employment_type`, `monthly_income_bdt`,
+        `account_balance_bdt`, `credit_score`,
+        `loan_amount_bdt`, `loan_tenure_months`,
+        `interest_rate_pct`, `monthly_installment_bdt`,
+        `previous_loans`, `transaction_frequency_monthly`,
+        `account_type`, `loan_type`, `previous_default`,
+        `loan_status`, `default`
+        """
+    )
+
+    st.stop()
+
+
+# ============================================================
+# READ DATA
+# ============================================================
+
+try:
+
+    df = load_data(uploaded_file)
+
+except Exception as e:
+
+    st.error(
+        f"Error loading dataset: {e}"
+    )
+
+    st.stop()
+
+
+# ============================================================
+# BASIC VALIDATION
+# ============================================================
+
+required_columns = [
+
+    "age",
+    "monthly_income_bdt",
+    "account_balance_bdt",
+    "credit_score",
+    "loan_amount_bdt",
+    "loan_tenure_months",
+    "interest_rate_pct",
+    "monthly_installment_bdt",
+    "previous_loans",
+    "transaction_frequency_monthly",
+    "gender",
+    "division",
+    "district",
+    "education",
+    "employment_type",
+    "account_type",
+    "loan_type",
+    "previous_default",
+    "loan_status",
+    "default"
+
+]
+
+
+missing_columns = [
+    col
+    for col in required_columns
+    if col not in df.columns
+]
+
+
+if missing_columns:
+
+    st.error(
+        "The following required columns are missing:"
+    )
+
+    st.write(
+        missing_columns
+    )
+
+    st.stop()
+
+
+# ============================================================
+# REMOVE CUSTOMER ID
+# ============================================================
+
+df = df.drop(
+    columns=["customer_id"],
+    errors="ignore"
+)
+
+
+# ============================================================
+# FEATURE ENGINEERING
+# ============================================================
+
+df["loan_to_income_ratio"] = (
+
+    df["loan_amount_bdt"]
+    /
+    (df["monthly_income_bdt"] * 12)
+
+)
+
+
+df["installment_to_income_ratio"] = (
+
+    df["monthly_installment_bdt"]
+    /
+    df["monthly_income_bdt"]
+
+)
+
+
+# ============================================================
+# HANDLE INFINITE VALUES
+# ============================================================
+
+df.replace(
+    [np.inf, -np.inf],
+    np.nan,
+    inplace=True
+)
+
+
+# ============================================================
+# CREATE DEFAULTER DATASET
+# ============================================================
+
+defaulters = df[
+    df["default"] == 1
+].copy()
+
+
+non_defaulters = df[
+    df["default"] == 0
+].copy()
+
+
+# ============================================================
+# BASIC STATISTICS
+# ============================================================
+
+total_customers = len(df)
+
+total_defaulters = len(defaulters)
+
+total_non_defaulters = len(non_defaulters)
+
+default_rate = (
+
+    total_defaulters
+    /
+    total_customers
+
+) * 100
+
+
+total_defaulted_loan = (
+
+    defaulters[
+        "loan_amount_bdt"
+    ].sum()
+
+)
+
+
+avg_defaulted_loan = (
+
+    defaulters[
+        "loan_amount_bdt"
+    ].mean()
+
+)
+
+
+avg_defaulter_income = (
+
+    defaulters[
+        "monthly_income_bdt"
+    ].mean()
+
+)
+
+
+avg_defaulter_credit_score = (
+
+    defaulters[
+        "credit_score"
+    ].mean()
+
+)
+
+
+avg_defaulter_age = (
+
+    defaulters[
+        "age"
+    ].mean()
+
+)
+
+
+# ============================================================
+# FEATURE LIST
+# ============================================================
+
+numeric_features = [
+
+    "age",
+
+    "monthly_income_bdt",
+
+    "account_balance_bdt",
+
+    "credit_score",
+
+    "loan_amount_bdt",
+
+    "loan_tenure_months",
+
+    "interest_rate_pct",
+
+    "monthly_installment_bdt",
+
+    "previous_loans",
+
+    "transaction_frequency_monthly",
+
+    "loan_to_income_ratio",
+
+    "installment_to_income_ratio"
+
+]
+
+
+categorical_features = [
+
+    "gender",
+
+    "division",
+
+    "district",
+
+    "education",
+
+    "employment_type",
+
+    "account_type",
+
+    "loan_type",
+
+    "previous_default",
+
+    "loan_status"
+
+]
+
+
+# ============================================================
+# PREPROCESSING
+# ============================================================
+
+numeric_transformer = Pipeline(
+
+    steps=[
+
+        (
+            "imputer",
+            SimpleImputer(
+                strategy="median"
+            )
+        ),
+
+        (
+            "scaler",
+            StandardScaler()
+        )
+
+    ]
+
+)
+
+
+categorical_transformer = Pipeline(
+
+    steps=[
+
+        (
+            "imputer",
+            SimpleImputer(
+                strategy="most_frequent"
+            )
+        ),
+
+        (
+            "encoder",
+            OneHotEncoder(
+                handle_unknown="ignore"
+            )
+        )
+
+    ]
+
+)
+
+
+preprocessor = ColumnTransformer(
+
+    transformers=[
+
+        (
+            "numeric",
+            numeric_transformer,
+            numeric_features
+        ),
+
+        (
+            "categorical",
+            categorical_transformer,
+            categorical_features
+        )
+
+    ]
+
+)
+
+
+# ============================================================
+# FEATURES AND TARGET
+# ============================================================
+
+X = df.drop(
+
+    columns=[
+        "customer_name",
+        "default"
+    ],
+
+    errors="ignore"
+
+)
+
+
+y = df["default"]
+
+
+# ============================================================
+# TRAIN TEST SPLIT
+# ============================================================
+
+X_train, X_test, y_train, y_test = train_test_split(
+
+    X,
+
+    y,
+
+    test_size=0.20,
+
+    random_state=42,
+
+    stratify=y
+
+)
+
+
+# ============================================================
+# ML MODELS
+# ============================================================
+
+models = {
+
+    "Logistic Regression":
+
+        LogisticRegression(
+
+            max_iter=2000,
+
+            class_weight="balanced",
+
+            random_state=42
+
+        ),
+
+
+    "Decision Tree":
+
+        DecisionTreeClassifier(
+
+            max_depth=6,
+
+            min_samples_split=10,
+
+            min_samples_leaf=5,
+
+            class_weight="balanced",
+
+            random_state=42
+
+        ),
+
+
+    "Random Forest":
+
+        RandomForestClassifier(
+
+            n_estimators=300,
+
+            max_depth=10,
+
+            min_samples_split=10,
+
+            min_samples_leaf=4,
+
+            class_weight="balanced",
+
+            random_state=42,
+
+            n_jobs=-1
+
+        ),
+
+
+    "Gradient Boosting":
+
+        GradientBoostingClassifier(
+
+            n_estimators=200,
+
+            learning_rate=0.05,
+
+            max_depth=3,
+
+            min_samples_split=10,
+
+            random_state=42
+
+        ),
+
+
+    "XGBoost":
+
+        XGBClassifier(
+
+            n_estimators=300,
+
+            learning_rate=0.05,
+
+            max_depth=4,
+
+            min_child_weight=3,
+
+            subsample=0.8,
+
+            colsample_bytree=0.8,
+
+            eval_metric="logloss",
+
+            random_state=42,
+
+            n_jobs=-1
+
+        ),
+
+
+    "SVM":
+
+        SVC(
+
+            kernel="rbf",
+
+            C=1.0,
+
+            probability=True,
+
+            class_weight="balanced",
+
+            random_state=42
+
+        ),
+
+
+    "KNN":
+
+        KNeighborsClassifier(
+
+            n_neighbors=7,
+
+            weights="distance"
+
+        )
+
 }
+
+
+# ============================================================
+# TRAIN MODELS
+# ============================================================
+
+@st.cache_resource
+def train_models(X_train, X_test, y_train, y_test):
+
+    trained_models = {}
+
+    results = {}
+
+    roc_data = {}
+
+    for name, model in models.items():
+
+        pipeline = Pipeline(
+
+            steps=[
+
+                (
+                    "preprocessor",
+                    preprocessor
+                ),
+
+                (
+                    "model",
+                    model
+                )
+
+            ]
+
+        )
+
+
+        pipeline.fit(
+            X_train,
+            y_train
+        )
+
+
+        trained_models[
+            name
+        ] = pipeline
+
+
+        y_pred = pipeline.predict(
+            X_test
+        )
+
+
+        y_prob = pipeline.predict_proba(
+            X_test
+        )[:, 1]
+
+
+        accuracy = accuracy_score(
+            y_test,
+            y_pred
+        )
+
+
+        precision = precision_score(
+            y_test,
+            y_pred,
+            zero_division=0
+        )
+
+
+        recall = recall_score(
+            y_test,
+            y_pred,
+            zero_division=0
+        )
+
+
+        f1 = f1_score(
+            y_test,
+            y_pred,
+            zero_division=0
+        )
+
+
+        roc_auc = roc_auc_score(
+            y_test,
+            y_prob
+        )
+
+
+        results[name] = {
+
+            "Model": name,
+
+            "Accuracy": accuracy,
+
+            "Precision": precision,
+
+            "Recall": recall,
+
+            "F1 Score": f1,
+
+            "ROC-AUC": roc_auc
+
+        }
+
+
+        fpr, tpr, thresholds = roc_curve(
+
+            y_test,
+
+            y_prob
+
+        )
+
+
+        roc_data[name] = {
+
+            "fpr": fpr,
+
+            "tpr": tpr,
+
+            "auc": roc_auc
+
+        }
+
+
+    results_df = pd.DataFrame(
+        list(results.values())
+    )
+
+
+    results_df = results_df.sort_values(
+
+        by="ROC-AUC",
+
+        ascending=False
+
+    )
+
+
+    return (
+
+        trained_models,
+
+        results_df,
+
+        roc_data
+
+    )
+
+
+# ============================================================
+# TRAINING SPINNER
+# ============================================================
+
+with st.spinner(
+    "🤖 Training machine learning models..."
+):
+
+    (
+        trained_models,
+        results_df,
+        roc_data
+    ) = train_models(
+
+        X_train,
+        X_test,
+        y_train,
+        y_test
+
+    )
+
+
+# ============================================================
+# BEST MODEL
+# ============================================================
+
+best_model_name = (
+
+    results_df.iloc[0]["Model"]
+
+)
+
+
+best_model = (
+
+    trained_models[
+        best_model_name
+    ]
+
+)
+
+
+# ============================================================
+# BEST MODEL PREDICTIONS
+# ============================================================
+
+best_pred = best_model.predict(
+    X_test
+)
+
+
+best_prob = best_model.predict_proba(
+    X_test
+)[:, 1]
+
+
+accuracy = accuracy_score(
+    y_test,
+    best_pred
+)
+
+
+precision = precision_score(
+    y_test,
+    best_pred,
+    zero_division=0
+)
+
+
+recall = recall_score(
+    y_test,
+    best_pred,
+    zero_division=0
+)
+
+
+f1 = f1_score(
+    y_test,
+    best_pred,
+    zero_division=0
+)
+
+
+roc_auc = roc_auc_score(
+    y_test,
+    best_prob
+)
+
+
+# ============================================================
+# TABS
+# ============================================================
+
+tabs = st.tabs(
+
+    [
+
+        "📊 Dashboard",
+
+        "🔍 EDA",
+
+        "👥 Defaulter Analysis",
+
+        "📈 Correlation",
+
+        "🤖 Model Comparison",
+
+        "🏆 Best Model",
+
+        "👤 New Customer Prediction"
+
+    ]
+
+)
+
+
+# ============================================================
+# TAB 1 — DASHBOARD
+# ============================================================
+
+with tabs[0]:
+
+    st.header(
+        "📊 Credit Risk Dashboard"
+    )
+
+
+    st.markdown(
+        "### Portfolio Overview"
+    )
+
+
+    col1, col2, col3, col4 = st.columns(4)
+
+
+    with col1:
+
+        st.metric(
+            "Total Customers",
+            f"{total_customers:,}"
+        )
+
+
+    with col2:
+
+        st.metric(
+            "Total Defaulters",
+            f"{total_defaulters:,}"
+        )
+
+
+    with col3:
+
+        st.metric(
+            "Default Rate",
+            f"{default_rate:.2f}%"
+        )
+
+
+    with col4:
+
+        st.metric(
+            "Defaulted Loan",
+            f"৳{total_defaulted_loan:,.0f}"
+        )
+
+
+    st.markdown("---")
+
+
+    col1, col2, col3, col4 = st.columns(4)
+
+
+    with col1:
+
+        st.metric(
+            "Avg Defaulter Income",
+            f"৳{avg_defaulter_income:,.0f}"
+        )
+
+
+    with col2:
+
+        st.metric(
+            "Avg Credit Score",
+            f"{avg_defaulter_credit_score:.1f}"
+        )
+
+
+    with col3:
+
+        st.metric(
+            "Avg Defaulter Age",
+            f"{avg_defaulter_age:.1f}"
+        )
+
+
+    with col4:
+
+        st.metric(
+            "Avg Defaulted Loan",
+            f"৳{avg_defaulted_loan:,.0f}"
+        )
+
+
+    st.markdown("---")
+
+
+    col1, col2 = st.columns(2)
+
+
+    with col1:
+
+        fig, ax = plt.subplots(
+            figsize=(7, 5)
+        )
+
+        sns.countplot(
+            data=df,
+            x="default",
+            ax=ax
+        )
+
+        ax.set_title(
+            "Default Distribution"
+        )
+
+        ax.set_xlabel(
+            "Default (0 = No, 1 = Yes)"
+        )
+
+        ax.set_ylabel(
+            "Number of Customers"
+        )
+
+        st.pyplot(fig)
+
+
+    with col2:
+
+        default_counts = (
+
+            df["default"]
+            .value_counts()
+            .sort_index()
+
+        )
+
+
+        fig, ax = plt.subplots(
+            figsize=(7, 5)
+        )
+
+        ax.pie(
+
+            default_counts.values,
+
+            labels=[
+                "Non-Defaulter",
+                "Defaulter"
+            ],
+
+            autopct="%1.1f%%"
+
+        )
+
+        ax.set_title(
+            "Default Percentage"
+        )
+
+        st.pyplot(fig)
+
+
+    st.markdown("---")
+
+
+    st.subheader(
+        "Dataset Preview"
+    )
+
+    st.dataframe(
+        df.head(20),
+        use_container_width=True
+    )
+
+
+    st.subheader(
+        "Dataset Information"
+    )
+
+    col1, col2 = st.columns(2)
+
+
+    with col1:
+
+        st.write(
+            "**Rows:**",
+            df.shape[0]
+        )
+
+        st.write(
+            "**Columns:**",
+            df.shape[1]
+        )
+
+
+    with col2:
+
+        st.write(
+            "**Missing Values:**",
+            int(df.isnull().sum().sum())
+        )
+
+        st.write(
+            "**Duplicate Rows:**",
+            int(df.duplicated().sum())
+        )
+
+
+# ============================================================
+# TAB 2 — EDA
+# ============================================================
+
+with tabs[1]:
+
+    st.header(
+        "🔍 Exploratory Data Analysis"
+    )
+
+
+    eda_variable = st.selectbox(
+
+        "Select numerical variable",
+
+        numeric_features
+
+    )
+
+
+    col1, col2 = st.columns(2)
+
+
+    with col1:
+
+        fig, ax = plt.subplots(
+            figsize=(7, 5)
+        )
+
+        sns.histplot(
+
+            data=df,
+
+            x=eda_variable,
+
+            bins=25,
+
+            kde=True,
+
+            ax=ax
+
+        )
+
+        ax.set_title(
+            f"Distribution of {eda_variable}"
+        )
+
+        st.pyplot(fig)
+
+
+    with col2:
+
+        fig, ax = plt.subplots(
+            figsize=(7, 5)
+        )
+
+        sns.boxplot(
+
+            data=df,
+
+            x="default",
+
+            y=eda_variable,
+
+            ax=ax
+
+        )
+
+        ax.set_title(
+
+            f"{eda_variable}: "
+            "Defaulters vs Non-Defaulters"
+
+        )
+
+        ax.set_xlabel(
+            "Default"
+        )
+
+        st.pyplot(fig)
+
+
+    st.markdown("---")
+
+
+    st.subheader(
+        "Categorical Variable Analysis"
+    )
+
+
+    categorical_variable = st.selectbox(
+
+        "Select categorical variable",
+
+        [
+
+            "gender",
+
+            "division",
+
+            "district",
+
+            "education",
+
+            "employment_type",
+
+            "account_type",
+
+            "loan_type",
+
+            "previous_default",
+
+            "loan_status"
+
+        ]
+
+    )
+
+
+    categorical_counts = (
+
+        df[categorical_variable]
+        .value_counts()
+        .head(15)
+
+    )
+
+
+    fig, ax = plt.subplots(
+        figsize=(10, 5)
+    )
+
+
+    sns.barplot(
+
+        x=categorical_counts.values,
+
+        y=categorical_counts.index,
+
+        ax=ax
+
+    )
+
+
+    ax.set_title(
+        f"Distribution of {categorical_variable}"
+    )
+
+    ax.set_xlabel(
+        "Number of Customers"
+    )
+
+    ax.set_ylabel(
+        categorical_variable
+    )
+
+
+    st.pyplot(fig)
+
+
+# ============================================================
+# TAB 3 — DEFAULTER ANALYSIS
+# ============================================================
+
+with tabs[2]:
+
+    st.header(
+        "👥 Defaulter Analysis"
+    )
+
+
+    analysis_variable = st.selectbox(
+
+        "Select variable for default analysis",
+
+        [
+
+            "gender",
+
+            "division",
+
+            "education",
+
+            "employment_type",
+
+            "loan_type",
+
+            "previous_default"
+
+        ]
+
+    )
+
+
+    default_rate_analysis = (
+
+        df.groupby(
+            analysis_variable
+        )["default"]
+
+        .mean()
+
+        .mul(100)
+
+        .sort_values(
+            ascending=False
+        )
+
+    )
+
+
+    st.subheader(
+        f"Default Rate by {analysis_variable}"
+    )
+
+
+    fig, ax = plt.subplots(
+        figsize=(10, 6)
+    )
+
+
+    sns.barplot(
+
+        x=default_rate_analysis.values,
+
+        y=default_rate_analysis.index,
+
+        ax=ax
+
+    )
+
+
+    ax.set_xlabel(
+        "Default Rate (%)"
+    )
+
+    ax.set_ylabel(
+        analysis_variable
+    )
+
+    ax.set_title(
+        f"Default Rate by {analysis_variable}"
+    )
+
+
+    st.pyplot(fig)
+
+
+    st.dataframe(
+
+        default_rate_analysis
+        .reset_index()
+        .rename(
+            columns={
+                "default":
+                    "Default Rate (%)"
+            }
+        ),
+
+        use_container_width=True
+
+    )
+
+
+    st.markdown("---")
+
+
+    st.subheader(
+        "Defaulter Profile"
+    )
+
+
+    profile = pd.DataFrame({
+
+        "Metric": [
+
+            "Average Age",
+
+            "Average Income",
+
+            "Average Account Balance",
+
+            "Average Credit Score",
+
+            "Average Loan Amount",
+
+            "Average Previous Loans",
+
+            "Average Transaction Frequency",
+
+            "Average Loan-to-Income Ratio",
+
+            "Average Installment-to-Income Ratio"
+
+        ],
+
+        "Value": [
+
+            defaulters[
+                "age"
+            ].mean(),
+
+            defaulters[
+                "monthly_income_bdt"
+            ].mean(),
+
+            defaulters[
+                "account_balance_bdt"
+            ].mean(),
+
+            defaulters[
+                "credit_score"
+            ].mean(),
+
+            defaulters[
+                "loan_amount_bdt"
+            ].mean(),
+
+            defaulters[
+                "previous_loans"
+            ].mean(),
+
+            defaulters[
+                "transaction_frequency_monthly"
+            ].mean(),
+
+            defaulters[
+                "loan_to_income_ratio"
+            ].mean(),
+
+            defaulters[
+                "installment_to_income_ratio"
+            ].mean()
+
+        ]
+
+    })
+
+
+    st.dataframe(
+        profile,
+        use_container_width=True
+    )
+
+
+# ============================================================
+# TAB 4 — CORRELATION
+# ============================================================
+
+with tabs[3]:
+
+    st.header(
+        "📈 Correlation Analysis"
+    )
+
+
+    correlation = df[
+        numeric_features + ["default"]
+    ].corr()
+
+
+    fig, ax = plt.subplots(
+        figsize=(14, 10)
+    )
+
+
+    sns.heatmap(
+
+        correlation,
+
+        annot=True,
+
+        fmt=".2f",
+
+        cmap="coolwarm",
+
+        center=0,
+
+        ax=ax
+
+    )
+
+
+    ax.set_title(
+        "Correlation Matrix"
+    )
+
+
+    st.pyplot(fig)
+
+
+    st.markdown("---")
+
+
+    st.subheader(
+        "Variables Most Associated with Default"
+    )
+
+
+    default_corr = (
+
+        correlation["default"]
+
+        .drop("default")
+
+        .sort_values(
+
+            key=abs,
+
+            ascending=False
+
+        )
+
+    )
+
+
+    correlation_table = (
+
+        default_corr
+        .reset_index()
+
+    )
+
+
+    correlation_table.columns = [
+
+        "Variable",
+        "Correlation"
+
+    ]
+
+
+    st.dataframe(
+
+        correlation_table,
+
+        use_container_width=True
+
+    )
+
+
+# ============================================================
+# TAB 5 — MODEL COMPARISON
+# ============================================================
+
+with tabs[4]:
+
+    st.header(
+        "🤖 Machine Learning Model Comparison"
+    )
+
+
+    st.markdown(
+        "Models are ranked according to ROC-AUC."
+    )
+
+
+    display_results = results_df.copy()
+
+
+    for col in [
+
+        "Accuracy",
+        "Precision",
+        "Recall",
+        "F1 Score",
+        "ROC-AUC"
+
+    ]:
+
+        display_results[col] = (
+
+            display_results[col]
+            .round(4)
+
+        )
+
+
+    st.dataframe(
+
+        display_results,
+
+        use_container_width=True,
+
+        hide_index=True
+
+    )
+
+
+    st.markdown("---")
+
+
+    col1, col2 = st.columns(2)
+
+
+    with col1:
+
+        fig, ax = plt.subplots(
+            figsize=(8, 6)
+        )
+
+
+        sns.barplot(
+
+            data=results_df,
+
+            x="ROC-AUC",
+
+            y="Model",
+
+            ax=ax
+
+        )
+
+
+        ax.set_xlim(
+            0,
+            1
+        )
+
+
+        ax.set_title(
+            "Model Comparison - ROC-AUC"
+        )
+
+
+        st.pyplot(fig)
+
+
+    with col2:
+
+        fig, ax = plt.subplots(
+            figsize=(8, 6)
+        )
+
+
+        sns.barplot(
+
+            data=results_df,
+
+            x="Recall",
+
+            y="Model",
+
+            ax=ax
+
+        )
+
+
+        ax.set_xlim(
+            0,
+            1
+        )
+
+
+        ax.set_title(
+            "Defaulter Recall Comparison"
+        )
+
+
+        st.pyplot(fig)
+
+
+    st.markdown("---")
+
+
+    col1, col2 = st.columns(2)
+
+
+    with col1:
+
+        fig, ax = plt.subplots(
+            figsize=(8, 6)
+        )
+
+
+        sns.barplot(
+
+            data=results_df,
+
+            x="F1 Score",
+
+            y="Model",
+
+            ax=ax
+
+        )
+
+
+        ax.set_xlim(
+            0,
+            1
+        )
+
+
+        ax.set_title(
+            "F1 Score Comparison"
+        )
+
+
+        st.pyplot(fig)
+
+
+    with col2:
+
+        fig, ax = plt.subplots(
+            figsize=(8, 6)
+        )
+
+
+        for name, data in roc_data.items():
+
+            ax.plot(
+
+                data["fpr"],
+
+                data["tpr"],
+
+                label=(
+
+                    f"{name} "
+                    f"(AUC={data['auc']:.3f})"
+
+                )
+
+            )
+
+
+        ax.plot(
+
+            [0, 1],
+
+            [0, 1],
+
+            linestyle="--"
+
+        )
+
+
+        ax.set_xlabel(
+            "False Positive Rate"
+        )
+
+        ax.set_ylabel(
+            "True Positive Rate"
+        )
+
+        ax.set_title(
+            "ROC Curves"
+        )
+
+        ax.legend(
+            fontsize=8
+        )
+
+
+        st.pyplot(fig)
+
+
+    st.download_button(
+
+        label="⬇️ Download Model Comparison",
+
+        data=results_df.to_csv(
+            index=False
+        ),
+
+        file_name="model_comparison_results.csv",
+
+        mime="text/csv"
+
+    )
+
+
+# ============================================================
+# TAB 6 — BEST MODEL
+# ============================================================
+
+with tabs[5]:
+
+    st.header(
+        "🏆 Best Credit Risk Model"
+    )
+
+
+    st.success(
+        f"Best Model: {best_model_name}"
+    )
+
+
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+
+    with col1:
+
+        st.metric(
+            "Accuracy",
+            f"{accuracy:.3f}"
+        )
+
+
+    with col2:
+
+        st.metric(
+            "Precision",
+            f"{precision:.3f}"
+        )
+
+
+    with col3:
+
+        st.metric(
+            "Recall",
+            f"{recall:.3f}"
+        )
+
+
+    with col4:
+
+        st.metric(
+            "F1 Score",
+            f"{f1:.3f}"
+        )
+
+
+    with col5:
+
+        st.metric(
+            "ROC-AUC",
+            f"{roc_auc:.3f}"
+        )
+
+
+    st.markdown("---")
+
+
+    st.subheader(
+        "Classification Report"
+    )
+
+
+    report = classification_report(
+
+        y_test,
+
+        best_pred,
+
+        target_names=[
+
+            "Non-Defaulter",
+
+            "Defaulter"
+
+        ],
+
+        zero_division=0,
+
+        output_dict=True
+
+    )
+
+
+    report_df = pd.DataFrame(
+        report
+    ).transpose()
+
+
+    st.dataframe(
+
+        report_df.round(4),
+
+        use_container_width=True
+
+    )
+
+
+    st.markdown("---")
+
+
+    st.subheader(
+        "Confusion Matrix"
+    )
+
+
+    cm = confusion_matrix(
+
+        y_test,
+
+        best_pred
+
+    )
+
+
+    fig, ax = plt.subplots(
+        figsize=(7, 6)
+    )
+
+
+    sns.heatmap(
+
+        cm,
+
+        annot=True,
+
+        fmt="d",
+
+        cmap="Blues",
+
+        xticklabels=[
+
+            "Non-Defaulter",
+
+            "Defaulter"
+
+        ],
+
+        yticklabels=[
+
+            "Non-Defaulter",
+
+            "Defaulter"
+
+        ],
+
+        ax=ax
+
+    )
+
+
+    ax.set_xlabel(
+        "Predicted"
+    )
+
+    ax.set_ylabel(
+        "Actual"
+    )
+
+    ax.set_title(
+        f"Confusion Matrix - {best_model_name}"
+    )
+
+
+    st.pyplot(fig)
+
+
+    # ========================================================
+    # FEATURE IMPORTANCE
+    # ========================================================
+
+    st.markdown("---")
+
+    st.subheader(
+        "🔎 Feature Importance"
+    )
+
+
+    model_object = (
+
+        best_model.named_steps[
+            "model"
+        ]
+
+    )
+
+
+    preprocessor_object = (
+
+        best_model.named_steps[
+            "preprocessor"
+        ]
+
+    )
+
+
+    if hasattr(
+
+        model_object,
+
+        "feature_importances_"
+
+    ):
+
+        feature_names = (
+
+            preprocessor_object
+            .get_feature_names_out()
+
+        )
+
+
+        importance = (
+
+            model_object
+            .feature_importances_
+
+        )
+
+
+        feature_importance = pd.DataFrame({
+
+            "Feature":
+                feature_names,
+
+            "Importance":
+                importance
+
+        })
+
+
+        feature_importance = (
+
+            feature_importance
+
+            .sort_values(
+
+                "Importance",
+
+                ascending=False
+
+            )
+
+            .head(20)
+
+        )
+
+
+        st.dataframe(
+
+            feature_importance,
+
+            use_container_width=True
+
+        )
+
+
+        fig, ax = plt.subplots(
+
+            figsize=(10, 8)
+
+        )
+
+
+        sns.barplot(
+
+            data=feature_importance,
+
+            x="Importance",
+
+            y="Feature",
+
+            ax=ax
+
+        )
+
+
+        ax.set_title(
+
+            f"Top 20 Feature Importance - "
+            f"{best_model_name}"
+
+        )
+
+
+        st.pyplot(fig)
+
+
+    else:
+
+        st.info(
+
+            f"{best_model_name} does not provide "
+            "built-in feature_importances_."
+
+        )
+
+
+    # ========================================================
+    # SAMPLE TEST CUSTOMER
+    # ========================================================
+
+    st.markdown("---")
+
+    st.subheader(
+        "📋 Sample Test Customer Predictions"
+    )
+
+
+    sample_customers = (
+
+        X_test
+        .head(10)
+        .copy()
+
+    )
+
+
+    sample_actual = (
+
+        y_test
+        .loc[
+            sample_customers.index
+        ]
+
+    )
+
+
+    sample_prediction = (
+
+        best_model
+        .predict(
+            sample_customers
+        )
+
+    )
+
+
+    sample_probability = (
+
+        best_model
+        .predict_proba(
+            sample_customers
+        )[:, 1]
+
+    )
+
+
+    prediction_table = pd.DataFrame({
+
+        "Actual":
+            sample_actual.values,
+
+        "Predicted":
+            sample_prediction,
+
+        "Default_Probability":
+            sample_probability
+
+    })
+
+
+    prediction_table[
+        "Risk_Level"
+    ] = np.where(
+
+        prediction_table[
+            "Default_Probability"
+        ] >= 0.70,
+
+        "High Risk",
+
+        np.where(
+
+            prediction_table[
+                "Default_Probability"
+            ] >= 0.40,
+
+            "Medium Risk",
+
+            "Low Risk"
+
+        )
+
+    )
+
+
+    st.dataframe(
+
+        prediction_table.style.format({
+
+            "Default_Probability":
+                "{:.2%}"
+
+        }),
+
+        use_container_width=True
+
+    )
+
+
+# ============================================================
+# TAB 7 — NEW CUSTOMER PREDICTION
+# ============================================================
+
+with tabs[6]:
+
+    st.header(
+        "👤 New Customer Credit Risk Prediction"
+    )
+
+
+    st.markdown(
+        """
+        Enter the customer's information below.
+        The trained best-performing model will estimate
+        the probability of default.
+        """
+    )
+
+
+    # ========================================================
+    # NUMERIC INPUTS
+    # ========================================================
+
+    st.subheader(
+        "💰 Financial Information"
+    )
+
+
+    col1, col2, col3 = st.columns(3)
+
+
+    with col1:
+
+        age = st.number_input(
+
+            "Age",
+
+            min_value=18,
+
+            max_value=100,
+
+            value=30
+
+        )
+
+
+    with col2:
+
+        monthly_income_bdt = st.number_input(
+
+            "Monthly Income (BDT)",
+
+            min_value=0.0,
+
+            value=50000.0,
+
+            step=1000.0
+
+        )
+
+
+    with col3:
+
+        account_balance_bdt = st.number_input(
+
+            "Account Balance (BDT)",
+
+            min_value=0.0,
+
+            value=100000.0,
+
+            step=5000.0
+
+        )
+
+
+    col1, col2, col3 = st.columns(3)
+
+
+    with col1:
+
+        credit_score = st.number_input(
+
+            "Credit Score",
+
+            min_value=0.0,
+
+            max_value=1000.0,
+
+            value=700.0,
+
+            step=1.0
+
+        )
+
+
+    with col2:
+
+        loan_amount_bdt = st.number_input(
+
+            "Loan Amount (BDT)",
+
+            min_value=0.0,
+
+            value=300000.0,
+
+            step=10000.0
+
+        )
+
+
+    with col3:
+
+        loan_tenure_months = st.number_input(
+
+            "Loan Tenure (Months)",
+
+            min_value=1,
+
+            max_value=360,
+
+            value=36
+
+        )
+
+
+    col1, col2, col3 = st.columns(3)
+
+
+    with col1:
+
+        interest_rate_pct = st.number_input(
+
+            "Interest Rate (%)",
+
+            min_value=0.0,
+
+            max_value=100.0,
+
+            value=10.0,
+
+            step=0.1
+
+        )
+
+
+    with col2:
+
+        monthly_installment_bdt = st.number_input(
+
+            "Monthly Installment (BDT)",
+
+            min_value=0.0,
+
+            value=10000.0,
+
+            step=500.0
+
+        )
+
+
+    with col3:
+
+        previous_loans = st.number_input(
+
+            "Previous Loans",
+
+            min_value=0,
+
+            max_value=100,
+
+            value=1
+
+        )
+
+
+    transaction_frequency_monthly = st.number_input(
+
+        "Monthly Transaction Frequency",
+
+        min_value=0,
+
+        max_value=1000,
+
+        value=20
+
+    )
+
+
+    # ========================================================
+    # CATEGORICAL INPUTS
+    # ========================================================
+
+    st.subheader(
+        "👤 Customer Information"
+    )
+
+
+    col1, col2, col3 = st.columns(3)
+
+
+    with col1:
+
+        gender = st.selectbox(
+
+            "Gender",
+
+            sorted(
+                df["gender"]
+                .dropna()
+                .astype(str)
+                .unique()
+            )
+
+        )
+
+
+    with col2:
+
+        division = st.selectbox(
+
+            "Division",
+
+            sorted(
+                df["division"]
+                .dropna()
+                .astype(str)
+                .unique()
+            )
+
+        )
+
+
+    with col3:
+
+        district = st.selectbox(
+
+            "District",
+
+            sorted(
+                df["district"]
+                .dropna()
+                .astype(str)
+                .unique()
+            )
+
+        )
+
+
+    col1, col2, col3 = st.columns(3)
+
+
+    with col1:
+
+        education = st.selectbox(
+
+            "Education",
+
+            sorted(
+                df["education"]
+                .dropna()
+                .astype(str)
+                .unique()
+            )
+
+        )
+
+
+    with col2:
+
+        employment_type = st.selectbox(
+
+            "Employment Type",
+
+            sorted(
+                df["employment_type"]
+                .dropna()
+                .astype(str)
+                .unique()
+            )
+
+        )
+
+
+    with col3:
+
+        account_type = st.selectbox(
+
+            "Account Type",
+
+            sorted(
+                df["account_type"]
+                .dropna()
+                .astype(str)
+                .unique()
+            )
+
+        )
+
+
+    col1, col2, col3 = st.columns(3)
+
+
+    with col1:
+
+        loan_type = st.selectbox(
+
+            "Loan Type",
+
+            sorted(
+                df["loan_type"]
+                .dropna()
+                .astype(str)
+                .unique()
+            )
+
+        )
+
+
+    with col2:
+
+        previous_default = st.selectbox(
+
+            "Previous Default",
+
+            sorted(
+                df["previous_default"]
+                .dropna()
+                .astype(str)
+                .unique()
+            )
+
+        )
+
+
+    with col3:
+
+        loan_status = st.selectbox(
+
+            "Loan Status",
+
+            sorted(
+                df["loan_status"]
+                .dropna()
+                .astype(str)
+                .unique()
+            )
+
+        )
+
+
+    st.markdown("---")
+
+
+    # ========================================================
+    # PREDICTION BUTTON
+    # ========================================================
+
+    predict_button = st.button(
+
+        "🔮 Predict Credit Risk",
+
+        type="primary",
+
+        use_container_width=True
+
+    )
+
+
+    if predict_button:
+
+        # ====================================================
+        # CREATE CUSTOMER DATA
+        # ====================================================
+
+        new_customer = {
+
+            "age":
+                age,
+
+            "monthly_income_bdt":
+                monthly_income_bdt,
+
+            "account_balance_bdt":
+                account_balance_bdt,
+
+            "credit_score":
+                credit_score,
+
+            "loan_amount_bdt":
+                loan_amount_bdt,
+
+            "loan_tenure_months":
+                loan_tenure_months,
+
+            "interest_rate_pct":
+                interest_rate_pct,
+
+            "monthly_installment_bdt":
+                monthly_installment_bdt,
+
+            "previous_loans":
+                previous_loans,
+
+            "transaction_frequency_monthly":
+                transaction_frequency_monthly,
+
+            "gender":
+                gender,
+
+            "division":
+                division,
+
+            "district":
+                district,
+
+            "education":
+                education,
+
+            "employment_type":
+                employment_type,
+
+            "account_type":
+                account_type,
+
+            "loan_type":
+                loan_type,
+
+            "previous_default":
+                previous_default,
+
+            "loan_status":
+                loan_status
+
+        }
+
+
+        new_customer_df = pd.DataFrame(
+            [new_customer]
+        )
+
+
+        # ====================================================
+        # FEATURE ENGINEERING
+        # ====================================================
+
+        if monthly_income_bdt > 0:
+
+            new_customer_df[
+                "loan_to_income_ratio"
+            ] = (
+
+                loan_amount_bdt
+                /
+                (monthly_income_bdt * 12)
+
+            )
+
+
+            new_customer_df[
+                "installment_to_income_ratio"
+            ] = (
+
+                monthly_installment_bdt
+                /
+                monthly_income_bdt
+
+            )
+
+        else:
+
+            new_customer_df[
+                "loan_to_income_ratio"
+            ] = np.nan
+
+
+            new_customer_df[
+                "installment_to_income_ratio"
+            ] = np.nan
+
+
+        # ====================================================
+        # HANDLE INF
+        # ====================================================
+
+        new_customer_df.replace(
+
+            [np.inf, -np.inf],
+
+            np.nan,
+
+            inplace=True
+
+        )
+
+
+        # ====================================================
+        # PREDICTION
+        # ====================================================
+
+        try:
+
+            new_prediction = (
+
+                best_model
+                .predict(
+                    new_customer_df
+                )[0]
+
+            )
+
+
+            new_probability = (
+
+                best_model
+                .predict_proba(
+                    new_customer_df
+                )[0, 1]
+
+            )
+
+
+            # ================================================
+            # RISK LEVEL
+            # ================================================
+
+            if new_probability >= 0.70:
+
+                risk_level = "HIGH RISK"
+
+            elif new_probability >= 0.40:
+
+                risk_level = "MEDIUM RISK"
+
+            else:
+
+                risk_level = "LOW RISK"
+
+
+            # ================================================
+            # PREDICTION LABEL
+            # ================================================
+
+            if new_prediction == 1:
+
+                prediction_label = (
+                    "DEFAULTER"
+                )
+
+            else:
+
+                prediction_label = (
+                    "NON-DEFAULTER"
+                )
+
+
+            # ================================================
+            # RESULT
+            # ================================================
+
+            st.markdown("---")
+
+            st.subheader(
+                "🎯 Credit Risk Result"
+            )
+
+
+            col1, col2, col3 = st.columns(3)
+
+
+            with col1:
+
+                st.metric(
+
+                    "Best Model",
+
+                    best_model_name
+
+                )
+
+
+            with col2:
+
+                st.metric(
+
+                    "Default Probability",
+
+                    f"{new_probability:.2%}"
+
+                )
+
+
+            with col3:
+
+                st.metric(
+
+                    "Prediction",
+
+                    prediction_label
+
+                )
+
+
+            # ================================================
+            # RISK DISPLAY
+            # ================================================
+
+            if risk_level == "HIGH RISK":
+
+                st.markdown(
+
+                    '<div class="risk-high">'
+                    '⚠️ HIGH RISK'
+                    '</div>',
+
+                    unsafe_allow_html=True
+
+                )
+
+
+            elif risk_level == "MEDIUM RISK":
+
+                st.markdown(
+
+                    '<div class="risk-medium">'
+                    '⚠️ MEDIUM RISK'
+                    '</div>',
+
+                    unsafe_allow_html=True
+
+                )
+
+
+            else:
+
+                st.markdown(
+
+                    '<div class="risk-low">'
+                    '✅ LOW RISK'
+                    '</div>',
+
+                    unsafe_allow_html=True
+
+                )
+
+
+            st.markdown("---")
+
+
+            # ================================================
+            # PROBABILITY BAR
+            # ================================================
+
+            st.subheader(
+                "Default Probability"
+            )
+
+
+            st.progress(
+                float(new_probability)
+            )
+
+
+            st.write(
+
+                f"Probability of Default: "
+                f"**{new_probability:.2%}**"
+
+            )
+
+
+            # ================================================
+            # CUSTOMER RISK REPORT
+            # ================================================
+
+            new_customer_report = pd.DataFrame({
+
+                "Model": [
+
+                    best_model_name
+
+                ],
+
+                "Prediction": [
+
+                    prediction_label
+
+                ],
+
+                "Default_Probability": [
+
+                    new_probability
+
+                ],
+
+                "Risk_Level": [
+
+                    risk_level
+
+                ]
+
+            })
+
+
+            st.subheader(
+                "📋 Customer Risk Report"
+            )
+
+
+            st.dataframe(
+
+                new_customer_report.style.format({
+
+                    "Default_Probability":
+                        "{:.2%}"
+
+                }),
+
+                use_container_width=True
+
+            )
+
+
+            # ================================================
+            # CUSTOMER INFORMATION
+            # ================================================
+
+            with st.expander(
+                "👤 View Customer Information"
+            ):
+
+                st.dataframe(
+
+                    new_customer_df,
+
+                    use_container_width=True
+
+                )
+
+
+            # ================================================
+            # DOWNLOAD REPORT
+            # ================================================
+
+            csv_data = (
+
+                new_customer_report
+                .to_csv(
+                    index=False
+                )
+
+            )
+
+
+            st.download_button(
+
+                label="⬇️ Download Risk Report",
+
+                data=csv_data,
+
+                file_name="new_customer_prediction.csv",
+
+                mime="text/csv",
+
+                use_container_width=True
+
+            )
+
+
+        except Exception as e:
+
+            st.error(
+                f"Prediction Error: {e}"
+            )
+
+
+# ============================================================
+# FOOTER
+# ============================================================
+
+st.markdown("---")
+
+st.markdown(
+
+    """
+    <div style="text-align:center; color:gray;">
+
+    <b>Credit Risk Prediction System</b><br>
+
+    Machine Learning | Credit Risk Analytics | Data Science
+
+    </div>
+    """,
+
+    unsafe_allow_html=True
+
+)
