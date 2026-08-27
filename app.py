@@ -3018,332 +3018,80 @@ with tabs[6]:
 
 
         if len(employment_options) == 0:
-
-            st.error(
-                "No valid employment values found."
-            )
-
+            st.error("No valid employment values found.")
             st.stop()
-
-
-        employment_type = st.selectbox(
-
-            "Employment Type",
-
-            employment_options
-
-        )
-
+        employment_type = st.selectbox("Employment Type", employment_options)
 
     with col3:
-
-        account_options = (
-
-            sorted(
-
-                df["account_type"]
-                .dropna()
-                .astype(str)
-                .unique()
-
-            )
-
-        )
-
+        account_options = (sorted(df["account_type"].dropna().astype(str).unique()))
 
         if len(account_options) == 0:
-
-            st.error(
-                "No valid account type values found."
-            )
-
+            st.error("No valid account type values found.")
             st.stop()
-
-
-        account_type = st.selectbox(
-
-            "Account Type",
-
-            account_options
-
-        )
-
-
+        account_type = st.selectbox("Account Type", account_options)
     col1, col2, col3 = st.columns(3)
-
-
     with col1:
-
-        loan_options = (
-
-            sorted(
-
-                df["loan_type"]
-                .dropna()
-                .astype(str)
-                .unique()
-
-            )
-
-        )
-
-
+        loan_options = (sorted(df["loan_type"].dropna().astype(str).unique()))
+        
         if len(loan_options) == 0:
-
-            st.error(
-                "No valid loan type values found."
-            )
-
+            st.error("No valid loan type values found.")
             st.stop()
 
-
-        loan_type = st.selectbox(
-
-            "Loan Type",
-
-            loan_options
-
-        )
-
+        loan_type = st.selectbox("Loan Type", loan_options)
 
     with col2:
-
         previous_default_options = (
-
-            sorted(
-
-                df["previous_default"]
-                .dropna()
-                .astype(str)
-                .unique()
-
-            )
-
-        )
-
-
+            sorted(df["previous_default"].dropna().astype(str).unique()))
+        
         if len(previous_default_options) == 0:
-
-            st.error(
-                "No valid previous default values found."
-            )
-
+            st.error("No valid previous default values found.")
             st.stop()
-
-
-        previous_default = st.selectbox(
-
-            "Previous Default",
-
-            previous_default_options
-
-        )
-
+        previous_default = st.selectbox("Previous Default", previous_default_options)
 
     with col3:
-
-        loan_status_options = (
-
-            sorted(
-
-                df["loan_status"]
-                .dropna()
-                .astype(str)
-                .unique()
-
-            )
-
-        )
-
+        loan_status_options = (sorted(df["loan_status"].dropna().astype(str).unique()))
 
         if len(loan_status_options) == 0:
-
-            st.error(
-                "No valid loan status values found."
-            )
-
+            st.error("No valid loan status values found.")
             st.stop()
 
-
-        loan_status = st.selectbox(
-
-            "Loan Status",
-
-            loan_status_options
-
-        )
-
+        loan_status = st.selectbox( "Loan Status", loan_status_options)
 
     st.markdown("---")
 
-
-    # ========================================================
     # PREDICTION BUTTON
-    # ========================================================
 
-    predict_button = st.button(
-
-        "🔮 Predict Credit Risk",
-
-        type="primary",
-
-        use_container_width=True
-
-    )
-
+    predict_button = st.button("🔮 Predict Credit Risk", type="primary", use_container_width=True)
 
     if predict_button:
-
-        # ----------------------------------------------------
+        
         # CUSTOMER DATA
-        # ----------------------------------------------------
+        new_customer = {"age" : age, "monthly_income_bdt" : monthly_income_bdt, "account_balance_bdt" : account_balance_bdt, 
+                        "credit_score" : credit_score, "loan_amount_bdt" : loan_amount_bdt, "loan_tenure_months" : loan_tenure_months,
+                        "interest_rate_pct" : interest_rate_pct, "monthly_installment_bdt" : monthly_installment_bdt, "previous_loans" : previous_loans,
+                        "transaction_frequency_monthly" : transaction_frequency_monthly, "gender" : gender, "division" : division, "district" : district,
+                        "education" : education, "employment_type" : employment_type, "account_type" : account_type, "loan_type" : loan_type,
+                        "previous_default" : previous_default, "loan_status" : loan_status}
 
-        new_customer = {
+        new_customer_df = pd.DataFrame([new_customer])
 
-            "age":
-                age,
-
-            "monthly_income_bdt":
-                monthly_income_bdt,
-
-            "account_balance_bdt":
-                account_balance_bdt,
-
-            "credit_score":
-                credit_score,
-
-            "loan_amount_bdt":
-                loan_amount_bdt,
-
-            "loan_tenure_months":
-                loan_tenure_months,
-
-            "interest_rate_pct":
-                interest_rate_pct,
-
-            "monthly_installment_bdt":
-                monthly_installment_bdt,
-
-            "previous_loans":
-                previous_loans,
-
-            "transaction_frequency_monthly":
-                transaction_frequency_monthly,
-
-            "gender":
-                gender,
-
-            "division":
-                division,
-
-            "district":
-                district,
-
-            "education":
-                education,
-
-            "employment_type":
-                employment_type,
-
-            "account_type":
-                account_type,
-
-            "loan_type":
-                loan_type,
-
-            "previous_default":
-                previous_default,
-
-            "loan_status":
-                loan_status
-
-        }
-
-
-        new_customer_df = pd.DataFrame(
-
-            [new_customer]
-
-        )
-
-
-        # ----------------------------------------------------
         # FEATURE ENGINEERING
-        # ----------------------------------------------------
-
         if monthly_income_bdt > 0:
+            new_customer_df["loan_to_income_ratio"] = (loan_amount_bdt / (monthly_income_bdt * 12))
 
-            new_customer_df[
-                "loan_to_income_ratio"
-            ] = (
-
-                loan_amount_bdt
-                /
-                (
-                    monthly_income_bdt
-                    * 12
-                )
-
-            )
-
-
-            new_customer_df[
-                "installment_to_income_ratio"
-            ] = (
-
-                monthly_installment_bdt
-                /
-                monthly_income_bdt
-
-            )
-
+            new_customer_df["installment_to_income_ratio"] = (monthly_installment_bdt / monthly_income_bdt)
         else:
+            new_customer_df["loan_to_income_ratio"] = np.nan
+            new_customer_df["installment_to_income_ratio"] = np.nan
 
-            new_customer_df[
-                "loan_to_income_ratio"
-            ] = np.nan
-
-
-            new_customer_df[
-                "installment_to_income_ratio"
-            ] = np.nan
-
-
-        # ----------------------------------------------------
         # HANDLE INFINITE VALUES
-        # ----------------------------------------------------
 
-        new_customer_df.replace(
-
-            [np.inf, -np.inf],
-
-            np.nan,
-
-            inplace=True
-
-        )
-
-
-        # ----------------------------------------------------
+        new_customer_df.replace([np.inf, -np.inf], np.nan, inplace=True)
+        
         # ENSURE COLUMN ORDER
-        # ----------------------------------------------------
-
-        prediction_columns = (
-
-            numeric_features
-            +
-            categorical_features
-
-        )
-
-
-        new_customer_df = (
-
-            new_customer_df[
-                prediction_columns
-            ]
-
-        )
+        
+        prediction_columns = (numeric_features + categorical_features)
+        new_customer_df = (new_customer_df[prediction_columns])
 
         # PREDICTION
         try:
