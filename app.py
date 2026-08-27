@@ -4,6 +4,8 @@
 # ============================================================
 
 import os
+from pathlib import Path
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -123,7 +125,9 @@ st.markdown(
 # ============================================================
 
 st.markdown(
-    '<div class="main-title">🏦 LoanGuard - Credit Risk Prediction System</div>',
+    '<div class="main-title">'
+    '🏦 LoanGuard - Credit Risk Prediction System'
+    '</div>',
     unsafe_allow_html=True
 )
 
@@ -164,31 +168,11 @@ st.sidebar.subheader("📂 Dataset")
 uploaded_file = st.sidebar.file_uploader(
     "Upload your own dataset",
     type=["csv", "xls", "xlsx"],
-    help="Upload a credit risk dataset. If no file is uploaded, the built-in default dataset will be used."
-)
-
-if uploaded_file is None:
-
-    st.sidebar.success(
-        "Using built-in default dataset."
+    help=(
+        "Upload a credit risk dataset. "
+        "If no file is uploaded, the built-in default dataset "
+        "will be used."
     )
-
-else:
-
-    st.sidebar.info(
-        f"Using uploaded dataset: {uploaded_file.name}"
-    )
-
-
-# ============================================================
-# DEFAULT DATASET PATH
-# ============================================================
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_DATASET = os.path.join(
-    BASE_DIR,
-    "data",
-    "default_credit_risk.csv"
 )
 
 
@@ -225,7 +209,92 @@ required_columns = [
 
 
 # ============================================================
-# LOAD DATA FUNCTION
+# FIND DEFAULT DATASET
+# ============================================================
+
+def find_default_dataset():
+
+    """
+    Search for the default dataset.
+
+    Expected structure:
+
+        LoanGuard/
+        ├── app.py
+        ├── requirements.txt
+        └── data/
+            └── default_credit_risk.csv
+    """
+
+    possible_paths = []
+
+    # --------------------------------------------------------
+    # Path 1: Same directory as app.py
+    # --------------------------------------------------------
+
+    try:
+
+        app_directory = Path(
+            __file__
+        ).resolve().parent
+
+        possible_paths.append(
+            app_directory
+            / "data"
+            / "default_credit_risk.csv"
+        )
+
+    except Exception:
+
+        app_directory = Path.cwd()
+
+
+    # --------------------------------------------------------
+    # Path 2: Current working directory
+    # --------------------------------------------------------
+
+    possible_paths.append(
+        Path.cwd()
+        / "data"
+        / "default_credit_risk.csv"
+    )
+
+
+    # --------------------------------------------------------
+    # Path 3: Dataset beside app.py
+    # --------------------------------------------------------
+
+    possible_paths.append(
+        app_directory
+        / "default_credit_risk.csv"
+    )
+
+
+    # --------------------------------------------------------
+    # Path 4: Dataset beside current directory
+    # --------------------------------------------------------
+
+    possible_paths.append(
+        Path.cwd()
+        / "default_credit_risk.csv"
+    )
+
+
+    # --------------------------------------------------------
+    # Search
+    # --------------------------------------------------------
+
+    for path in possible_paths:
+
+        if path.exists() and path.is_file():
+
+            return path
+
+    return None
+
+
+# ============================================================
+# LOAD UPLOADED DATA
 # ============================================================
 
 @st.cache_data
@@ -235,15 +304,32 @@ def load_uploaded_data(uploaded_file):
 
     if file_name.endswith(".csv"):
 
-        return pd.read_csv(uploaded_file)
+        try:
+
+            return pd.read_csv(
+                uploaded_file
+            )
+
+        except UnicodeDecodeError:
+
+            uploaded_file.seek(0)
+
+            return pd.read_csv(
+                uploaded_file,
+                encoding="latin1"
+            )
 
     elif file_name.endswith(".xlsx"):
 
-        return pd.read_excel(uploaded_file)
+        return pd.read_excel(
+            uploaded_file
+        )
 
     elif file_name.endswith(".xls"):
 
-        return pd.read_excel(uploaded_file)
+        return pd.read_excel(
+            uploaded_file
+        )
 
     else:
 
@@ -252,25 +338,38 @@ def load_uploaded_data(uploaded_file):
         )
 
 
-@st.cache_data
-def load_default_data():
+# ============================================================
+# LOAD DEFAULT DATA
+# ============================================================
 
-    if not os.path.exists(DEFAULT_DATASET):
+@st.cache_data
+def load_default_data(dataset_path):
+
+    if dataset_path is None:
 
         return None
 
-    return pd.read_csv(
-        DEFAULT_DATASET
-    )
+    try:
+
+        return pd.read_csv(
+            dataset_path
+        )
+
+    except UnicodeDecodeError:
+
+        return pd.read_csv(
+            dataset_path,
+            encoding="latin1"
+        )
 
 
 # ============================================================
 # LOAD DATA
 # ============================================================
 
-try:
+if uploaded_file is not None:
 
-    if uploaded_file is not None:
+    try:
 
         df = load_uploaded_data(
             uploaded_file
@@ -280,41 +379,131 @@ try:
             f"Uploaded dataset: {uploaded_file.name}"
         )
 
-    else:
+        st.sidebar.success(
+            f"Using uploaded dataset: {uploaded_file.name}"
+        )
 
-        df = load_default_data()
+    except Exception as e:
+
+        st.error(
+            f"❌ Error loading uploaded dataset: {e}"
+        )
+
+        st.stop()
+
+else:
+
+    default_dataset_path = find_default_dataset()
+
+    if default_dataset_path is None:
+
+        st.sidebar.error(
+            "Default dataset not found."
+        )
+
+        st.error(
+            """
+            ## ❌ Default dataset not found
+
+            The application could not find:
+
+            `data/default_credit_risk.csv`
+
+            Your GitHub repository should have exactly this structure:
+
+            ```
+            LoanGuard/
+            │
+            ├── app.py
+            ├── requirements.txt
+            │
+            └── data/
+                └── default_credit_risk.csv
+            ```
+
+            Make sure the file is committed and pushed to GitHub.
+            """
+        )
+
+        st.info(
+            "You can also upload your dataset from the sidebar."
+        )
+
+        with st.expander("🔎 Debug Information"):
+
+            try:
+
+                st.write(
+                    "**Current working directory:**"
+                )
+
+                st.code(
+                    str(Path.cwd())
+                )
+
+                st.write(
+                    "**Application directory:**"
+                )
+
+                st.code(
+                    str(
+                        Path(__file__).resolve().parent
+                    )
+                )
+
+                st.write(
+                    "**Expected dataset path:**"
+                )
+
+                st.code(
+                    str(
+                        Path(__file__).resolve().parent
+                        / "data"
+                        / "default_credit_risk.csv"
+                    )
+                )
+
+                st.write(
+                    "**Files in application directory:**"
+                )
+
+                for item in (
+                    Path(__file__).resolve().parent
+                ).iterdir():
+
+                    st.write(
+                        str(item)
+                    )
+
+            except Exception as debug_error:
+
+                st.write(
+                    f"Debug information unavailable: {debug_error}"
+                )
+
+        st.stop()
+
+    try:
+
+        df = load_default_data(
+            str(default_dataset_path)
+        )
 
         dataset_source = (
             "Built-in default dataset"
         )
 
+        st.sidebar.success(
+            "Using built-in default dataset."
+        )
 
-except Exception as e:
+    except Exception as e:
 
-    st.error(
-        f"Error loading dataset: {e}"
-    )
+        st.error(
+            f"❌ Error loading default dataset: {e}"
+        )
 
-    st.stop()
-
-
-# ============================================================
-# CHECK DEFAULT DATASET
-# ============================================================
-
-if df is None:
-
-    st.error(
-        """
-        ❌ Default dataset not found.
-
-        Please make sure your GitHub repository contains:
-
-        `data/default_credit_risk.csv`
-        """
-    )
-
-    st.stop()
+        st.stop()
 
 
 # ============================================================
@@ -332,6 +521,7 @@ st.sidebar.caption(
 
 df.columns = (
     df.columns
+    .astype(str)
     .str.strip()
     .str.lower()
 )
@@ -344,7 +534,9 @@ df.columns = (
 missing_columns = [
 
     col
+
     for col in required_columns
+
     if col not in df.columns
 
 ]
@@ -357,7 +549,7 @@ if missing_columns:
     )
 
     st.write(
-        "Missing columns:"
+        "**Missing columns:**"
     )
 
     st.write(
@@ -366,7 +558,7 @@ if missing_columns:
 
     st.info(
         """
-        Please upload a dataset containing the required
+        Your dataset must contain all required
         credit-risk variables.
         """
     )
@@ -391,20 +583,10 @@ df = df.drop(
 # CONVERT TARGET TO NUMERIC
 # ============================================================
 
-try:
-
-    df["default"] = pd.to_numeric(
-        df["default"],
-        errors="coerce"
-    )
-
-except Exception:
-
-    st.error(
-        "The 'default' column could not be converted to numeric."
-    )
-
-    st.stop()
+df["default"] = pd.to_numeric(
+    df["default"],
+    errors="coerce"
+)
 
 
 # ============================================================
@@ -417,13 +599,22 @@ df = df[
 
 
 # ============================================================
-# CHECK TARGET CLASSES
+# CHECK TARGET
 # ============================================================
+
+if len(df) == 0:
+
+    st.error(
+        "❌ No valid observations remain after cleaning."
+    )
+
+    st.stop()
+
 
 if df["default"].nunique() < 2:
 
     st.error(
-        "The dataset must contain both default classes: 0 and 1."
+        "❌ The dataset must contain both default classes 0 and 1."
     )
 
     st.stop()
@@ -612,97 +803,23 @@ categorical_features = [
 
 
 # ============================================================
-# PREPROCESSING
-# ============================================================
-
-numeric_transformer = Pipeline(
-    steps=[
-
-        (
-            "imputer",
-            SimpleImputer(
-                strategy="median"
-            )
-        ),
-
-        (
-            "scaler",
-            StandardScaler()
-        )
-
-    ]
-)
-
-
-categorical_transformer = Pipeline(
-    steps=[
-
-        (
-            "imputer",
-            SimpleImputer(
-                strategy="most_frequent"
-            )
-        ),
-
-        (
-            "encoder",
-            OneHotEncoder(
-                handle_unknown="ignore",
-                sparse_output=False
-            )
-        )
-
-    ]
-)
-
-
-preprocessor = ColumnTransformer(
-
-    transformers=[
-
-        (
-            "numeric",
-            numeric_transformer,
-            numeric_features
-        ),
-
-        (
-            "categorical",
-            categorical_transformer,
-            categorical_features
-        )
-
-    ],
-
-    remainder="drop"
-
-)
-
-
-# ============================================================
 # FEATURES AND TARGET
 # ============================================================
 
 X = df.drop(
-
     columns=[
         "default"
     ],
-
     errors="ignore"
-
 )
 
 
 X = X.drop(
-
     columns=[
         "customer_name",
         "customer_id"
     ],
-
     errors="ignore"
-
 )
 
 
@@ -726,6 +843,107 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42,
 
     stratify=y
+
+)
+
+
+# ============================================================
+# ONE HOT ENCODER
+# ============================================================
+
+try:
+
+    encoder = OneHotEncoder(
+        handle_unknown="ignore",
+        sparse_output=False
+    )
+
+except TypeError:
+
+    encoder = OneHotEncoder(
+        handle_unknown="ignore",
+        sparse=False
+    )
+
+
+# ============================================================
+# PREPROCESSING
+# ============================================================
+
+numeric_transformer = Pipeline(
+
+    steps=[
+
+        (
+            "imputer",
+
+            SimpleImputer(
+                strategy="median"
+            )
+
+        ),
+
+        (
+            "scaler",
+
+            StandardScaler()
+        )
+
+    ]
+
+)
+
+
+categorical_transformer = Pipeline(
+
+    steps=[
+
+        (
+            "imputer",
+
+            SimpleImputer(
+                strategy="most_frequent"
+            )
+
+        ),
+
+        (
+            "encoder",
+
+            encoder
+
+        )
+
+    ]
+
+)
+
+
+preprocessor = ColumnTransformer(
+
+    transformers=[
+
+        (
+            "numeric",
+
+            numeric_transformer,
+
+            numeric_features
+
+        ),
+
+        (
+            "categorical",
+
+            categorical_transformer,
+
+            categorical_features
+
+        )
+
+    ],
+
+    remainder="drop"
 
 )
 
@@ -879,6 +1097,8 @@ def train_models(
 
     roc_data = {}
 
+    errors = {}
+
 
     for name, model in models.items():
 
@@ -1019,9 +1239,7 @@ def train_models(
 
         except Exception as e:
 
-            print(
-                f"{name} failed: {e}"
-            )
+            errors[name] = str(e)
 
 
     if not results:
@@ -1057,7 +1275,9 @@ def train_models(
 
         results_df,
 
-        roc_data
+        roc_data,
+
+        errors
 
     )
 
@@ -1067,9 +1287,7 @@ def train_models(
 # ============================================================
 
 with st.spinner(
-
     "🤖 Training machine learning models..."
-
 ):
 
     try:
@@ -1077,12 +1295,16 @@ with st.spinner(
         (
             trained_models,
             results_df,
-            roc_data
+            roc_data,
+            model_errors
         ) = train_models(
 
             X_train,
+
             X_test,
+
             y_train,
+
             y_test
 
         )
@@ -1090,10 +1312,27 @@ with st.spinner(
     except Exception as e:
 
         st.error(
-            f"Model training failed: {e}"
+            f"❌ Model training failed: {e}"
         )
 
         st.stop()
+
+
+# ============================================================
+# SHOW MODEL ERRORS
+# ============================================================
+
+if model_errors:
+
+    with st.expander(
+        "⚠️ Models with training errors"
+    ):
+
+        for model_name, error in model_errors.items():
+
+            st.write(
+                f"**{model_name}:** {error}"
+            )
 
 
 # ============================================================
@@ -1226,6 +1465,7 @@ with tabs[0]:
         "📊 Credit Risk Dashboard"
     )
 
+
     st.info(
         f"Dataset: {dataset_source}"
     )
@@ -1246,44 +1486,32 @@ with tabs[0]:
     with col1:
 
         st.metric(
-
             "Total Customers",
-
             f"{total_customers:,}"
-
         )
 
 
     with col2:
 
         st.metric(
-
             "Total Defaulters",
-
             f"{total_defaulters:,}"
-
         )
 
 
     with col3:
 
         st.metric(
-
             "Default Rate",
-
             f"{default_rate:.2f}%"
-
         )
 
 
     with col4:
 
         st.metric(
-
             "Defaulted Loan",
-
             f"৳{total_defaulted_loan:,.0f}"
-
         )
 
 
@@ -1296,44 +1524,32 @@ with tabs[0]:
     with col1:
 
         st.metric(
-
             "Avg Defaulter Income",
-
             f"৳{avg_defaulter_income:,.0f}"
-
         )
 
 
     with col2:
 
         st.metric(
-
             "Avg Credit Score",
-
             f"{avg_defaulter_credit_score:.1f}"
-
         )
 
 
     with col3:
 
         st.metric(
-
             "Avg Defaulter Age",
-
             f"{avg_defaulter_age:.1f}"
-
         )
 
 
     with col4:
 
         st.metric(
-
             "Avg Defaulted Loan",
-
             f"৳{avg_defaulted_loan:,.0f}"
-
         )
 
 
@@ -1350,20 +1566,14 @@ with tabs[0]:
     with col1:
 
         fig, ax = plt.subplots(
-
             figsize=(7, 5)
-
         )
 
 
         sns.countplot(
-
             data=df,
-
             x="default",
-
             ax=ax
-
         )
 
 
@@ -1371,9 +1581,11 @@ with tabs[0]:
             "Default Distribution"
         )
 
+
         ax.set_xlabel(
             "Default (0 = No, 1 = Yes)"
         )
+
 
         ax.set_ylabel(
             "Number of Customers"
@@ -1398,9 +1610,7 @@ with tabs[0]:
 
 
         fig, ax = plt.subplots(
-
             figsize=(7, 5)
-
         )
 
 
@@ -1465,6 +1675,7 @@ with tabs[0]:
             df.shape[0]
         )
 
+
         st.write(
             "**Columns:**",
             df.shape[1]
@@ -1481,6 +1692,7 @@ with tabs[0]:
                 .sum()
             )
         )
+
 
         st.write(
             "**Duplicate Rows:**",
@@ -1517,9 +1729,7 @@ with tabs[1]:
     with col1:
 
         fig, ax = plt.subplots(
-
             figsize=(7, 5)
-
         )
 
 
@@ -1539,9 +1749,7 @@ with tabs[1]:
 
 
         ax.set_title(
-
             f"Distribution of {eda_variable}"
-
         )
 
 
@@ -1554,9 +1762,7 @@ with tabs[1]:
     with col2:
 
         fig, ax = plt.subplots(
-
             figsize=(7, 5)
-
         )
 
 
@@ -1680,10 +1886,15 @@ with tabs[2]:
         [
 
             "gender",
+
             "division",
+
             "education",
+
             "employment_type",
+
             "loan_type",
+
             "previous_default"
 
         ]
@@ -1769,7 +1980,7 @@ with tabs[2]:
             columns={
 
                 "default":
-                    "Default Rate (%)"
+                "Default Rate (%)"
 
             }
 
@@ -1960,6 +2171,7 @@ with tabs[3]:
     correlation_table.columns = [
 
         "Variable",
+
         "Correlation"
 
     ]
@@ -1998,9 +2210,13 @@ with tabs[4]:
     for col in [
 
         "Accuracy",
+
         "Precision",
+
         "Recall",
+
         "F1 Score",
+
         "ROC-AUC"
 
     ]:
@@ -2027,7 +2243,10 @@ with tabs[4]:
     st.markdown("---")
 
 
+    # --------------------------------------------------------
     # ROC-AUC
+    # --------------------------------------------------------
+
     fig, ax = plt.subplots(
 
         figsize=(8, 6)
@@ -2065,7 +2284,10 @@ with tabs[4]:
     )
 
 
-    # Recall
+    # --------------------------------------------------------
+    # RECALL
+    # --------------------------------------------------------
+
     fig, ax = plt.subplots(
 
         figsize=(8, 6)
@@ -2103,7 +2325,10 @@ with tabs[4]:
     )
 
 
+    # --------------------------------------------------------
     # F1
+    # --------------------------------------------------------
+
     fig, ax = plt.subplots(
 
         figsize=(8, 6)
@@ -2141,7 +2366,10 @@ with tabs[4]:
     )
 
 
+    # --------------------------------------------------------
     # ROC CURVES
+    # --------------------------------------------------------
+
     fig, ax = plt.subplots(
 
         figsize=(8, 6)
@@ -2529,8 +2757,11 @@ with tabs[5]:
 
 
         st.pyplot(
+
             fig,
+
             clear_figure=True
+
         )
 
 
@@ -2869,6 +3100,15 @@ with tabs[6]:
         )
 
 
+        if len(gender_options) == 0:
+
+            st.error(
+                "No valid gender values found."
+            )
+
+            st.stop()
+
+
         gender = st.selectbox(
 
             "Gender",
@@ -2894,6 +3134,15 @@ with tabs[6]:
         )
 
 
+        if len(division_options) == 0:
+
+            st.error(
+                "No valid division values found."
+            )
+
+            st.stop()
+
+
         division = st.selectbox(
 
             "Division",
@@ -2917,6 +3166,15 @@ with tabs[6]:
             )
 
         )
+
+
+        if len(district_options) == 0:
+
+            st.error(
+                "No valid district values found."
+            )
+
+            st.stop()
 
 
         district = st.selectbox(
@@ -2947,6 +3205,15 @@ with tabs[6]:
         )
 
 
+        if len(education_options) == 0:
+
+            st.error(
+                "No valid education values found."
+            )
+
+            st.stop()
+
+
         education = st.selectbox(
 
             "Education",
@@ -2972,6 +3239,15 @@ with tabs[6]:
         )
 
 
+        if len(employment_options) == 0:
+
+            st.error(
+                "No valid employment values found."
+            )
+
+            st.stop()
+
+
         employment_type = st.selectbox(
 
             "Employment Type",
@@ -2995,6 +3271,15 @@ with tabs[6]:
             )
 
         )
+
+
+        if len(account_options) == 0:
+
+            st.error(
+                "No valid account type values found."
+            )
+
+            st.stop()
 
 
         account_type = st.selectbox(
@@ -3025,6 +3310,15 @@ with tabs[6]:
         )
 
 
+        if len(loan_options) == 0:
+
+            st.error(
+                "No valid loan type values found."
+            )
+
+            st.stop()
+
+
         loan_type = st.selectbox(
 
             "Loan Type",
@@ -3050,6 +3344,15 @@ with tabs[6]:
         )
 
 
+        if len(previous_default_options) == 0:
+
+            st.error(
+                "No valid previous default values found."
+            )
+
+            st.stop()
+
+
         previous_default = st.selectbox(
 
             "Previous Default",
@@ -3073,6 +3376,15 @@ with tabs[6]:
             )
 
         )
+
+
+        if len(loan_status_options) == 0:
+
+            st.error(
+                "No valid loan status values found."
+            )
+
+            st.stop()
 
 
         loan_status = st.selectbox(
@@ -3230,6 +3542,28 @@ with tabs[6]:
             np.nan,
 
             inplace=True
+
+        )
+
+
+        # ----------------------------------------------------
+        # ENSURE COLUMN ORDER
+        # ----------------------------------------------------
+
+        prediction_columns = (
+
+            numeric_features
+            +
+            categorical_features
+
+        )
+
+
+        new_customer_df = (
+
+            new_customer_df[
+                prediction_columns
+            ]
 
         )
 
@@ -3516,7 +3850,7 @@ with tabs[6]:
 
             st.error(
 
-                f"Prediction Error: {e}"
+                f"❌ Prediction Error: {e}"
 
             )
 
