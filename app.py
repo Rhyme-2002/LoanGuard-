@@ -195,12 +195,11 @@ st.sidebar.caption(
 # ============================================================
 # DATASET PATHS
 # ============================================================
-DATA_FOLDER = "data"
+BASE_DIR = Path(__file__).resolve().parent
 
-DEFAULT_DATASET = os.path.join(
-    DATA_FOLDER,
-    "default_credit_risk.csv"
-)
+DATA_FOLDER = BASE_DIR / "data"
+
+DEFAULT_DATASET = DATA_FOLDER / "default_credit_risk.csv"
 
 
 # ============================================================
