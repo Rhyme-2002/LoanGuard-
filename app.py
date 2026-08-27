@@ -1612,410 +1612,71 @@ with tabs[0]:
         )
 
 
-# ============================================================
-# TAB 2 — EDA
-# ============================================================
-
+#  EDA
 with tabs[1]:
-
-    st.header(
-        "🔍 Exploratory Data Analysis"
-    )
-
-
-    eda_variable = st.selectbox(
-
-        "Select numerical variable",
-
-        numeric_features
-
-    )
-
-
+    st.header("🔍 Exploratory Data Analysis")
+    eda_variable = st.selectbox("Select numerical variable", numeric_features)
     col1, col2 = st.columns(2)
-
-
     with col1:
-
-        fig, ax = plt.subplots(
-            figsize=(7, 5)
-        )
-
-
-        sns.histplot(
-
-            data=df,
-
-            x=eda_variable,
-
-            bins=25,
-
-            kde=True,
-
-            ax=ax
-
-        )
-
-
-        ax.set_title(
-            f"Distribution of {eda_variable}"
-        )
-
-
-        st.pyplot(
-            fig,
-            clear_figure=True
-        )
-
-
+        fig, ax = plt.subplots(figsize=(7, 5))
+        sns.histplot(data=df, x=eda_variable, bins=25, kde=True, ax=ax)
+        ax.set_title(f"Distribution of {eda_variable}")
+        st.pyplot(fig, clear_figure=True)
     with col2:
-
-        fig, ax = plt.subplots(
-            figsize=(7, 5)
-        )
-
-
-        sns.boxplot(
-
-            data=df,
-
-            x="default",
-
-            y=eda_variable,
-
-            ax=ax
-
-        )
-
-
-        ax.set_title(
-
-            f"{eda_variable}: "
-            "Defaulters vs Non-Defaulters"
-
-        )
-
-
-        ax.set_xlabel(
-            "Default"
-        )
-
-
-        st.pyplot(
-            fig,
-            clear_figure=True
-        )
-
-
+        fig, ax = plt.subplots(figsize=(7, 5))
+        sns.boxplot(data=df, x="default", y=eda_variable, ax=ax)
+        ax.set_title(f"{eda_variable}: " "Defaulters vs Non-Defaulters")
+        ax.set_xlabel("Default")
+        st.pyplot(fig, clear_figure=True)
+        
     st.markdown("---")
-
-
-    st.subheader(
-        "Categorical Variable Analysis"
-    )
-
-
-    categorical_variable = st.selectbox(
-
-        "Select categorical variable",
-
-        categorical_features
-
-    )
-
-
-    categorical_counts = (
-
-        df[
-            categorical_variable
-        ]
-        .astype(str)
-        .value_counts()
-        .head(15)
-
-    )
-
-
-    fig, ax = plt.subplots(
-
-        figsize=(10, 5)
-
-    )
-
-
-    sns.barplot(
-
-        x=categorical_counts.values,
-
-        y=categorical_counts.index,
-
-        ax=ax
-
-    )
-
-
-    ax.set_title(
-
-        f"Distribution of {categorical_variable}"
-
-    )
-
-
-    ax.set_xlabel(
-        "Number of Customers"
-    )
-
-
-    ax.set_ylabel(
-        categorical_variable
-    )
-
-
-    st.pyplot(
-        fig,
-        clear_figure=True
-    )
-
-
-# ============================================================
-# TAB 3 — DEFAULTER ANALYSIS
-# ============================================================
-
+    st.subheader("Categorical Variable Analysis")
+    categorical_variable = st.selectbox("Select categorical variable", categorical_features)
+    categorical_counts = (df[categorical_variable].astype(str).value_counts().head(15))
+    fig, ax = plt.subplots(figsize=(10, 5))
+    sns.barplot(x=categorical_counts.values, y=categorical_counts.index, ax=ax)
+    ax.set_title(f"Distribution of {categorical_variable}")
+    ax.set_xlabel("Number of Customers")
+    ax.set_ylabel(categorical_variable)
+    st.pyplot(fig, clear_figure=True)
+    
+#  DEFAULTER ANALYSIS
 with tabs[2]:
+    st.header("👥 Defaulter Analysis")
+    analysis_variable = st.selectbox("Select variable for default analysis",
+                                     ["gender", "division", "education",  "employment_type", "loan_type", "previous_default"])
 
-    st.header(
-        "👥 Defaulter Analysis"
-    )
-
-
-    analysis_variable = st.selectbox(
-
-        "Select variable for default analysis",
-
-        [
-
-            "gender",
-
-            "division",
-
-            "education",
-
-            "employment_type",
-
-            "loan_type",
-
-            "previous_default"
-
-        ]
-
-    )
-
-
-    default_rate_analysis = (
-
-        df.groupby(
-
-            analysis_variable,
-
-            dropna=False
-
-        )["default"]
-
-        .mean()
-
-        .mul(100)
-
-        .sort_values(
-            ascending=False
-        )
-
-    )
-
-
-    st.subheader(
-
-        f"Default Rate by {analysis_variable}"
-
-    )
-
-
-    fig, ax = plt.subplots(
-
-        figsize=(10, 6)
-
-    )
-
-
-    sns.barplot(
-
-        x=default_rate_analysis.values,
-
-        y=default_rate_analysis.index.astype(str),
-
-        ax=ax
-
-    )
-
-
-    ax.set_xlabel(
-        "Default Rate (%)"
-    )
-
-
-    ax.set_ylabel(
-        analysis_variable
-    )
-
-
-    ax.set_title(
-
-        f"Default Rate by {analysis_variable}"
-
-    )
-
-
-    st.pyplot(
-        fig,
-        clear_figure=True
-    )
-
-
-    st.dataframe(
-
-        default_rate_analysis
-        .reset_index()
-        .rename(
-
-            columns={
-
-                "default":
-                "Default Rate (%)"
-
-            }
-
-        ),
-
-        use_container_width=True
-
-    )
-
-
+    default_rate_analysis = (df.groupby(analysis_variable, dropna=False)["default"].mean().mul(100).sort_values(ascending=False))
+    st.subheader(f"Default Rate by {analysis_variable}")
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.barplot(x=default_rate_analysis.values, y=default_rate_analysis.index.astype(str), ax=ax)
+    ax.set_xlabel("Default Rate (%)")
+    ax.set_ylabel(analysis_variable)
+    ax.set_title(f"Default Rate by {analysis_variable}")
+    st.pyplot(fig, clear_figure=True)
+    st.dataframe( default_rate_analysis.reset_index().rename(columns={"default" : "Default Rate (%)"}), use_container_width=True)
     st.markdown("---")
+    st.subheader("Defaulter Profile")
+    profile = pd.DataFrame({"Metric": ["Average Age", "Average Income", "Average Account Balance",
+                                       "Average Credit Score", "Average Loan Amount", "Average Previous Loans",
+                                       "Average Transaction Frequency", "Average Loan-to-Income Ratio",
+                                       "Average Installment-to-Income Ratio"],
+                            "Value": [defaulters["age"].mean(),
+                                      defaulters["monthly_income_bdt"].mean(),
+                                      defaulters["account_balance_bdt"].mean(),
+                                      defaulters["credit_score"].mean(),
+                                      defaulters["loan_amount_bdt"].mean(),
+                                      defaulters["previous_loans"].mean(),
+                                      defaulters["transaction_frequency_monthly"].mean(),
+                                      defaulters["loan_to_income_ratio"].mean(),
+                                      defaulters["installment_to_income_ratio"].mean()]})
+    st.dataframe(profile, use_container_width=True)
 
-
-    st.subheader(
-        "Defaulter Profile"
-    )
-
-
-    profile = pd.DataFrame({
-
-        "Metric": [
-
-            "Average Age",
-
-            "Average Income",
-
-            "Average Account Balance",
-
-            "Average Credit Score",
-
-            "Average Loan Amount",
-
-            "Average Previous Loans",
-
-            "Average Transaction Frequency",
-
-            "Average Loan-to-Income Ratio",
-
-            "Average Installment-to-Income Ratio"
-
-        ],
-
-
-        "Value": [
-
-            defaulters[
-                "age"
-            ].mean(),
-
-            defaulters[
-                "monthly_income_bdt"
-            ].mean(),
-
-            defaulters[
-                "account_balance_bdt"
-            ].mean(),
-
-            defaulters[
-                "credit_score"
-            ].mean(),
-
-            defaulters[
-                "loan_amount_bdt"
-            ].mean(),
-
-            defaulters[
-                "previous_loans"
-            ].mean(),
-
-            defaulters[
-                "transaction_frequency_monthly"
-            ].mean(),
-
-            defaulters[
-                "loan_to_income_ratio"
-            ].mean(),
-
-            defaulters[
-                "installment_to_income_ratio"
-            ].mean()
-
-        ]
-
-    })
-
-
-    st.dataframe(
-
-        profile,
-
-        use_container_width=True
-
-    )
-
-
-# ============================================================
-# TAB 4 — CORRELATION
-# ============================================================
-
+#  CORRELATION
 with tabs[3]:
-
-    st.header(
-        "📈 Correlation Analysis"
-    )
-
-
-    correlation = (
-
-        df[
-            numeric_features + ["default"]
-        ]
-
-        .corr(
-            numeric_only=True
-        )
-
-    )
-
-
-    fig, ax = plt.subplots(
-
-        figsize=(14, 10)
-
-    )
-
-
+    st.header("📈 Correlation Analysis")
+    correlation = (df[numeric_features + ["default"]].corr(numeric_only=True))
+    fig, ax = plt.subplots(figsize=(14, 10))
     sns.heatmap(correlation, annot=True, fmt=".2f", cmap="coolwarm", center=0, ax=ax)
     ax.set_title("Correlation Matrix")
     st.pyplot(fig, clear_figure=True)
