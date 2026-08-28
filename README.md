@@ -89,6 +89,7 @@ LoanGuard/
 | `outputs/customer_risk_prediction.csv` | Customer credit risk prediction report              |
 | `requirements.txt`                     | Required Python libraries                           |
 | `.devcontainer/`                       | Development container configuration                 |
+|`data/`                                 |                                                     |
 
 ---
 
@@ -101,7 +102,7 @@ The interactive application is built using Streamlit.
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+git clone https://github.com/Rhyme-2002/LoanGuard-.git
 ```
 
 Move to the project directory:
