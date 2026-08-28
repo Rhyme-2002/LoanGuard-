@@ -730,7 +730,7 @@ with tabs[6]:
         )
 
         st.markdown("---")
-        st.subheader("📊 Default Probability"))
+        st.subheader("📊 Default Probability")
 
         st.write(f"Estimated probability of default: "f"**{new_probability:.2%}**")
 
