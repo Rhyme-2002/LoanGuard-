@@ -1263,24 +1263,8 @@ with tabs[6]:
             f"**{new_probability:.2%}**"
         )
 
-        report_df = pd.DataFrame({
-
-            "Best_Model": [
-                best_model_name
-            ],
-
-            "Prediction": [
-                prediction_label
-            ],
-
-            "Default_Probability": [
-                new_probability
-            ],
-
-            "Risk_Level": [
-                risk_level
-            ]
-        })
+        report_df = pd.DataFrame({"Best_Model": [best_model_name], "Prediction": [prediction_label],
+        "Default_Probability": [new_probability], "Risk_Level": [risk_level]})
 
         st.markdown("---")
         st.subheader("📋 Customer Risk Report")
