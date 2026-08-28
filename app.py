@@ -289,167 +289,42 @@ if missing_columns:
         "or remove the uploaded file to use the default dataset.")
     st.stop()
 
-
-# ============================================================
 # REMOVE ID COLUMNS FROM MODEL DATA
-# ============================================================
 
-df = df.drop(
-    columns=[
-        "customer_id",
-        "customer_name"
-    ],
-    errors="ignore"
-)
+df = df.drop(columns=["customer_id", "customer_name"], errors="ignore")
 
-
-# ============================================================
 # FEATURE ENGINEERING
-# ============================================================
 
-df["loan_to_income_ratio"] = (
-    df["loan_amount_bdt"]
-    / (df["monthly_income_bdt"] * 12)
-)
+df["loan_to_income_ratio"] = (df["loan_amount_bdt"] / (df["monthly_income_bdt"] * 12))
+df["installment_to_income_ratio"] = (df["monthly_installment_bdt"] / df["monthly_income_bdt"])
+df.replace([np.inf, -np.inf], np.nan, inplace=True)
 
-df["installment_to_income_ratio"] = (
-    df["monthly_installment_bdt"]
-    / df["monthly_income_bdt"]
-)
-
-df.replace(
-    [np.inf, -np.inf],
-    np.nan,
-    inplace=True
-)
-
-
-# ============================================================
 # BASIC STATISTICS
-# ============================================================
-
-defaulters = df[
-    df["default"] == 1
-].copy()
-
-non_defaulters = df[
-    df["default"] == 0
-].copy()
-
+defaulters = df[df["default"] == 1].copy()
+non_defaulters = df[df["default"] == 0].copy()
 total_customers = len(df)
 total_defaulters = len(defaulters)
 total_non_defaulters = len(non_defaulters)
+default_rate = (total_defaulters / total_customers) * 100
+total_defaulted_loan = (defaulters["loan_amount_bdt"].sum())
+avg_defaulted_loan = (defaulters["loan_amount_bdt"].mean())
+avg_defaulter_income = (defaulters["monthly_income_bdt"].mean())
+avg_defaulter_credit_score = (defaulters["credit_score"].mean())
+avg_defaulter_age = (defaulters["age"].mean())
 
-default_rate = (
-    total_defaulters
-    / total_customers
-) * 100
-
-total_defaulted_loan = (
-    defaulters["loan_amount_bdt"].sum()
-)
-
-avg_defaulted_loan = (
-    defaulters["loan_amount_bdt"].mean()
-)
-
-avg_defaulter_income = (
-    defaulters["monthly_income_bdt"].mean()
-)
-
-avg_defaulter_credit_score = (
-    defaulters["credit_score"].mean()
-)
-
-avg_defaulter_age = (
-    defaulters["age"].mean()
-)
-
-
-# ============================================================
 # FEATURE LISTS
-# ============================================================
 
-numeric_features = [
+numeric_features = ["age", "monthly_income_bdt", "account_balance_bdt", "credit_score", "loan_amount_bdt", "loan_tenure_months", "interest_rate_pct",
+                    "monthly_installment_bdt", "previous_loans", "transaction_frequency_monthly", "loan_to_income_ratio", "installment_to_income_ratio"]
+categorical_features = ["gender", "division", "district", "education", "employment_type", "account_type", "loan_type", "previous_default"]
 
-    "age",
-    "monthly_income_bdt",
-    "account_balance_bdt",
-    "credit_score",
-    "loan_amount_bdt",
-    "loan_tenure_months",
-    "interest_rate_pct",
-    "monthly_installment_bdt",
-    "previous_loans",
-    "transaction_frequency_monthly",
-    "loan_to_income_ratio",
-    "installment_to_income_ratio"
-]
-
-categorical_features = [
-
-    "gender",
-    "division",
-    "district",
-    "education",
-    "employment_type",
-    "account_type",
-    "loan_type",
-    "previous_default"
-]
-
-
-# ============================================================
 # PREPROCESSING
-# ============================================================
 
-numeric_transformer = Pipeline(
-    steps=[
-        (
-            "imputer",
-            SimpleImputer(strategy="median")
-        ),
-        (
-            "scaler",
-            StandardScaler()
-        )
-    ]
-)
+numeric_transformer = Pipeline(steps=[("imputer", SimpleImputer(strategy="median")), ("scaler", StandardScaler())])
+categorical_transformer = Pipeline(steps=[("imputer", SimpleImputer(strategy="most_frequent")), ("encoder", OneHotEncoder(handle_unknown="ignore"))])
+preprocessor = ColumnTransformer(transformers=[("numeric", numeric_transformer, numeric_features), ("categorical", categorical_transformer, categorical_features)])
 
-categorical_transformer = Pipeline(
-    steps=[
-        (
-            "imputer",
-            SimpleImputer(strategy="most_frequent")
-        ),
-        (
-            "encoder",
-            OneHotEncoder(
-                handle_unknown="ignore"
-            )
-        )
-    ]
-)
-
-preprocessor = ColumnTransformer(
-    transformers=[
-        (
-            "numeric",
-            numeric_transformer,
-            numeric_features
-        ),
-        (
-            "categorical",
-            categorical_transformer,
-            categorical_features
-        )
-    ]
-)
-
-
-# ============================================================
 # FEATURES AND TARGET
-# ============================================================
 
 X = df[
     numeric_features
