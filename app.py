@@ -616,341 +616,109 @@ with tabs[5]:
         plt.close(fig)
 
 
-# ============================================================
-# TAB 7 - NEW CUSTOMER PREDICTION
-# ============================================================
+# NEW CUSTOMER PREDICTION
 
 with tabs[6]:
-
-    st.header(
-        "👤 New Customer Risk Prediction"
-    )
-
+    st.header("👤 New Customer Risk Prediction")
     st.caption(
         f"Prediction is generated using the best model: "
-        f"{best_model_name}"
-    )
+        f"{best_model_name}")
 
-    st.subheader(
-        "💰 Financial Information"
-    )
+    st.subheader("💰 Financial Information")
 
     col1, col2, col3 = st.columns(3)
-
     with col1:
-
-        age = st.number_input(
-            "Age",
-            min_value=18,
-            max_value=100,
-            value=30
-        )
+        age = st.number_input("Age", min_value=18, max_value=100, value=30)
 
     with col2:
-
-        monthly_income_bdt = st.number_input(
-            "Monthly Income (BDT)",
-            min_value=1.0,
-            value=50000.0,
-            step=1000.0
-        )
+        monthly_income_bdt = st.number_input("Monthly Income (BDT)", min_value=1.0, value=50000.0, step=1000.0)
 
     with col3:
-
-        account_balance_bdt = st.number_input(
-            "Account Balance (BDT)",
-            min_value=0.0,
-            value=100000.0,
-            step=5000.0
-        )
+        account_balance_bdt = st.number_input("Account Balance (BDT)", min_value=0.0, value=100000.0, step=5000.0)
 
     col1, col2, col3 = st.columns(3)
-
     with col1:
-
-        credit_score = st.number_input(
-            "Credit Score",
-            min_value=0.0,
-            max_value=1000.0,
-            value=700.0
-        )
-
+        credit_score = st.number_input("Credit Score", min_value=0.0, max_value=1000.0, value=700.0)
     with col2:
-
-        loan_amount_bdt = st.number_input(
-            "Loan Amount (BDT)",
-            min_value=0.0,
-            value=300000.0,
-            step=10000.0
-        )
-
+        loan_amount_bdt = st.number_input("Loan Amount (BDT)", min_value=0.0, value=300000.0, step=10000.0)
     with col3:
-
-        loan_tenure_months = st.number_input(
-            "Loan Tenure (Months)",
-            min_value=1,
-            max_value=360,
-            value=36
-        )
+        loan_tenure_months = st.number_input("Loan Tenure (Months)", min_value=1, max_value=360, value=36)
 
     col1, col2, col3 = st.columns(3)
-
     with col1:
-
-        interest_rate_pct = st.number_input(
-            "Interest Rate (%)",
-            min_value=0.0,
-            max_value=100.0,
-            value=10.0
-        )
-
+        interest_rate_pct = st.number_input("Interest Rate (%)", min_value=0.0, max_value=100.0, value=10.0)
     with col2:
-
-        monthly_installment_bdt = st.number_input(
-            "Monthly Installment (BDT)",
-            min_value=0.0,
-            value=10000.0,
-            step=500.0
-        )
-
+        monthly_installment_bdt = st.number_input("Monthly Installment (BDT)", min_value=0.0, value=10000.0, step=500.0)
     with col3:
+        previous_loans = st.number_input("Previous Loans", min_value=0, value=1)
 
-        previous_loans = st.number_input(
-            "Previous Loans",
-            min_value=0,
-            value=1
-        )
-
-    transaction_frequency_monthly = st.number_input(
-        "Monthly Transaction Frequency",
-        min_value=0,
-        value=20
-    )
+    transaction_frequency_monthly = st.number_input("Monthly Transaction Frequency", min_value=0, value=20)
 
     st.markdown("---")
-
-    st.subheader(
-        "👤 Customer Information"
-    )
+    st.subheader("👤 Customer Information")
 
     col1, col2, col3 = st.columns(3)
-
     with col1:
-
-        gender = st.selectbox(
-            "Gender",
-            sorted(df["gender"].dropna().astype(str).unique())
-        )
-
+        gender = st.selectbox("Gender", sorted(df["gender"].dropna().astype(str).unique()))
     with col2:
-
-        division = st.selectbox(
-            "Division",
-            sorted(df["division"].dropna().astype(str).unique())
-        )
-
+        division = st.selectbox("Division", sorted(df["division"].dropna().astype(str).unique()))
     with col3:
-
-        district = st.selectbox(
-            "District",
-            sorted(df["district"].dropna().astype(str).unique())
-        )
+        district = st.selectbox("District", sorted(df["district"].dropna().astype(str).unique()))
 
     col1, col2, col3 = st.columns(3)
-
     with col1:
-
-        education = st.selectbox(
-            "Education",
-            sorted(df["education"].dropna().astype(str).unique())
-        )
-
+        education = st.selectbox("Education", sorted(df["education"].dropna().astype(str).unique()))
     with col2:
-
-        employment_type = st.selectbox(
-            "Employment Type",
-            sorted(
-                df["employment_type"]
-                .dropna()
-                .astype(str)
-                .unique()
-            )
-        )
-
+        employment_type = st.selectbox("Employment Type", sorted(df["employment_type"].dropna().astype(str).unique()))
     with col3:
-
-        account_type = st.selectbox(
-            "Account Type",
-            sorted(
-                df["account_type"]
-                .dropna()
-                .astype(str)
-                .unique()
-            )
-        )
+        account_type = st.selectbox("Account Type",
+            sorted(df["account_type"].dropna().astype(str).unique()))
 
     col1, col2 = st.columns(2)
-
     with col1:
-
-        loan_type = st.selectbox(
-            "Loan Type",
-            sorted(
-                df["loan_type"]
-                .dropna()
-                .astype(str)
-                .unique()
-            )
-        )
-
+        loan_type = st.selectbox("Loan Type",
+            sorted(df["loan_type"].dropna().astype(str).unique()))
     with col2:
-
-        previous_default = st.selectbox(
-            "Previous Default",
-            sorted(
-                df["previous_default"]
-                .dropna()
-                .astype(str)
-                .unique()
-            )
-        )
+        previous_default = st.selectbox("Previous Default", sorted(df["previous_default"].dropna().astype(str).unique()))
 
     st.markdown("---")
 
-    predict_button = st.button(
-        "🔮 Predict Credit Risk",
-        type="primary",
-        use_container_width=True
-    )
+    predict_button = st.button("🔮 Predict Credit Risk", type="primary", use_container_width=True)
 
     if predict_button:
+        new_customer_df = pd.DataFrame({"age": [age], "monthly_income_bdt": [monthly_income_bdt], "account_balance_bdt": [account_balance_bdt],
+                                        "credit_score": [credit_score], "loan_amount_bdt": [loan_amount_bdt], "loan_tenure_months": [loan_tenure_months],
+                                        "interest_rate_pct": [interest_rate_pct], "monthly_installment_bdt": [monthly_installment_bdt], 
+                                        "previous_loans": [previous_loans], "transaction_frequency_monthly": [transaction_frequency_monthly],
+                                        "loan_to_income_ratio": [loan_amount_bdt / (monthly_income_bdt * 12)],
+                                        "installment_to_income_ratio": [monthly_installment_bdt / monthly_income_bdt], "gender": [gender],
+                                        "division": [division], "district": [district], "education": [education], "employment_type": [employment_type],
+                                        "account_type": [account_type], "loan_type": [loan_type], "previous_default": [previous_default]})
 
-        new_customer_df = pd.DataFrame({
-
-            "age": [age],
-
-            "monthly_income_bdt": [
-                monthly_income_bdt
-            ],
-
-            "account_balance_bdt": [
-                account_balance_bdt
-            ],
-
-            "credit_score": [
-                credit_score
-            ],
-
-            "loan_amount_bdt": [
-                loan_amount_bdt
-            ],
-
-            "loan_tenure_months": [
-                loan_tenure_months
-            ],
-
-            "interest_rate_pct": [
-                interest_rate_pct
-            ],
-
-            "monthly_installment_bdt": [
-                monthly_installment_bdt
-            ],
-
-            "previous_loans": [
-                previous_loans
-            ],
-
-            "transaction_frequency_monthly": [
-                transaction_frequency_monthly
-            ],
-
-            "loan_to_income_ratio": [
-                loan_amount_bdt
-                / (monthly_income_bdt * 12)
-            ],
-
-            "installment_to_income_ratio": [
-                monthly_installment_bdt
-                / monthly_income_bdt
-            ],
-
-            "gender": [gender],
-
-            "division": [division],
-
-            "district": [district],
-
-            "education": [education],
-
-            "employment_type": [
-                employment_type
-            ],
-
-            "account_type": [
-                account_type
-            ],
-
-            "loan_type": [
-                loan_type
-            ],
-
-            "previous_default": [
-                previous_default
-            ]
-        })
-
-        new_prediction = best_model.predict(
-            new_customer_df
-        )[0]
-
-        new_probability = best_model.predict_proba(
-            new_customer_df
-        )[0, 1]
+        new_prediction = best_model.predict(new_customer_df)[0]
+        new_probability = best_model.predict_proba(new_customer_df)[0, 1]
 
         if new_probability >= 0.70:
-
             risk_level = "HIGH RISK"
             risk_class = "risk-high"
 
         elif new_probability >= 0.40:
-
             risk_level = "MEDIUM RISK"
             risk_class = "risk-medium"
 
         else:
-
             risk_level = "LOW RISK"
             risk_class = "risk-low"
 
-        prediction_label = (
-            "Likely Defaulter"
-            if new_prediction == 1
-            else "Likely Non-Defaulter"
-        )
+        prediction_label = ("Likely Defaulter" if new_prediction == 1 else "Likely Non-Defaulter")
 
         st.markdown("---")
-
-        st.subheader(
-            "🎯 Prediction Result"
-        )
+        st.subheader("🎯 Prediction Result")
 
         col1, col2, col3 = st.columns(3)
-
-        col1.metric(
-            "Prediction",
-            prediction_label
-        )
-
-        col2.metric(
-            "Default Probability",
-            f"{new_probability:.2%}"
-        )
-
-        col3.metric(
-            "Risk Level",
-            risk_level
-        )
+        col1.metric("Prediction", prediction_label)
+        col2.metric("Default Probability", f"{new_probability:.2%}")
+        col3.metric("Risk Level", risk_level)
 
         st.markdown(
             f"""
@@ -962,19 +730,9 @@ with tabs[6]:
         )
 
         st.markdown("---")
+        st.subheader("📊 Default Probability"))
 
-        st.subheader(
-            "📊 Default Probability"
-        )
-
-        st.progress(
-            float(new_probability)
-        )
-
-        st.write(
-            f"Estimated probability of default: "
-            f"**{new_probability:.2%}**"
-        )
+        st.write(f"Estimated probability of default: "f"**{new_probability:.2%}**")
 
         report_df = pd.DataFrame({"Best_Model": [best_model_name], "Prediction": [prediction_label],
         "Default_Probability": [new_probability], "Risk_Level": [risk_level]})
