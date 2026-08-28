@@ -89,7 +89,7 @@ LoanGuard/
 | `outputs/customer_risk_prediction.csv` | Customer credit risk prediction report              |
 | `requirements.txt`                     | Required Python libraries                           |
 | `.devcontainer/`                       | Development container configuration                 |
-|`data/`                                 |                                                     |
+|`data/default_credit_risk.csv`          | Default credit risk dataset used for analysis, model training, and prediction.                                                |
 
 ---
 
