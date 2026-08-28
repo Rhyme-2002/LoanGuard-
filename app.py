@@ -326,208 +326,60 @@ preprocessor = ColumnTransformer(transformers=[("numeric", numeric_transformer, 
 
 # FEATURES AND TARGET
 
-X = df[
-    numeric_features
-    + categorical_features
-].copy()
-
+X = df[numeric_features + categorical_features].copy()
 y = df["default"].copy()
 
-
-# ============================================================
 # CHECK TARGET
-# ============================================================
 
 if y.nunique() < 2:
-
-    st.error(
-        "The 'default' column must contain both "
-        "0 and 1 classes."
-    )
-
+    st.error("The 'default' column must contain both " 
+             "0 and 1 classes.")
     st.stop()
-
-
-# ============================================================
+    
 # TRAIN / TEST SPLIT
-# ============================================================
 
-X_train, X_test, y_train, y_test = train_test_split(
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42, stratify=y)
 
-    X,
-    y,
-
-    test_size=0.20,
-
-    random_state=42,
-
-    stratify=y
-)
-
-
-# ============================================================
 # TRAIN MODELS
-# ============================================================
 
 @st.cache_resource
-def train_models(
-    X_train,
-    X_test,
-    y_train,
-    y_test
-):
-
+def train_models(X_train, X_test, y_train, y_tes):
     models = {
-
         "Logistic Regression":
-            LogisticRegression(
-                max_iter=2000,
-                class_weight="balanced",
-                random_state=42
-            ),
-
+            LogisticRegression(max_iter=2000, class_weight="balanced", random_state=42),
         "Decision Tree":
-            DecisionTreeClassifier(
-                max_depth=6,
-                min_samples_split=10,
-                min_samples_leaf=5,
-                class_weight="balanced",
-                random_state=42
-            ),
-
+            DecisionTreeClassifier(max_depth=6, min_samples_split=10, min_samples_leaf=5, class_weight="balanced", random_state=42),
         "Random Forest":
-            RandomForestClassifier(
-                n_estimators=300,
-                max_depth=10,
-                min_samples_split=10,
-                min_samples_leaf=4,
-                class_weight="balanced",
-                random_state=42,
-                n_jobs=-1
-            ),
-
+            RandomForestClassifier(n_estimators=300, max_depth=10, min_samples_split=10, min_samples_leaf=4, class_weight="balanced", random_state=42, n_jobs=-1),
         "Gradient Boosting":
-            GradientBoostingClassifier(
-                n_estimators=200,
-                learning_rate=0.05,
-                max_depth=3,
-                random_state=42
-            ),
-
+            GradientBoostingClassifier(n_estimators=200, learning_rate=0.05, max_depth=3, random_state=42),
         "XGBoost":
-            XGBClassifier(
-                n_estimators=300,
-                learning_rate=0.05,
-                max_depth=4,
-                min_child_weight=3,
-                subsample=0.8,
-                colsample_bytree=0.8,
-                eval_metric="logloss",
-                random_state=42,
-                n_jobs=-1
-            ),
-
+            XGBClassifier(n_estimators=300, learning_rate=0.05, max_depth=4, min_child_weight=3, subsample=0.8, colsample_bytree=0.8, eval_metric="logloss", random_state=42, n_jobs=-1),
         "SVM":
-            SVC(
-                kernel="rbf",
-                C=1.0,
-                probability=True,
-                class_weight="balanced",
-                random_state=42
-            ),
-
+            SVC(kernel="rbf", C=1.0, probability=True, class_weight="balanced", random_state=42),
         "KNN":
-            KNeighborsClassifier(
-                n_neighbors=7,
-                weights="distance"
-            )
+            KNeighborsClassifier(n_neighbors=7, weights="distance")
     }
 
     trained_models = {}
     results = []
     roc_data = {}
-
     for name, model in models.items():
-
-        pipeline = Pipeline(
-            steps=[
-                (
-                    "preprocessor",
-                    preprocessor
-                ),
-                (
-                    "model",
-                    model
-                )
-            ]
-        )
-
-        pipeline.fit(
-            X_train,
-            y_train
-        )
-
+        pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("model", model)])
+        pipeline.fit(X_train, y_train)
         trained_models[name] = pipeline
-
-        y_pred = pipeline.predict(
-            X_test
-        )
-
-        y_prob = pipeline.predict_proba(
-            X_test
-        )[:, 1]
-
-        results.append({
-
-            "Model": name,
-
-            "Accuracy":
-                accuracy_score(
-                    y_test,
-                    y_pred
-                ),
-
-            "Precision":
-                precision_score(
-                    y_test,
-                    y_pred,
-                    zero_division=0
-                ),
-
-            "Recall":
-                recall_score(
-                    y_test,
-                    y_pred,
-                    zero_division=0
-                ),
-
-            "F1 Score":
-                f1_score(
-                    y_test,
-                    y_pred,
-                    zero_division=0
-                ),
-
-            "ROC-AUC":
-                roc_auc_score(
-                    y_test,
-                    y_prob
-                )
-        })
-
-        fpr, tpr, _ = roc_curve(
-            y_test,
-            y_prob
-        )
-
+        y_pred = pipeline.predict(X_test)
+        y_prob = pipeline.predict_proba(X_test)[:, 1]
+        results.append({ "Model": name, "Accuracy": accuracy_score(y_test, y_pred),
+            "Precision": precision_score(y_test, y_pred, zero_division=0),
+            "Recall": recall_score(y_test, y_pred, zero_division=0),
+            "F1 Score": f1_score(y_test, y_pred, zero_division=0),
+            "ROC-AUC": roc_auc_score(y_test, y_prob)})
+        fpr, tpr, _ = roc_curve(y_test, y_prob)
         roc_data[name] = {
             "fpr": fpr,
             "tpr": tpr,
-            "auc": roc_auc_score(
-                y_test,
-                y_prob
-            )
-        }
+            "auc": roc_auc_score(y_test, y_prob)}
 
     results_df = pd.DataFrame(
         results
