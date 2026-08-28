@@ -227,42 +227,18 @@ def load_data(uploaded_file=None):
             raise FileNotFoundError(f"Default dataset not found: {DEFAULT_DATASET}")
     return df, source
 
-
-# ============================================================
 # LOAD DATASET
-# ============================================================
 
 try:
-
     df, dataset_source = load_data(uploaded_file)
-
     if uploaded_file is not None:
-
-        st.sidebar.success(
-            "✅ Custom dataset loaded"
-        )
-
-        st.sidebar.info(
-            f"📄 {uploaded_file.name}"
-        )
-
+        st.sidebar.success("✅ Custom dataset loaded")
+        st.sidebar.info(f"📄 {uploaded_file.name}")
     else:
-
-        st.sidebar.success(
-            "🗂️ Default dataset loaded"
-        )
-
-        st.sidebar.info(
-            "📄 default_credit_risk.csv"
-        )
-
-
+        st.sidebar.success("🗂️ Default dataset loaded")
+        st.sidebar.info("📄 default_credit_risk.csv")
 except Exception as e:
-
-    st.error(
-        f"❌ Error loading dataset: {e}"
-    )
-
+    st.error(f"❌ Error loading dataset: {e}")
     st.stop()
 
 # ============================================================
