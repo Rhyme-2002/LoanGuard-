@@ -381,195 +381,66 @@ def train_models(X_train, X_test, y_train, y_tes):
             "tpr": tpr,
             "auc": roc_auc_score(y_test, y_prob)}
 
-    results_df = pd.DataFrame(
-        results
-    ).sort_values(
-        "ROC-AUC",
-        ascending=False
-    ).reset_index(drop=True)
-
-    return (
-        trained_models,
-        results_df,
-        roc_data
-    )
-
-
-# ============================================================
+    results_df = pd.DataFrame(results).sort_values("ROC-AUC", ascending=False).reset_index(drop=True)
+    return (trained_models, results_df, roc_data)
+    
 # MODEL TRAINING
-# ============================================================
+with st.spinner( "🤖 Training machine learning models..."): (trained_models, results_df, roc_data) = train_models(X_train, X_test, y_train, y_test)
 
-with st.spinner(
-    "🤖 Training machine learning models..."
-):
-
-    (
-        trained_models,
-        results_df,
-        roc_data
-    ) = train_models(
-        X_train,
-        X_test,
-        y_train,
-        y_test
-    )
-
-
-# ============================================================
 # BEST MODEL
-# ============================================================
-
 best_model_name = results_df.iloc[0]["Model"]
+best_model = trained_models[best_model_name]
+best_pred = best_model.predict(X_test)
+best_prob = best_model.predict_proba(X_test)[:, 1]
 
-best_model = trained_models[
-    best_model_name
-]
-
-best_pred = best_model.predict(
-    X_test
-)
-
-best_prob = best_model.predict_proba(
-    X_test
-)[:, 1]
-
-
-# ============================================================
 # TABS
-# ============================================================
 
 tabs = st.tabs([
-
     "📊 Dashboard",
     "🔍 EDA",
     "👥 Defaulter Analysis",
     "📈 Correlation",
     "🤖 Model Comparison",
     "🏆 Best Model",
-    "👤 New Prediction"
-
-])
+    "👤 New Prediction"])
 
 
-# ============================================================
-# TAB 1 - DASHBOARD
-# ============================================================
-
+#  DASHBOARD
 with tabs[0]:
-
     st.header("📊 Credit Risk Dashboard")
-
-    st.info(
-        f"Current Dataset: {dataset_source}"
-    )
-
+    st.info(f"Current Dataset: {dataset_source}")
     col1, col2, col3, col4 = st.columns(4)
-
-    col1.metric(
-        "Total Customers",
-        f"{total_customers:,}"
-    )
-
-    col2.metric(
-        "Total Defaulters",
-        f"{total_defaulters:,}"
-    )
-
-    col3.metric(
-        "Default Rate",
-        f"{default_rate:.2f}%"
-    )
-
-    col4.metric(
-        "Defaulted Loan",
-        f"৳{total_defaulted_loan:,.0f}"
-    )
+    col1.metric("Total Customers", f"{total_customers:,}")
+    col2.metric("Total Defaulters", f"{total_defaulters:,}")
+    col3.metric("Default Rate", f"{default_rate:.2f}%")
+    col4.metric("Defaulted Loan", f"৳{total_defaulted_loan:,.0f}")
+    st.markdown("---")
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Avg Defaulter Income", f"৳{avg_defaulter_income:,.0f}")
+    col2.metric("Avg Credit Score", f"{avg_defaulter_credit_score:.0f}")
+    col3.metric("Avg Defaulter Age", f"{avg_defaulter_age:.1f}")
+    col4.metric("Avg Defaulted Loan", f"৳{avg_defaulted_loan:,.0f}")
 
     st.markdown("---")
-
-    col1, col2, col3, col4 = st.columns(4)
-
-    col1.metric(
-        "Avg Defaulter Income",
-        f"৳{avg_defaulter_income:,.0f}"
-    )
-
-    col2.metric(
-        "Avg Credit Score",
-        f"{avg_defaulter_credit_score:.0f}"
-    )
-
-    col3.metric(
-        "Avg Defaulter Age",
-        f"{avg_defaulter_age:.1f}"
-    )
-
-    col4.metric(
-        "Avg Defaulted Loan",
-        f"৳{avg_defaulted_loan:,.0f}"
-    )
-
-    st.markdown("---")
-
     col1, col2 = st.columns(2)
-
     with col1:
-
         fig, ax = plt.subplots()
-
-        sns.countplot(
-            data=df,
-            x="default",
-            ax=ax
-        )
-
-        ax.set_xticklabels(
-            ["Non-Defaulter", "Defaulter"]
-        )
-
-        ax.set_title(
-            "Default Distribution"
-        )
-
+        sns.countplot(data=df, x="default", ax=ax)
+        ax.set_xticklabels(["Non-Defaulter", "Defaulter"])
+        ax.set_title("Default Distribution")
         st.pyplot(fig)
-
         plt.close(fig)
-
     with col2:
-
-        counts = (
-            df["default"]
-            .value_counts()
-            .sort_index()
-        )
-
+        counts = (df["default"].value_counts().sort_index())
         fig, ax = plt.subplots()
-
-        ax.pie(
-            counts,
-            labels=[
-                "Non-Defaulter",
-                "Defaulter"
-            ],
-            autopct="%1.1f%%"
-        )
-
-        ax.set_title(
-            "Default Percentage"
-        )
-
+        ax.pie(counts, labels=["Non-Defaulter", "Defaulter"], autopct="%1.1f%%")
+        ax.set_title("Default Percentage")
         st.pyplot(fig)
-
         plt.close(fig)
 
     st.markdown("---")
-
     st.subheader("Dataset Preview")
-
-    st.dataframe(
-        df.head(20),
-        use_container_width=True
-    )
+    st.dataframe(df.head(20), use_container_width=True)
 
 
 # ============================================================
@@ -1468,36 +1339,17 @@ with tabs[6]:
         })
 
         st.markdown("---")
-
-        st.subheader(
-            "📋 Customer Risk Report"
-        )
-
-        st.dataframe(
-            report_df.style.format(
-                {
-                    "Default_Probability":
-                        "{:.2%}"
-                }
-            ),
-            use_container_width=True
-        )
-
+        st.subheader("📋 Customer Risk Report")
+        st.dataframe(report_df.style.format({"Default_Probability": "{:.2%}"}), use_container_width=True)
         st.download_button(
             "⬇️ Download Risk Report",
             report_df.to_csv(index=False),
             "customer_risk_prediction.csv",
             "text/csv",
-            use_container_width=True
-        )
+            use_container_width=True)
 
-
-# ============================================================
 # FOOTER
-# ============================================================
-
 st.markdown("---")
-
 st.markdown(
     """
     <div style="
