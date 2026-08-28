@@ -634,180 +634,60 @@ with tabs[4]:
     )
 
 
-# ============================================================
-# TAB 6 - BEST MODEL
-# ============================================================
-
+# BEST MODEL
 with tabs[5]:
-
-    st.header(
-        "🏆 Best Model Performance"
-    )
-
-    st.success(
-        f"🏆 Selected Model: {best_model_name}"
-    )
-
-    accuracy = accuracy_score(
-        y_test,
-        best_pred
-    )
-
-    precision = precision_score(
-        y_test,
-        best_pred,
-        zero_division=0
-    )
-
-    recall = recall_score(
-        y_test,
-        best_pred,
-        zero_division=0
-    )
-
-    f1 = f1_score(
-        y_test,
-        best_pred,
-        zero_division=0
-    )
-
-    auc = roc_auc_score(
-        y_test,
-        best_prob
-    )
+    st.header("🏆 Best Model Performance")
+    st.success(f"🏆 Selected Model: {best_model_name}")
+    accuracy = accuracy_score(y_test, best_pred)
+    precision = precision_score(y_test, best_pred, zero_division=0)
+    recall = recall_score(y_test, best_pred, zero_division=0)
+    f1 = f1_score(y_test, best_pred, zero_division=0)
+    auc = roc_auc_score(y_test, best_prob)
 
     col1, col2, col3, col4, col5 = st.columns(5)
-
-    col1.metric(
-        "Accuracy",
-        f"{accuracy:.3f}"
-    )
-
-    col2.metric(
-        "Precision",
-        f"{precision:.3f}"
-    )
-
-    col3.metric(
-        "Recall",
-        f"{recall:.3f}"
-    )
-
-    col4.metric(
-        "F1 Score",
-        f"{f1:.3f}"
-    )
-
-    col5.metric(
-        "ROC-AUC",
-        f"{auc:.3f}"
-    )
+    col1.metric("Accuracy", f"{accuracy:.3f}")
+    col2.metric("Precision", f"{precision:.3f}")
+    col3.metric("Recall", f"{recall:.3f}")
+    col4.metric("F1 Score", f"{f1:.3f}")
+    col5.metric("ROC-AUC", f"{auc:.3f}")
 
     st.markdown("---")
 
-    st.subheader(
-        "Confusion Matrix"
-    )
-
-    cm = confusion_matrix(
-        y_test,
-        best_pred
-    )
+    st.subheader("Confusion Matrix")
+    cm = confusion_matrix(y_test, best_pred)
 
     fig, ax = plt.subplots()
-
-    sns.heatmap(
-        cm,
-        annot=True,
-        fmt="d",
-        cmap="Blues",
-        xticklabels=[
-            "Non-Defaulter",
-            "Defaulter"
-        ],
-        yticklabels=[
-            "Non-Defaulter",
-            "Defaulter"
-        ],
-        ax=ax
-    )
-
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
+                xticklabels=["Non-Defaulter", "Defaulter"],
+                yticklabels=["Non-Defaulter", "Defaulter"],
+                ax=ax)
     ax.set_xlabel("Predicted")
     ax.set_ylabel("Actual")
-
     st.pyplot(fig)
-
     plt.close(fig)
 
     st.markdown("---")
+    st.subheader("Classification Report")
 
-    st.subheader(
-        "Classification Report"
-    )
+    report = classification_report(y_test, best_pred, target_names=["Non-Defaulter", "Defaulter"], 
+                                   zero_division=0, output_dict=True)
 
-    report = classification_report(
-        y_test,
-        best_pred,
-        target_names=[
-            "Non-Defaulter",
-            "Defaulter"
-        ],
-        zero_division=0,
-        output_dict=True
-    )
-
-    st.dataframe(
-        pd.DataFrame(report).transpose().round(4),
-        use_container_width=True
-    )
+    st.dataframe(pd.DataFrame(report).transpose().round(4), use_container_width=True)
 
     # Feature importance
-
     model_object = best_model.named_steps["model"]
     preprocessor_object = best_model.named_steps["preprocessor"]
 
-    if hasattr(
-        model_object,
-        "feature_importances_"
-    ):
-
-        feature_names = (
-            preprocessor_object
-            .get_feature_names_out()
-        )
-
-        feature_importance = pd.DataFrame({
-
-            "Feature":
-                feature_names,
-
-            "Importance":
-                model_object.feature_importances_
-
-        }).sort_values(
-            "Importance",
-            ascending=False
-        ).head(20)
+    if hasattr(model_object, "feature_importances_"):
+        feature_names = (preprocessor_object.get_feature_names_out())
+        feature_importance = pd.DataFrame({"Feature": feature_names,
+                                           "Importance": model_object.feature_importances_}).sort_values("Importance",ascending=False).head(20)
 
         st.markdown("---")
-
-        st.subheader(
-            "🔎 Top Feature Importance"
-        )
-
-        fig, ax = plt.subplots(
-            figsize=(10, 8)
-        )
-
-        sns.barplot(
-            data=feature_importance,
-            x="Importance",
-            y="Feature",
-            ax=ax
-        )
-
+        st.subheader("🔎 Top Feature Importance")
+        fig, ax = plt.subplots(figsize=(10, 8))
+        sns.barplot(data=feature_importance, x="Importance", y="Feature", ax=ax)
         st.pyplot(fig)
-
         plt.close(fig)
 
 
