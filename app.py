@@ -510,119 +510,45 @@ with tabs[3]:
     st.dataframe(correlation_table, use_container_width=True)
 
 
-# ============================================================
-# TAB 5 - MODEL COMPARISON
-# ============================================================
-
+#  MODEL COMPARISON
 with tabs[4]:
-
-    st.header(
-        "🤖 Model Comparison"
-    )
-
-    display_results = (
-        results_df
-        .copy()
-        .round(4)
-    )
-
-    st.dataframe(
-        display_results,
-        use_container_width=True,
-        hide_index=True
-    )
+    st.header("🤖 Model Comparison")
+    display_results = (results_df.copy().round(4))
+    st.dataframe(display_results, use_container_width=True, hide_index=True)
 
     st.markdown("---")
-
     col1, col2 = st.columns(2)
-
     with col1:
+        fig, ax = plt.subplots(figsize=(8, 5))
 
-        fig, ax = plt.subplots(
-            figsize=(8, 5)
-        )
-
-        sns.barplot(
-            data=results_df,
-            x="ROC-AUC",
-            y="Model",
-            ax=ax
-        )
-
+        sns.barplot(data=results_df, x="ROC-AUC", y="Model", ax=ax)
         ax.set_xlim(0, 1)
-
-        ax.set_title(
-            "Model Performance - ROC AUC"
-        )
-
+        ax.set_title("Model Performance - ROC AUC")
         st.pyplot(fig)
-
         plt.close(fig)
-
     with col2:
-
-        fig, ax = plt.subplots(
-            figsize=(8, 5)
-        )
-
-        sns.barplot(
-            data=results_df,
-            x="F1 Score",
-            y="Model",
-            ax=ax
-        )
-
+        fig, ax = plt.subplots(figsize=(8, 5))
+        sns.barplot(data=results_df, x="F1 Score", y="Model", ax=ax)
         ax.set_xlim(0, 1)
-
-        ax.set_title(
-            "Model Performance - F1 Score"
-        )
-
+        ax.set_title("Model Performance - F1 Score")
         st.pyplot(fig)
-
         plt.close(fig)
-
+        
     st.markdown("---")
-
     st.subheader("ROC Curves")
-
-    fig, ax = plt.subplots(
-        figsize=(10, 7)
-    )
+    fig, ax = plt.subplots(figsize=(10, 7))
 
     for name, data in roc_data.items():
+        ax.plot(data["fpr"], data["tpr"],
+            label=(f"{name} " 
+                   f"(AUC = {data['auc']:.3f})"))
 
-        ax.plot(
-            data["fpr"],
-            data["tpr"],
-            label=(
-                f"{name} "
-                f"(AUC = {data['auc']:.3f})"
-            )
-        )
-
-    ax.plot(
-        [0, 1],
-        [0, 1],
-        linestyle="--"
-    )
-
-    ax.set_xlabel(
-        "False Positive Rate"
-    )
-
-    ax.set_ylabel(
-        "True Positive Rate"
-    )
-
+    ax.plot([0, 1], [0, 1], linestyle="--")
+    ax.set_xlabel("False Positive Rate")
+    ax.set_ylabel("True Positive Rate")
     ax.legend()
-
-    ax.set_title(
-        "ROC Curve Comparison"
-    )
-
+    ax.set_title("ROC Curve Comparison")
     st.pyplot(fig)
-
     plt.close(fig)
 
     st.download_button(
@@ -630,8 +556,7 @@ with tabs[4]:
         results_df.to_csv(index=False),
         "model_comparison.csv",
         "text/csv",
-        use_container_width=True
-    )
+        use_container_width=True)
 
 
 # BEST MODEL
