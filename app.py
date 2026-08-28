@@ -132,11 +132,10 @@ st.markdown(
 st.markdown(
     """
     <div class="sub-title">
-        AI-Powered Credit Risk Analytics & Default Prediction System
+        ML Powered Credit Risk Analytics & Default Prediction System
     </div>
     """,
-    unsafe_allow_html=True
-)
+    unsafe_allow_html=True)
 
 # SIDEBAR HEADER
 
@@ -154,25 +153,16 @@ st.sidebar.markdown(
 # APP FEATURES
 
 st.sidebar.markdown("---")
-
 st.sidebar.markdown("### 🚀 App Features")
-
 st.sidebar.markdown(
     """
     📊 **Interactive Dashboard**
-
     🔍 **Exploratory Data Analysis**
-
     👥 **Defaulter Profile Analysis**
-
     📈 **Correlation Analysis**
-
     🤖 **Multiple ML Models**
-
     🏆 **Automatic Best Model Selection**
-
     👤 **Customer Risk Prediction**
-
     📥 **Download Prediction Reports**
     """)
 
@@ -190,9 +180,7 @@ uploaded_file = st.sidebar.file_uploader(
         "If no dataset is uploaded, LoanGuard will use "
         "a built-in demo dataset."))
 
-st.sidebar.caption(
-    "Supported formats: CSV, XLS, XLSX")
-
+st.sidebar.caption("Supported formats: CSV, XLS, XLSX")
 
 # DATASET PATHS
 
@@ -241,45 +229,26 @@ except Exception as e:
     st.error(f"❌ Error loading dataset: {e}")
     st.stop()
 
-# ============================================================
 # DATASET INFORMATION
-# ============================================================
-
 st.sidebar.markdown("---")
-
 st.sidebar.markdown("### 📊 Dataset Status")
-
-st.sidebar.write(
-    f"**Rows:** {df.shape[0]:,}"
-)
-
-st.sidebar.write(
-    f"**Columns:** {df.shape[1]}"
-)
-
+st.sidebar.write(f"**Rows:** {df.shape[0]:,}")
+st.sidebar.write(f"**Columns:** {df.shape[1]}")
 st.sidebar.write(
     f"**Missing Values:** {df.isnull().sum().sum():,}"
 )
 
-
-# ============================================================
 # ABOUT APP
-# ============================================================
 
 st.sidebar.markdown("---")
-
 with st.sidebar.expander("ℹ️ About LoanGuard"):
-
     st.markdown(
         """
-        **LoanGuard** is an AI-powered credit
+        **LoanGuard** is an ML powered credit
         risk analytics platform.
-
         It analyzes customer financial profiles
         and predicts the probability of loan default.
-
         **Models Included:**
-
         - Logistic Regression
         - Decision Tree
         - Random Forest
@@ -287,12 +256,8 @@ with st.sidebar.expander("ℹ️ About LoanGuard"):
         - XGBoost
         - Support Vector Machine
         - K-Nearest Neighbors
-        """
-    )
-
-
+        """)
 st.sidebar.markdown("---")
-
 st.sidebar.markdown(
     """
     <div style="
@@ -309,57 +274,19 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 
-
-# ============================================================
 # REQUIRED COLUMNS
-# ============================================================
-
-required_columns = [
-
-    "age",
-    "monthly_income_bdt",
-    "account_balance_bdt",
-    "credit_score",
-    "loan_amount_bdt",
-    "loan_tenure_months",
-    "interest_rate_pct",
-    "monthly_installment_bdt",
-    "previous_loans",
-    "transaction_frequency_monthly",
-
-    "gender",
-    "division",
-    "district",
-    "education",
-    "employment_type",
-    "account_type",
-    "loan_type",
-    "previous_default",
-
-    "default"
-]
-
-
-missing_columns = [
-    col
+required_columns = ["age", "monthly_income_bdt", "account_balance_bdt", "credit_score", "loan_amount_bdt", "loan_tenure_months",
+                    "interest_rate_pct", "monthly_installment_bdt", "previous_loans",  "transaction_frequency_monthly", "gender",
+                    "division", "district", "education", "employment_type", "account_type", "loan_type", "previous_default", "default"]
+missing_columns = [col
     for col in required_columns
-    if col not in df.columns
-]
-
-
+    if col not in df.columns]
 if missing_columns:
-
-    st.error(
-        "❌ The uploaded dataset is missing required columns:"
-    )
-
+    st.error("❌ The uploaded dataset is missing required columns:")
     st.write(missing_columns)
-
     st.info(
         "Please upload a dataset with the required columns "
-        "or remove the uploaded file to use the default dataset."
-    )
-
+        "or remove the uploaded file to use the default dataset.")
     st.stop()
 
 
