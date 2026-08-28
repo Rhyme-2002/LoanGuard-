@@ -480,126 +480,34 @@ with tabs[1]:
     st.pyplot(fig)
     plt.close(fig)
 
-# ============================================================
-# TAB 3 - DEFAULTER ANALYSIS
-# ============================================================
-
+# DEFAULTER ANALYSIS
 with tabs[2]:
-
-    st.header(
-        "👥 Defaulter Profile Analysis"
-    )
-
-    analysis_variable = st.selectbox(
-        "Select Variable",
-        categorical_features
-    )
-
-    default_rate_analysis = (
-        df.groupby(analysis_variable)["default"]
-        .mean()
-        .mul(100)
-        .sort_values(ascending=False)
-    )
-
-    fig, ax = plt.subplots(
-        figsize=(10, 6)
-    )
-
-    sns.barplot(
-        x=default_rate_analysis.values,
-        y=default_rate_analysis.index,
-        ax=ax
-    )
-
-    ax.set_xlabel(
-        "Default Rate (%)"
-    )
-
-    ax.set_title(
-        f"Default Rate by {analysis_variable}"
-    )
-
+    st.header("👥 Defaulter Profile Analysis")
+    analysis_variable = st.selectbox("Select Variable", categorical_features)
+    default_rate_analysis = (df.groupby(analysis_variable)["default"].mean().mul(100).sort_values(ascending=False))
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.barplot(x=default_rate_analysis.values, y=default_rate_analysis.index, ax=ax)
+    ax.set_xlabel("Default Rate (%)")
+    ax.set_title(f"Default Rate by {analysis_variable}")
     st.pyplot(fig)
-
     plt.close(fig)
+    st.dataframe(default_rate_analysis.reset_index().rename(columns={"default": "Default Rate (%)" }), use_container_width=True)
 
-    st.dataframe(
-        default_rate_analysis
-        .reset_index()
-        .rename(
-            columns={
-                "default":
-                    "Default Rate (%)"
-            }
-        ),
-        use_container_width=True
-    )
-
-
-# ============================================================
-# TAB 4 - CORRELATION
-# ============================================================
-
+# CORRELATION
 with tabs[3]:
-
-    st.header(
-        "📈 Correlation Analysis"
-    )
-
-    correlation = (
-        df[numeric_features + ["default"]]
-        .corr()
-    )
-
-    fig, ax = plt.subplots(
-        figsize=(14, 10)
-    )
-
-    sns.heatmap(
-        correlation,
-        annot=True,
-        fmt=".2f",
-        cmap="coolwarm",
-        center=0,
-        ax=ax
-    )
-
-    ax.set_title(
-        "Correlation Matrix"
-    )
-
+    st.header("📈 Correlation Analysis")
+    correlation = (df[numeric_features + ["default"]].corr())
+    fig, ax = plt.subplots(figsize=(14, 10))
+    sns.heatmap(correlation, annot=True, fmt=".2f", cmap="coolwarm", center=0, ax=ax)
+    ax.set_title("Correlation Matrix")
     st.pyplot(fig)
-
     plt.close(fig)
+    st.subheader("Relationship with Default")
 
-    st.subheader(
-        "Relationship with Default"
-    )
-
-    default_corr = (
-        correlation["default"]
-        .drop("default")
-        .sort_values(
-            key=abs,
-            ascending=False
-        )
-    )
-
-    correlation_table = (
-        default_corr
-        .reset_index()
-    )
-
-    correlation_table.columns = [
-        "Variable",
-        "Correlation"
-    ]
-
-    st.dataframe(
-        correlation_table,
-        use_container_width=True
-    )
+    default_corr = (correlation["default"].drop("default").sort_values(key=abs, ascending=False))
+    correlation_table = (default_corr.reset_index())
+    correlation_table.columns = ["Variable", "Correlation"]
+    st.dataframe(correlation_table, use_container_width=True)
 
 
 # ============================================================
