@@ -132,7 +132,7 @@ st.markdown(
 st.markdown(
     """
     <div class="sub-title">
-        ML Powered Credit Risk Analytics & Default Prediction System
+       Machine Learning based Credit Risk Analytics & Default Prediction System
     </div>
     """,
     unsafe_allow_html=True)
@@ -157,12 +157,19 @@ st.sidebar.markdown("### 🚀 App Features")
 st.sidebar.markdown(
     """
     📊 **Interactive Dashboard**
+    
     🔍 **Exploratory Data Analysis**
+    
     👥 **Defaulter Profile Analysis**
+    
     📈 **Correlation Analysis**
+    
     🤖 **Multiple ML Models**
+    
     🏆 **Automatic Best Model Selection**
+    
     👤 **Customer Risk Prediction**
+    
     📥 **Download Prediction Reports**
     """)
 
@@ -244,7 +251,7 @@ st.sidebar.markdown("---")
 with st.sidebar.expander("ℹ️ About LoanGuard"):
     st.markdown(
         """
-        **LoanGuard** is an ML powered credit
+        **LoanGuard** is an Machine Learning based credit
         risk analytics platform.
         It analyzes customer financial profiles
         and predicts the probability of loan default.
@@ -1295,8 +1302,8 @@ st.markdown(
         padding:15px;
     ">
         <b>🏦 LoanGuard</b><br>
-        ML Powered Credit Risk Prediction System<br>
-        Data Science || Machine Learning 🤖
+        Machine Learning based Credit Risk Prediction System<br>
+        Data Science | Machine Learning 
     </div>
     """,
     unsafe_allow_html=True
