@@ -1852,8 +1852,8 @@ st.markdown(
         padding:15px;
     ">
         <b>🏦 LoanGuard</b><br>
-        AI-Powered Credit Risk Prediction System<br>
-        Built with Streamlit & Machine Learning 🤖
+        ML Powered Credit Risk Prediction System<br>
+        Data Science || Machine Learning 🤖
     </div>
     """,
     unsafe_allow_html=True
