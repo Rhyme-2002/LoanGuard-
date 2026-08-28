@@ -443,98 +443,35 @@ with tabs[0]:
     st.dataframe(df.head(20), use_container_width=True)
 
 
-# ============================================================
-# TAB 2 - EDA
-# ============================================================
-
+#  EDA
 with tabs[1]:
-
-    st.header(
-        "🔍 Exploratory Data Analysis"
-    )
-
-    eda_variable = st.selectbox(
-        "Select Numerical Variable",
-        numeric_features
-    )
-
+    st.header("🔍 Exploratory Data Analysis")
+    eda_variable = st.selectbox("Select Numerical Variable", numeric_features)
     col1, col2 = st.columns(2)
-
     with col1:
-
         fig, ax = plt.subplots()
-
-        sns.histplot(
-            data=df,
-            x=eda_variable,
-            hue="default",
-            kde=True,
-            bins=30,
-            ax=ax
-        )
-
-        ax.set_title(
-            f"Distribution of {eda_variable}"
-        )
-
+        sns.histplot(data=df, x=eda_variable, hue="default", kde=True, bins=30, ax=ax)
+        ax.set_title(f"Distribution of {eda_variable}")
         st.pyplot(fig)
-
         plt.close(fig)
-
     with col2:
-
         fig, ax = plt.subplots()
-
-        sns.boxplot(
-            data=df,
-            x="default",
-            y=eda_variable,
-            ax=ax
-        )
-
-        ax.set_xticklabels(
-            ["Non-Defaulter", "Defaulter"]
-        )
-
-        ax.set_title(
-            f"{eda_variable} by Default Status"
-        )
-
+        sns.boxplot(data=df, x="default", y=eda_variable,  ax=ax)
+        ax.set_xticklabels(["Non-Defaulter", "Defaulter"])
+        ax.set_title(f"{eda_variable} by Default Status")
         st.pyplot(fig)
-
         plt.close(fig)
-
+        
     st.markdown("---")
 
-    categorical_variable = st.selectbox(
-        "Select Categorical Variable",
-        categorical_features
-    )
+    categorical_variable = st.selectbox("Select Categorical Variable", categorical_features)
 
-    category_counts = (
-        df[categorical_variable]
-        .value_counts()
-        .head(15)
-    )
-
-    fig, ax = plt.subplots(
-        figsize=(10, 5)
-    )
-
-    sns.barplot(
-        x=category_counts.values,
-        y=category_counts.index,
-        ax=ax
-    )
-
-    ax.set_title(
-        f"Distribution of {categorical_variable}"
-    )
-
+    category_counts = (df[categorical_variable].value_counts().head(15))
+    fig, ax = plt.subplots(figsize=(10, 5))
+    sns.barplot(x=category_counts.values, y=category_counts.index, ax=ax)
+    ax.set_title(f"Distribution of {categorical_variable}")
     st.pyplot(fig)
-
     plt.close(fig)
-
 
 # ============================================================
 # TAB 3 - DEFAULTER ANALYSIS
