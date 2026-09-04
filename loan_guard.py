@@ -117,7 +117,6 @@ for variable in numeric_features:
     plt.show()
 
 # DEFAULTER PROFILE ANALYSIS
-
 for variable in categorical_features:
     default_rate_analysis = (df.groupby(variable)["default"].mean().mul(100).sort_values(ascending=False))
     print(f"Default Rate by {variable}")
